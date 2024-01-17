@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "build:extension":"next build  && mv out/_next out/next && cp -R ./extension/manifest.json ./out"
   },
   "dependencies": {
     "@emotion/react": "^11.11.3",
