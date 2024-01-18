@@ -35,7 +35,6 @@ export class FirebaseDatabase{
      *  @param {object} query.data
      */
      static async writeDataToDB(query){
-        console.log(JSON.stringify(query))
        await set(ref(db,query.queryPath),query.data)
      }
 
