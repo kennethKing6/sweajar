@@ -1,4 +1,4 @@
-import {child, get, getDatabase, push, ref, remove, set, update} from 'firebase/database'
+import {child, equalTo, get, getDatabase, push, ref, remove, set, update} from 'firebase/database'
 import { FirebaseConfigs } from './FirebaseConfig'
 
 const db = getDatabase(FirebaseConfigs.firebaseApp)
@@ -9,12 +9,24 @@ export class FirebaseDatabase{
      * Read data from the database at a specific path
      * @param {object} query 
      * @param {string} query.queryPath
-     * @param {any} data
      */
     static async readDataFromDB(query){
        const snapshot = await get(child(query.queryPath))
        return snapshot.val()
     }
+
+     /**
+     * Read data from the database by checking equality
+     * @param {object} query 
+     * @param {string} query.queryPath
+     * @param {string} query.equalValue
+     * @param {string} query.queryKey
+     * @param {any} data
+     */
+     static async readDataFromDByEquality(query){
+      const snapshot = await equalTo(query.equalValue,ref(db,`${query.queryPath}/${query.queryKey}`))
+      return snapshot.val()
+   }
 
     /**
      * Write new data at path to the database
