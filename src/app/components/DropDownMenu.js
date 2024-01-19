@@ -1,42 +1,47 @@
-import React from "react";
-//import { useEffect, useState } from "react";
-import Dropdown from "react-bootstrap/Dropdown";
-//import { Menu, MenuItem} from '@mui/material';
+import { useState } from "react";
+import { 
+  Container, 
+  Button,
+  Menu,
+  MenuItem,
+  Checkbox,
+} from "@mui/material";
 
-function DropdownMenu() {
-  // Fetch the menu items from the database and store them in an array
-  //const [menuItems, setMenuItems] = useState([]);
-
-  /*useEffect( () => {
-    fetch("")
-      .then( (response) => response.json )
-      .then( (data) => setMenuItems(data) );
-  }, []);*/
-
-  // Store the selected menu item in a state variable
-  //const [selectedItem, setSelectedItem] = useState("");
-
-  const handleSelect = (eventKey) => {
-    setSelectedItem(eventKey);
+export default function DropdownMenu() {
+  const [anchor, setAnchor] = useState(null);
+  const [selected, setSelected] = useState([]);
+  const onClick = (e) => setAnchor(e.currentTarget);
+  const onClose = () => setAnchor(null);
+  const onToggle = (item) => {
+    const index = selected.indexOf(item);
+    if (index > -1) {
+      // Remove the item from the array
+      setSelected(selected.filter((i) => i !== item));
+    } else {
+      // Add the item to the array
+      setSelected([...selected, item]);
+    }
   };
 
   return (
-    <Dropdown /*onSelect={handleSelect}*/>
-      <Dropdown.Toggle variant="success" id="dropdown-basic">
-        Select a violation
-      </Dropdown.Toggle>
-  
-      <Dropdown.Menu>
-        {/* {menuItems.map( (item) => (
-          <Dropdown.Item key={item.id} eventKey={item.name}>
-            {item.name}
-          </Dropdown.Item>
-        ))} */}
-        <Dropdown.Item>Profanity</Dropdown.Item>
-        <Dropdown.Item>Late Arrival</Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
+    <Container>
+      <Button onClick={onClick}>Select the Violation</Button>
+      <Menu anchorEl={anchor} open={!!anchor}>
+        <MenuItem onClick={() => onToggle("Profanity")}>
+          <Checkbox checked={selected.includes("Profanity")} />
+          Profanity
+        </MenuItem>
+
+        <MenuItem onClick={() => onToggle("Muted Microphone")}>
+          <Checkbox checked={selected.includes("Muted Microphone")} />
+          Muted Microphone
+        </MenuItem>
+
+        <MenuItem onClick={() => onToggle("Late Arrival")}>
+          <Checkbox checked={selected.includes("Late Arrival")} />
+          Late Arrival
+        </MenuItem>
+      </Menu>
+    </Container>
   );
 }
-
-export default DropdownMenu;
