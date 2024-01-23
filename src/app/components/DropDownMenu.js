@@ -5,6 +5,7 @@ import {
   Menu,
   MenuItem,
   Checkbox,
+  Tooltip,
 } from "@mui/material";
 
 export default function DropdownMenu() {
@@ -27,20 +28,26 @@ export default function DropdownMenu() {
     <Container>
       <Button onClick={onClick}>Select the Violation</Button>
       <Menu anchorEl={anchor} open={!!anchor}>
-        <MenuItem onClick={() => onToggle("Profanity")}>
-          <Checkbox checked={selected.includes("Profanity")} />
-          Profanity
-        </MenuItem>
+        <Tooltip title="Choose this option if the user used inappropriate language" placement="right">
+          <MenuItem onClick={() => onToggle("Profanity")}>
+            <Checkbox checked={selected.includes("Profanity")} />
+            Profanity
+          </MenuItem>
+        </Tooltip>
 
-        <MenuItem onClick={() => onToggle("Muted Microphone")}>
-          <Checkbox checked={selected.includes("Muted Microphone")} />
-          Muted Microphone
-        </MenuItem>
+        <Tooltip title="Choose this option if the user's microphone was muted" placement="right">
+          <MenuItem onClick={() => onToggle("Muted Microphone")}>
+            <Checkbox checked={selected.includes("Muted Microphone")} />
+            Muted Microphone
+          </MenuItem>
+        </Tooltip>
 
-        <MenuItem onClick={() => onToggle("Late Arrival")}>
-          <Checkbox checked={selected.includes("Late Arrival")} />
-          Late Arrival
-        </MenuItem>
+        <Tooltip title="Choose this option if the user joined the meeting late" placement="right">
+          <MenuItem onClick={() => onToggle("Late Arrival")}>
+            <Checkbox checked={selected.includes("Late Arrival")} />
+            Late Arrival
+          </MenuItem>
+        </Tooltip>
       </Menu>
     </Container>
   );
