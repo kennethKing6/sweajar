@@ -7,7 +7,10 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import {Avatar} from '@mui/material';
 
-export default function UserViolationDetails({ data }) {
+export default function UserViolationDetails({ 
+  data,
+  onExit = ()=>{}
+ }) {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} md={8} lg={6} alignSelf="flex-start">

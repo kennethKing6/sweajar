@@ -5,7 +5,7 @@ import { User } from '../model/User';
 import { SignedInUser } from '../model/SignedInUser';
 
 export default function UsersList({
-    onNavigate = ()=>{}
+    onPress = ()=>{}, 
 }) {
     /**@param {[User]} */
     const [users,setUsers] = useState([new User({
@@ -47,7 +47,7 @@ export default function UsersList({
                         <Avatar sx={{marginTop:1,width:56,height:56,":hover":{opacity:0.6}}} alt="Remy Sharp" src={currentUser.profilePicture} />
                     </Grid>
 
-                    <Grid item pl={1}  onClick={onNavigate}>
+                    <Grid item pl={1}  onClick={onPress}>
                         <Typography variant="h6" gutterBottom>{currentUser.firstName} {currentUser.lastName}</Typography>
                         <Typography style={{marginTop:-5}}  gutterBottom>@{currentUser.username}</Typography>
                     </Grid>

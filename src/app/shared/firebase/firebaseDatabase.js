@@ -24,6 +24,7 @@ export class FirebaseDatabase{
      * @param {any} data
      */
      static async readDataFromDByEquality(query){
+      console.log('******_____',query)
       const snapshot = await equalTo(query.equalValue,ref(db,`${query.queryPath}/${query.queryKey}`))
       return snapshot.val()
    }

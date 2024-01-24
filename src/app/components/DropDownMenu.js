@@ -11,8 +11,11 @@ import {
 } from "@mui/material";
 import { SwearType } from "../model/SwearType";
 import { SignedInUser } from "../model/SignedInUser";
+import ReportButton from "./ReportButton";
 
-export default function DropdownMenu() {
+export default function DropdownMenu({
+  onPress = ()=>{}
+}) {
   const [anchor, setAnchor] = useState(null);
   const [selected, setSelected] = useState([]);
   const [items, setItems] = useState([]);
@@ -34,6 +37,7 @@ export default function DropdownMenu() {
     const fetchItems = async () => {
       const companyID = SignedInUser.user.companyID;
       const swearTypes = await SwearType.getSwearTypesByCompany(companyID);
+      alert(JSON.stringify(swearTypes))
       setItems(swearTypes);
     };
     fetchItems().then().catch()
@@ -73,6 +77,7 @@ export default function DropdownMenu() {
               </MenuItem>
             </Tooltip>
           ))}
+          <ReportButton onPress={onPress}/>
         </Menu>
     </Container>
   );
