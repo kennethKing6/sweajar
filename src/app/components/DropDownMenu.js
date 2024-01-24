@@ -9,6 +9,8 @@ import {
   Tooltip,
   ClickAwayListener,
 } from "@mui/material";
+import { SwearType } from "../model/SwearType";
+import { SignedInUser } from "../model/SignedInUser";
 
 export default function DropdownMenu() {
   const [anchor, setAnchor] = useState(null);
@@ -30,11 +32,11 @@ export default function DropdownMenu() {
   useEffect(() => {
     // Fetch the menu items from the database
     const fetchItems = async () => {
-      const companyID = SwearType.companyID;
-      const swearTypes = await getSwearTypesByCompany(companyID);
+      const companyID = SignedInUser.user.companyID;
+      const swearTypes = await SwearType.getSwearTypesByCompany(companyID);
       setItems(swearTypes);
     };
-    fetchItems();
+    fetchItems().then().catch()
   }, []);
 
   return (
