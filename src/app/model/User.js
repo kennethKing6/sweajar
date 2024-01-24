@@ -39,7 +39,7 @@ export class User {
         this.employeedID = user.employeedID
         this.firstName = user.firstName;
         this.lastName = user.lastName;
-        this.profilePicture = user.profilePicture;
+        this.profilePicture = user.profilePicture || "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
         this.username = user.username;
         this.userID = user.userID
     }
