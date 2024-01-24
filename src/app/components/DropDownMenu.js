@@ -1,4 +1,5 @@
-import { useState } from "react";
+"use client"
+import { useState,useEffect } from "react";
 import { 
   Container, 
   Button,
@@ -8,7 +9,6 @@ import {
   Tooltip,
   ClickAwayListener,
 } from "@mui/material";
-import { } from "./model/SwearType.js";
 
 export default function DropdownMenu() {
   const [anchor, setAnchor] = useState(null);
@@ -39,7 +39,7 @@ export default function DropdownMenu() {
 
   return (
     <Container>
-      <ClickAwayListener onClickAway={onClose}>
+      {/* <ClickAwayListener onClickAway={onClose}></ClickAwayListener> */}
         <Button onClick={onClick}>Select the Violation</Button>
         <Menu anchorEl={anchor} open={!!anchor}>
           <Tooltip title="Choose this option if the user used inappropriate language" placement="right">
@@ -72,7 +72,6 @@ export default function DropdownMenu() {
             </Tooltip>
           ))}
         </Menu>
-      </ClickAwayListener>
     </Container>
   );
 }

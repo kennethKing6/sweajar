@@ -30,20 +30,20 @@ export default function Home() {
 
   return (
    <>
-    <UsersList/>
-   <div>
+    {/* <UsersList/> */}
+   {/* <div>
     <DropdownMenu></DropdownMenu>
-   </div>
+   </div> */}
   
 
-    <Grid container spacing={2}>
+    {/* <Grid container spacing={2}>
       <Grid item xs={12} md={6} lg={8} sx={{ position: 'relative', alignSelf: 'flex-start', justifyContent: 'flex-end', alignItems: 'flex-start' }}>
         <UserViolationDetails data={userViolationDetailsData} />
       </Grid>
       <Grid item xs={12}>
         <ReportButton />
       </Grid>
-    </Grid>
+    </Grid> */}
     </>
   );
 }

@@ -26,12 +26,12 @@ export default function UsersList({
     })]);
 
     useEffect(()=>{
-        User.getUsersByCompanyID(
-            SignedInUser.user.userID,
-            SignedInUser.user.companyID
-            ).then((users)=>{
-                setUsers(users)
-            }).catch((err)=>{setUsers([])})
+        // User.getUsersByCompanyID(
+        //     SignedInUser.user.userID,
+        //     SignedInUser.user.companyID
+        //     ).then((users)=>{
+        //         setUsers(users)
+        //     }).catch((err)=>{setUsers([])})
     },[])
 
   return (
