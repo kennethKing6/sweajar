@@ -17,11 +17,9 @@ import ReportButton from "./ReportButton";
 export default function ViolationSelectList({
   onPress = ()=>{}
 }) {
-  const [anchor, setAnchor] = useState(null);
   const [selected, setSelected] = useState([]);
   const [items, setItems] = useState([]);
   const onClick = (e) => setAnchor(e.currentTarget);
-  const onClose = () => setAnchor(null);
   const onToggle = (item) => {
     const index = selected.indexOf(item);
     if (index > -1) {
@@ -46,10 +44,9 @@ export default function ViolationSelectList({
 
   return (
     <Container>
-      <Button onClick={onClick}>Select the Violation</Button>
       <List>
         <Tooltip title="Choose this option if the user used inappropriate language" placement="right">
-          <ListItem button onClick={() => onToggle("Profanity")}>
+          <ListItem onClick={() => onToggle("Profanity")}>
             <ListItemIcon>
               <Checkbox checked={selected.includes("Profanity")} />
             </ListItemIcon>
@@ -60,7 +57,7 @@ export default function ViolationSelectList({
         </Tooltip>
 
         <Tooltip title="Choose this option if the user's microphone was muted" placement="right">
-          <ListItem button onClick={() => onToggle("Muted Microphone")}>
+          <ListItem onClick={() => onToggle("Muted Microphone")}>
             <ListItemIcon>
               <Checkbox checked={selected.includes("Muted Microphone")} />
             </ListItemIcon>
@@ -71,7 +68,7 @@ export default function ViolationSelectList({
         </Tooltip>
 
         <Tooltip title="Choose this option if the user joined the meeting late" placement="right">
-          <ListItem button onClick={() => onToggle("Late Arrival")}>
+          <ListItem onClick={() => onToggle("Late Arrival")}>
             <ListItemIcon>
               <Checkbox checked={selected.includes("Late Arrival")} />
             </ListItemIcon>
@@ -83,7 +80,7 @@ export default function ViolationSelectList({
 
         {items.map( (item) => (
           <Tooltip title={item.description} placement="right" key={item.id}>
-            <ListItem button onClick={() => onToggle(item.name)}>
+            <ListItem onClick={() => onToggle(item.name)}>
               <ListItemIcon>
                 <Checkbox checked={selected.includes(item.name)} />
               </ListItemIcon>
