@@ -8,6 +8,7 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  ListSubheader,
   Checkbox,
   Tooltip,
 } from "@mui/material";
@@ -20,7 +21,7 @@ export default function ViolationSelectList({
 }) {
   const [selected, setSelected] = useState([]);
   const [items, setItems] = useState([]);
-  const onClick = (e) => setAnchor(e.currentTarget);
+  // const onClick = (e) => setAnchor(e.currentTarget);
   const onToggle = (item) => {
     const index = selected.indexOf(item);
     if (index > -1) {
@@ -45,7 +46,11 @@ export default function ViolationSelectList({
 
   return (
     <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-      <List>
+      <List subheader={
+        <ListSubheader component="div" id="list-subheader">
+          Select the Violation
+        </ListSubheader>
+      }>
         <Tooltip title="Choose this option if the user used inappropriate language" placement="right">
           <ListItem onClick={() => onToggle("Profanity")}>
             <ListItemIcon>
