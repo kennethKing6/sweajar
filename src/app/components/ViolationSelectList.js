@@ -1,7 +1,6 @@
 "use client"
 import { useState,useEffect } from "react";
 import { 
-  Container, 
   Button,
   Box,
   List,
@@ -11,6 +10,7 @@ import {
   ListSubheader,
   Checkbox,
   Tooltip,
+  Divider,
 } from "@mui/material";
 import { SwearType } from "../model/SwearType";
 import { SignedInUser } from "../model/SignedInUser";
@@ -21,7 +21,6 @@ export default function ViolationSelectList({
 }) {
   const [selected, setSelected] = useState([]);
   const [items, setItems] = useState([]);
-  // const onClick = (e) => setAnchor(e.currentTarget);
   const onToggle = (item) => {
     const index = selected.indexOf(item);
     if (index > -1) {
@@ -94,7 +93,7 @@ export default function ViolationSelectList({
             </ListItem>
           </Tooltip>
         ))}
-
+        <Divider/><br></br>
         <ReportButton onPress={onPress}/>
       </List>
     </Box>
