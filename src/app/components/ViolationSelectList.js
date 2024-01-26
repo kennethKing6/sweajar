@@ -3,6 +3,7 @@ import { useState,useEffect } from "react";
 import { 
   Container, 
   Button,
+  Box,
   List,
   ListItem,
   ListItemIcon,
@@ -43,7 +44,7 @@ export default function ViolationSelectList({
   }, []);
 
   return (
-    <Container>
+    <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
       <List>
         <Tooltip title="Choose this option if the user used inappropriate language" placement="right">
           <ListItem onClick={() => onToggle("Profanity")}>
@@ -91,6 +92,6 @@ export default function ViolationSelectList({
 
         <ReportButton onPress={onPress}/>
       </List>
-    </Container>
+    </Box>
   );
 }
