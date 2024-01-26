@@ -22,15 +22,31 @@ export default function Home() {
       violationType: 'Profanity', 
       firstName:'Bobby', 
       lastName:'Boy', 
-      countPerViolation:'69420' },
+      countPerViolation:'20' },
+
+      { // Dummy user details
+        username: 'SobbyBoy123', 
+        profilePicture: 'https://img.freepik.com/free-photo/user-front-side-with-white-background_187299-40007.jpg?w=740&t=st=1705633868~exp=1705634468~hmac=76e3865f1fd041589284444d1270b80bd35408a9ce616303cd36e6abfd08f9e8', 
+        violationType: 'Profanity', 
+        firstName:'Sobby', 
+        lastName:'Boy', 
+        countPerViolation:'20' },
+
+        { // Dummy user details
+          username: 'LobbyBoy123', 
+          profilePicture: 'https://img.freepik.com/free-photo/user-front-side-with-white-background_187299-40007.jpg?w=740&t=st=1705633868~exp=1705634468~hmac=76e3865f1fd041589284444d1270b80bd35408a9ce616303cd36e6abfd08f9e8', 
+          violationType: 'Profanity', 
+          firstName:'Lobby', 
+          lastName:'Boy', 
+          countPerViolation:'20' },
     
     { // Finalize the variables here
-      username: '', 
+      username: 'KenK123', 
       profilePicture: '', 
-      violationType: '', 
-      firstName: '', 
-      lastName: '', 
-      countPerViolation: ''}
+      violationType: 'Forgot to unmute', 
+      firstName: 'Ken', 
+      lastName: 'K', 
+      countPerViolation: '1000'}
   ];
 
   return (

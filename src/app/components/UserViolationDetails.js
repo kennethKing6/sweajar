@@ -1,40 +1,65 @@
 "use client"
-import React from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import {Avatar} from '@mui/material';
+import SortButton from './SortButton';
 
 export default function UserViolationDetails({ 
   data,
-  onExit = ()=>{}
+  onExit = ()=>{},
  }) {
+  const [sortedData, setSortedData] = useState([...data]);
+
+  const sortAlphabetically = () => {
+    const sorted = [...sortedData].sort((a, b) =>
+      `${a.firstName} ${a.lastName}`.localeCompare(`${b.firstName} ${b.lastName}`)
+    );
+    setSortedData(sorted);
+  }
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} md={8} lg={6} alignSelf="flex-start">
-        <Box sx={{ width: '100%', bgcolor: '#216c5c ', color: 'primary.contrastText', padding: 5 }}>
+        <Box sx={{ 
+          width: '100%', 
+          bgcolor: 'black', 
+          color: 'white', 
+          padding: 2 ,
+          border: '2px solid yellow'
+          }}>
           <>
-            <div>User Violation Details</div>
+            <h1>
+              User Violation Details{' '}
+              <SortButton onPress = {sortAlphabetically}/>
+            </h1>
             <nav aria-label="main reported folder">
               <List>
-                {data.map((person, index) => (
+                {sortedData.map((person, index) => (
                   <ListItem key={index} >
                     <ListItemText 
                       primary={
                         <Grid container alignItems={"center"}>
-                          <Avatar alt={`${person.firstName} ${person.lastName}`} src={person.profilePicture}/>
-                          <Box sx={{ marginLeft: '8px' }}>{person.firstName} {person.lastName}</Box>
+                          {person.profilePicture ? (
+                            <Avatar alt={`${person.firstName} ${person.lastName}`} src={person.profilePicture} />
+                          ) : (
+                            <Avatar sx={{ bgcolor: '#FF5733' }}>
+                              {`${person.firstName.charAt(0)}${person.lastName.charAt(0)}`}
+                            </Avatar>
+                          )}
+                          <Box sx={{ marginLeft: '10px', flexGrow: 1 }}>{person.firstName} {person.lastName}</Box>
                         </Grid>
                       }
                       secondary={
-                        <Grid container alignItems={'center'} fontSize={'20px'}>
-                          <span style={{ marginLeft: '45px' }}>{person.violationType}</span>
-                          <span style={{ marginLeft: '20px' }}>{person.countPerViolation}</span>
+                        <Grid container alignItems={'center'} fontSize={'20px'} >
+                          <span style={{ marginLeft: '50px', color: 'white'}}>{person.violationType}</span>
+                          <span style={{ marginLeft: '20px', color: 'white'}}>{person.countPerViolation}</span>
                         </Grid>
                       }
-                      sx={{ marginLeft: '8px' }}
+                      sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
                     />
                   </ListItem>
                 ))}
