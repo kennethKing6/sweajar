@@ -1,74 +1,79 @@
-import {child, equalTo, get, getDatabase, push, ref, remove, set, update} from 'firebase/database'
+import {child, equalTo, get, getDatabase, orderByChild, push,query, ref, remove, set, update} from 'firebase/database'
 import { FirebaseConfigs } from './FirebaseConfig'
+import firebase from 'firebase/database'
 
 const db = getDatabase(FirebaseConfigs.firebaseApp)
-
 export class FirebaseDatabase{
 
     /**
      * Read data from the database at a specific path
-     * @param {object} query 
-     * @param {string} query.queryPath
+     * @param {object} userQuery 
+     * @param {string} userQuery.queryPath
      */
-    static async readDataFromDB(query){
-       const snapshot = await get(child(query.queryPath))
+    static async readDataFromDB(userQuery){
+      const dbRef = ref(db,'/')
+      const reference = child(dbRef,userQuery.queryPath)
+       const snapshot = await get(reference)
        return snapshot.val()
     }
 
      /**
      * Read data from the database by checking equality
-     * @param {object} query 
-     * @param {string} query.queryPath
-     * @param {string} query.equalValue
-     * @param {string} query.queryKey
+     * @param {object} userQuery 
+     * @param {string} userQuery.queryPath
+     * @param {string} userQuery.equalValue
+     * @param {string} userQuery.queryKey
      * @param {any} data
      */
-     static async readDataFromDByEquality(query){
-      console.log('******_____',query)
-      const snapshot = await equalTo(query.equalValue,ref(db,`${query.queryPath}/${query.queryKey}`))
+     static async readDataFromDByEquality(userQuery){
+      const reference = ref(db,userQuery.queryPath)
+      const equalityQuery = query(reference,orderByChild(userQuery.queryKey),equalTo(userQuery.equalValue))
+
+      const snapshot = await get(equalityQuery )
+
       return snapshot.val()
    }
 
     /**
      * Write new data at path to the database
-     * @param {object} query 
-     * @param {string} query.queryPath
-     *  @param {object} query.data
+     * @param {object} userQuery 
+     * @param {string} userQuery.queryPath
+     *  @param {object} userQuery.data
      */
-     static async writeDataToDB(query){
-       await set(ref(db,query.queryPath),query.data)
+     static async writeDataToDB(userQuery){
+       await set(ref(db,userQuery.queryPath),userQuery.data)
      }
 
     /**
      * Delete data at path from the database
-     * @param {object} query 
-     * @param {string} query.queryPath
+     * @param {object} userQuery 
+     * @param {string} userQuery.queryPath
      */
-      static async deleteDataFromDB(query){
-        await remove(ref(db,query.queryPath))
+      static async deleteDataFromDB(userQuery){
+        await remove(ref(db,userQuery.queryPath))
       }
 
     /**
      * Update data at specific path on the database
-     * @param {object} query 
-     * @param {string} query.queryPath
-     * @param {object} query.newData
+     * @param {object} userQuery 
+     * @param {string} userQuery.queryPath
+     * @param {object} userQuery.newData
      */
-       static async updateDataOnDB(query){
-        await update(ref(db,query.queryPath),query.newData)
+       static async updateDataOnDB(userQuery){
+        await update(ref(db,userQuery.queryPath),userQuery.newData)
       }
     
      /**
      * Push data at specific path on the database with a unique data ID
-     * @param {object} query 
-     * @param {string} query.queryPath
-     * @param {object} query.newData
+     * @param {object} userQuery 
+     * @param {string} userQuery.queryPath
+     * @param {object} userQuery.newData
      */
-     static async pushDataToDB(query){
-           const newPostKey =  push(child(ref(db),query.queryPath)).key
+     static async pushDataToDB(userQuery){
+           const newPostKey =  push(child(ref(db),userQuery.queryPath)).key
         await this.updateDataOnDB({
-            newData:query.newData,
-            queryPath:`${query.queryPath}/${newPostKey}`
+            newData:userQuery.newData,
+            queryPath:`${userQuery.queryPath}/${newPostKey}`
         })
       }
 

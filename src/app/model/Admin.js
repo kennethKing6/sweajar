@@ -22,4 +22,7 @@ export class Admin{
         this.companyName = admin.companyName;
         this.companyLogoUrl = admin.companyLogoUrl;
     }
+
+    //TODO: Admin can add a user/employee
+    //TODO: Admin can create a company
 }

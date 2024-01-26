@@ -8,31 +8,21 @@ export default function UsersList({
     onPress = ()=>{}, 
 }) {
     /**@param {[User]} */
-    const [users,setUsers] = useState([new User({
-        companyID:'sdkkds',
-        employeedID:'jshdjfhlda',
-        firstName:'Kenneth',
-        lastName:'Kouadio',
-        userID:'lsjdnjsd',
-        username:'joker'
-    }),
-    new User({
-        companyID:'sdkkds',
-        employeedID:'jshdjfhlda',
-        firstName:'John',
-        lastName:'Kou',
-        userID:'lsjdnjsd',
-        username:'joker'
-    })]);
+    const [users,setUsers] = useState([]);
 
     useEffect(()=>{
-        // User.getUsersByCompanyID(
-        //     SignedInUser.user.userID,
-        //     SignedInUser.user.companyID
-        //     ).then((users)=>{
-        //         setUsers(users)
-        //     }).catch((err)=>{setUsers([])})
+        User.getUsersByCompanyID(
+            SignedInUser.user.userID,
+            SignedInUser.user.companyID
+            ).then((users)=>{
+                setUsers(users)
+            }).catch((err)=>{
+                console.log(err)
+                setUsers([])
+            })
     },[])
+    
+   
 
   return (
     <Grid container p={2} sx={{flex:1,flexDirection:'column'}}>
@@ -41,7 +31,7 @@ export default function UsersList({
             /**@type {User} */
             const currentUser = data
             return (
-                <Grid container sx={{flexDirection:'row'}}  mt={1} key={currentUser.userID}> 
+                <Grid  container sx={{flexDirection:'row'}}  mt={1} key={JSON.stringify(data)}> 
 
                     <Grid  sx={{justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
                         <Avatar sx={{marginTop:1,width:56,height:56,":hover":{opacity:0.6}}} alt="Remy Sharp" src={currentUser.profilePicture} />

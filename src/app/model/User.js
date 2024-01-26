@@ -71,14 +71,17 @@ export class User {
     }
 
     static async getUsersByCompanyID(userID,companyID){
-       const result = await FirebaseDatabase.readDataFromDByEquality({
+       var result = await FirebaseDatabase.readDataFromDByEquality({
         equalValue:userID,
-        queryKey: 'userID',
+        queryKey: '/userID',
         queryPath:'/users'
-       }) //check if user requesting is saved under that company
+       }) 
+       result = Object.values(result)[0]
+       //check if user requesting is saved under that company
        if(!result)throw new Error("Unauthorized")
 
        const user = new User(result)
+
        if(user.companyID !== companyID)throw new Error("UnAuthorized")
 
        const users = await FirebaseDatabase.readDataFromDByEquality({

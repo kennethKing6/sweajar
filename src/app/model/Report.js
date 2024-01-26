@@ -74,3 +74,4 @@ export class Report{
       return Object.values(result)
     }
 }
+
