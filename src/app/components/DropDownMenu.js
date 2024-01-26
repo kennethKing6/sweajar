@@ -7,7 +7,6 @@ import {
   MenuItem,
   Checkbox,
   Tooltip,
-  ClickAwayListener,
 } from "@mui/material";
 import { SwearType } from "../model/SwearType";
 import { SignedInUser } from "../model/SignedInUser";
@@ -45,39 +44,38 @@ export default function DropdownMenu({
 
   return (
     <Container>
-      {/* <ClickAwayListener onClickAway={onClose}></ClickAwayListener> */}
-        <Button onClick={onClick}>Select the Violation</Button>
-        <Menu anchorEl={anchor} open={!!anchor}>
-          <Tooltip title="Choose this option if the user used inappropriate language" placement="right">
-            <MenuItem onClick={() => onToggle("Profanity")}>
-              <Checkbox checked={selected.includes("Profanity")} />
-              Profanity
+      <Button onClick={onClick}>Select the Violation</Button>
+      <Menu anchorEl={anchor} open={!!anchor}>
+        <Tooltip title="Choose this option if the user used inappropriate language" placement="right">
+          <MenuItem onClick={() => onToggle("Profanity")}>
+            <Checkbox checked={selected.includes("Profanity")} />
+            Profanity
+            </MenuItem>
+        </Tooltip>
+
+        <Tooltip title="Choose this option if the user's microphone was muted" placement="right">
+          <MenuItem onClick={() => onToggle("Muted Microphone")}>
+            <Checkbox checked={selected.includes("Muted Microphone")} />
+            Muted Microphone
+          </MenuItem>
+        </Tooltip>
+
+        <Tooltip title="Choose this option if the user joined the meeting late" placement="right">
+          <MenuItem onClick={() => onToggle("Late Arrival")}>
+            <Checkbox checked={selected.includes("Late Arrival")} />
+            Late Arrival
+          </MenuItem>
+        </Tooltip>
+
+        {items.map( (item) => (
+          <Tooltip title={item.description} placement="right" key={item.id}>
+            <MenuItem onClick={() => onToggle(item.name)}>
+              <Checkbox checked={selected.includes(item.name)} />
+              {item.name}
             </MenuItem>
           </Tooltip>
-
-          <Tooltip title="Choose this option if the user's microphone was muted" placement="right">
-            <MenuItem onClick={() => onToggle("Muted Microphone")}>
-              <Checkbox checked={selected.includes("Muted Microphone")} />
-              Muted Microphone
-            </MenuItem>
-          </Tooltip>
-
-          <Tooltip title="Choose this option if the user joined the meeting late" placement="right">
-            <MenuItem onClick={() => onToggle("Late Arrival")}>
-              <Checkbox checked={selected.includes("Late Arrival")} />
-              Late Arrival
-            </MenuItem>
-          </Tooltip>
-
-          {items.map( (item) => (
-            <Tooltip title={item.description} placement="right" key={item.id}>
-              <MenuItem onClick={() => onToggle(item.name)}>
-                <Checkbox checked={selected.includes(item.name)} />
-                {item.name}
-              </MenuItem>
-            </Tooltip>
-          ))}
-          <ReportButton onPress={onPress}/>
+        ))}
+        <ReportButton onPress={onPress}/>
         </Menu>
     </Container>
   );
