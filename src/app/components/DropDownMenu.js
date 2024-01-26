@@ -3,8 +3,10 @@ import { useState,useEffect } from "react";
 import { 
   Container, 
   Button,
-  Menu,
-  MenuItem,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
   Checkbox,
   Tooltip,
 } from "@mui/material";
@@ -45,38 +47,75 @@ export default function DropdownMenu({
   return (
     <Container>
       <Button onClick={onClick}>Select the Violation</Button>
-      <Menu anchorEl={anchor} open={!!anchor}>
+      <List>
         <Tooltip title="Choose this option if the user used inappropriate language" placement="right">
-          <MenuItem onClick={() => onToggle("Profanity")}>
-            <Checkbox checked={selected.includes("Profanity")} />
-            Profanity
-            </MenuItem>
+          <ListItem button onClick={() => onToggle("Profanity")}>
+            <ListItemIcon>
+              <Checkbox checked={selected.includes("Profanity")} />
+            </ListItemIcon>
+            <ListItemText>
+              Profanity
+            </ListItemText>
+          </ListItem>
         </Tooltip>
 
         <Tooltip title="Choose this option if the user's microphone was muted" placement="right">
+          <ListItem button onClick={() => onToggle("Muted Microphone")}>
+            <ListItemIcon>
+              <Checkbox checked={selected.includes("Muted Microphone")} />
+            </ListItemIcon>
+            <ListItemText>
+              Muted Microphone
+            </ListItemText>
+          </ListItem>
+        </Tooltip>
+
+        <Tooltip title="Choose this option if the user joined the meeting late" placement="right">
+          <ListItem button onClick={() => onToggle("Late Arrival")}>
+            <ListItemIcon>
+              <Checkbox checked={selected.includes("Late Arrival")} />
+            </ListItemIcon>
+            <ListItemText>
+              Late Arrival
+            </ListItemText>
+          </ListItem>
+        </Tooltip>
+
+        {items.map( (item) => (
+          <Tooltip title={item.description} placement="right" key={item.id}>
+            <ListItem button onClick={() => onToggle(item.name)}>
+              <ListItemIcon>
+                <Checkbox checked={selected.includes(item.name)} />
+              </ListItemIcon>
+              <ListItemText primary={item.name} />
+            </ListItem>
+          </Tooltip>
+        ))}
+
+        <ReportButton onPress={onPress}/>
+      </List>
+        {/* <Tooltip title="Choose this option if the user's microphone was muted" placement="right">
           <MenuItem onClick={() => onToggle("Muted Microphone")}>
             <Checkbox checked={selected.includes("Muted Microphone")} />
             Muted Microphone
           </MenuItem>
-        </Tooltip>
+        </Tooltip> */}
 
-        <Tooltip title="Choose this option if the user joined the meeting late" placement="right">
+        {/* <Tooltip title="Choose this option if the user joined the meeting late" placement="right">
           <MenuItem onClick={() => onToggle("Late Arrival")}>
             <Checkbox checked={selected.includes("Late Arrival")} />
             Late Arrival
           </MenuItem>
-        </Tooltip>
+        </Tooltip> */}
 
-        {items.map( (item) => (
+        {/* {items.map( (item) => (
           <Tooltip title={item.description} placement="right" key={item.id}>
             <MenuItem onClick={() => onToggle(item.name)}>
               <Checkbox checked={selected.includes(item.name)} />
               {item.name}
             </MenuItem>
           </Tooltip>
-        ))}
-        <ReportButton onPress={onPress}/>
-        </Menu>
+        ))} */}
     </Container>
   );
 }
