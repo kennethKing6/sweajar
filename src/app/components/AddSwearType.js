@@ -1,3 +1,4 @@
+import { ListSubheader } from "@mui/material";
 import { SwearType } from "../model/SwearType";
 
 export default function AddSwearType ({onAdd = () => {}}) {
@@ -18,7 +19,31 @@ export default function AddSwearType ({onAdd = () => {}}) {
 
     return (
         <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper'}}>
-            
+            <List subheader={
+                <ListSubheader component="div" id="newType-list-subheader">
+                    Add new Swear Type
+                </ListSubheader>
+            }>
+                <ListItem>
+                    <TextField
+                        label="Name"
+                        value={name}
+                        onChange={ (e) => setName(e.target.value)}
+                    />
+                </ListItem>
+                <ListItem>
+                    <TextField
+                        label="Description"
+                        value={description}
+                        onChange={ (e) => setDescription(e.target.value)}
+                    />
+                </ListItem>
+                <ListItem>
+                    <Button variant="contained" color="primary" onClick={onSubmit}>
+                        Submit
+                    </Button>
+                </ListItem>
+            </List>
         </Box>
     );
 }
