@@ -94,7 +94,7 @@ export default function ViolationSelectList({
           </Tooltip>
         ))}
         <Divider/><br></br>
-        <ReportButton onPress={onPress} placement="right"/>
+        <ReportButton onPress={onPress}/>
       </List>
     </Box>
   );
