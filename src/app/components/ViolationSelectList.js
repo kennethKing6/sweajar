@@ -15,6 +15,7 @@ import {
 import { SwearType } from "../model/SwearType";
 import { SignedInUser } from "../model/SignedInUser";
 import ReportButton from "./ReportButton";
+import AddSwearType from "./AddSwearType";
 
 export default function ViolationSelectList({
   onPress = ()=>{}
@@ -94,6 +95,7 @@ export default function ViolationSelectList({
           </Tooltip>
         ))}
         <Divider/><br></br>
+        <AddSwearType/>
         <ReportButton onPress={onPress}/>
       </List>
     </Box>
