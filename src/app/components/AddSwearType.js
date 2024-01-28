@@ -1,5 +1,10 @@
-import {useState} from "react";
-import { ListSubheader } from "@mui/material";
+import React, {useState} from "react";
+import { 
+    ListSubheader,
+    Box,
+    TextField,
+    Button,
+} from "@mui/material";
 import { SwearType } from "../model/SwearType";
 
 export default function AddSwearType ({onAdd = () => {}}) {
@@ -16,6 +21,9 @@ export default function AddSwearType ({onAdd = () => {}}) {
         const query = {name, description};
         const newSwearType = await SwearType.createNewSwearType(query);
         onAdd(newSwearType);
+        // Clear the input fields
+        setName("");
+        setDescription("");
     };
 
     return (
