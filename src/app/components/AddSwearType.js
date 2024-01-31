@@ -19,7 +19,7 @@ import { FormControl, FormLabel } from "react-bootstrap";
 export default function AddSwearType ({onAdd = () => {}}) {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
-    const [level, setLevel] = useState("minor");
+    const [level, setLevel] = useState("");
 
     const onSubmit = async () => {
         // Validate the input fields
