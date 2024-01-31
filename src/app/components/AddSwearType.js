@@ -9,12 +9,12 @@ import {
     Radio,
     RadioGroup,
     FormControlLabel,
+    FormControl,
     InputLabel,
     MenuItem,
     Select,
 } from "@mui/material";
 import { SwearType } from "../model/SwearType";
-import { FormControl, FormLabel } from "react-bootstrap";
 
 export default function AddSwearType ({onAdd = () => {}}) {
     const [name, setName] = useState("");
@@ -35,10 +35,6 @@ export default function AddSwearType ({onAdd = () => {}}) {
         setName("");
         setDescription("");
         setLevel("");
-    };
-
-    const handleLevelChange = (event) => {
-        setLevel(event.target.value);
     };
 
     return (
@@ -63,12 +59,13 @@ export default function AddSwearType ({onAdd = () => {}}) {
                     />
                 </ListItem>
                 <ListItem>
-                    <FormControl>
-                        <InputLabel>Select Level</InputLabel>
+                    <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">Select Level</InputLabel>
                         <Select
+                            labelId="demo-simple-select-label"
                             value={level}
                             label="Level"
-                            onChange={handleLevelChange}
+                            onChange={ (e) => setLevel(e.target.value)}
                         >
                             <MenuItem value="minor">Minor</MenuItem>
                             <MenuItem value="medium">Medium</MenuItem>
