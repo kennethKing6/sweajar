@@ -31,6 +31,10 @@ export default function AddSwearType ({onAdd = () => {}}) {
         setLevel("");
     };
 
+    const handleLevelChange = (event) => {
+        setValue(event.target.value);
+    };
+
     return (
         <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper'}}>
             <List subheader={
@@ -58,7 +62,7 @@ export default function AddSwearType ({onAdd = () => {}}) {
                         <RadioGroup
                             name="controlled-radio-buttons-group"
                             value={value}
-                            onChange={handleChange}
+                            onChange={handleLevelChange}
                         >
                         <FormControlLabel value="minor" control={<Radio />} label="Minor" />
                         <FormControlLabel value="medium" control={<Radio />} label="Medium" />
