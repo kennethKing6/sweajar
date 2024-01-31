@@ -6,6 +6,12 @@ import {
     Box,
     TextField,
     Button,
+    Radio,
+    RadioGroup,
+    FormControlLabel,
+    InputLabel,
+    MenuItem,
+    Select,
 } from "@mui/material";
 import { SwearType } from "../model/SwearType";
 import { FormControl, FormLabel } from "react-bootstrap";
@@ -13,7 +19,7 @@ import { FormControl, FormLabel } from "react-bootstrap";
 export default function AddSwearType ({onAdd = () => {}}) {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
-    const [level, setLevel] = useState("");
+    const [level, setLevel] = useState("minor");
 
     const onSubmit = async () => {
         // Validate the input fields
@@ -32,7 +38,7 @@ export default function AddSwearType ({onAdd = () => {}}) {
     };
 
     const handleLevelChange = (event) => {
-        setValue(event.target.value);
+        setLevel(event.target.value);
     };
 
     return (
@@ -58,17 +64,29 @@ export default function AddSwearType ({onAdd = () => {}}) {
                 </ListItem>
                 <ListItem>
                     <FormControl>
+                        <InputLabel>Select Level</InputLabel>
+                        <Select
+                            value={level}
+                            label="Level"
+                            onChange={handleLevelChange}
+                        >
+                            <MenuItem value="minor">Minor</MenuItem>
+                            <MenuItem value="medium">Medium</MenuItem>
+                            <MenuItem value="major">Major</MenuItem>
+                        </Select>
+                    </FormControl>
+                    {/* <FormControl>
                         <FormLabel>Select Level</FormLabel>
                         <RadioGroup
                             name="controlled-radio-buttons-group"
-                            value={value}
+                            value={level}
                             onChange={handleLevelChange}
                         >
-                        <FormControlLabel value="minor" control={<Radio />} label="Minor" />
-                        <FormControlLabel value="medium" control={<Radio />} label="Medium" />
-                        <FormControlLabel value="major" control={<Radio />} label="Major" />
+                            <FormControlLabel value="minor" control={<Radio />} label="Minor" />
+                            <FormControlLabel value="medium" control={<Radio />} label="Medium" />
+                            <FormControlLabel value="major" control={<Radio />} label="Major" />
                         </RadioGroup>
-                    </FormControl>
+                    </FormControl> */}
                 </ListItem>
                 <ListItem>
                     <Button variant="contained" color="primary" onClick={onSubmit}>
