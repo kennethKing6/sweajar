@@ -20,7 +20,7 @@ const HOMEPAGE_LEADERBOARD = 'leaderboard';
 const USER_DETAILS_COMPONENT = 'userDetails';
 
 export default function Home() {
-   const [switcher,setSwitcher]  = useState(HOMEPAGE_LEADERBOARD)
+   const [switcher,setSwitcher]  = useState(VIOLATION_LIST_COMPONENT)
    const [user,setUser] = useState()
   const HomepageLeaderBoardData = [
     { // Dummy user details

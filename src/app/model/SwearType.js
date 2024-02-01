@@ -70,6 +70,7 @@ export class SwearType{
             queryKey:"teamID",
             queryPath:SWEAR_TYPE_PATH,
         })
+        console.log(result)
         return result?Object.values(result):[]
     }
 }

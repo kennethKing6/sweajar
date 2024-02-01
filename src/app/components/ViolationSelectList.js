@@ -89,7 +89,7 @@ export default function ViolationSelectList({
               <ListItemIcon>
                 <Checkbox checked={selected.includes(item.name)} />
               </ListItemIcon>
-              <ListItemText primary={item.name} />
+              <ListItemText primary={item.name} sx={{color:'black'}}/>
             </ListItem>
           </Tooltip>
         ))}
