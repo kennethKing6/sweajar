@@ -72,18 +72,6 @@ export default function AddSwearType ({onAdd = () => {}}) {
                             <MenuItem value="major">Major</MenuItem>
                         </Select>
                     </FormControl>
-                    {/* <FormControl>
-                        <FormLabel>Select Level</FormLabel>
-                        <RadioGroup
-                            name="controlled-radio-buttons-group"
-                            value={level}
-                            onChange={handleLevelChange}
-                        >
-                            <FormControlLabel value="minor" control={<Radio />} label="Minor" />
-                            <FormControlLabel value="medium" control={<Radio />} label="Medium" />
-                            <FormControlLabel value="major" control={<Radio />} label="Major" />
-                        </RadioGroup>
-                    </FormControl> */}
                 </ListItem>
                 <ListItem>
                     <Button variant="contained" color="primary" onClick={onSubmit}>
