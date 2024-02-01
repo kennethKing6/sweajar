@@ -11,7 +11,7 @@ export class Report{
      reportedID;
 
     /**@type {string} */
-    companyID; 
+    teamID; 
 
      /**@type {string} */
      typeID;
@@ -20,25 +20,25 @@ export class Report{
       dateEntry;
 
       /**@type {string} */
-      companyID;
+      teamID;
 
      /**
       * 
       * @param {object} reportType 
       * @param {string} reportType.reporterID
       * @param {string} reportType.reportedID
-      * @param {string} reportType.companyID
+      * @param {string} reportType.teamID
       * @param {string} reportType.typeID
       * @param {EpochTimeStamp} reportType.dateEntry
-      * @param {string} reportType.companyID
+      * @param {string} reportType.teamID
       */
     constructor(reportType){
         this.reportedID= reportType.reportedID;
         this.reporterID = reportType.reporterID;
-        this.companyID = reportType.companyID;
+        this.teamID = reportType.teamID;
         this.dateEntry = reportType.dateEntry;
         this.typeID = reportType.typeID;
-        this.companyID = reportType.companyID
+        this.teamID = reportType.teamID
     }
 
      /**
@@ -46,10 +46,10 @@ export class Report{
       * @param {object} query 
       * @param {string} query.reporterID
       * @param {string} query.reportedID
-      * @param {string} query.companyID
+      * @param {string} query.teamID
       * @param {string} query.typeID
       * @param {EpochTimeStamp} query.dateEntry
-      * @param {string} query.companyID
+      * @param {string} query.teamID
       */
     static async reportThisUser(query){
         const report = new Report(query)
