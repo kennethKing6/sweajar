@@ -54,7 +54,7 @@ export default function Home() {
   return (
    <>
     {switcher === USER_LIST_COMPONENT?<UsersList onPress={()=>{setSwitcher(VIOLATION_LIST_COMPONENT)}}/>:<></>}
-    {switcher === VIOLATION_LIST_COMPONENT?<DropdownMenu onPress={()=>{setSwitcher(VIOLATION_DETAILS_COMPONENT)}}/>:<></>}
+    {switcher === VIOLATION_LIST_COMPONENT?<ViolationSelectList onPress={()=>{setSwitcher(VIOLATION_DETAILS_COMPONENT)}}/>:<></>}
     {switcher === VIOLATION_DETAILS_COMPONENT?<UserDetails onPress={()=>{setSwitcher(USER_DETAILS_COMPONENT)}}/>:<></>}
     {switcher === VIOLATION_DETAILS_COMPONENT? 
       <Grid container spacing={2}>
