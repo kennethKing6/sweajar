@@ -8,10 +8,12 @@ import Grid from '@mui/material/Grid';
 import ReportButton from './components/ReportButton';
 import ReportList from './components/UserViolationDetails';
 import UserViolationDetails from './components/UserViolationDetails';
+import UserDetails from './components/UserDetails';
 
 const USER_LIST_COMPONENT = 'userLiist';
 const VIOLATION_LIST_COMPONENT = 'userViolations';
 const VIOLATION_DETAILS_COMPONENT = 'userViolationsDetails';
+const USER_DETAILS_COMPONENT = 'userDetails';
 
 export default function Home() {
    const [switcher,setSwitcher]  = useState(USER_LIST_COMPONENT)
@@ -53,12 +55,13 @@ export default function Home() {
    <>
     {switcher === USER_LIST_COMPONENT?<UsersList onPress={()=>{setSwitcher(VIOLATION_LIST_COMPONENT)}}/>:<></>}
     {switcher === VIOLATION_LIST_COMPONENT?<DropdownMenu onPress={()=>{setSwitcher(VIOLATION_DETAILS_COMPONENT)}}/>:<></>}
-   {switcher ===VIOLATION_DETAILS_COMPONENT? <Grid container spacing={2}>
-      <Grid item xs={12} md={6} lg={8} sx={{ position: 'relative', alignSelf: 'flex-start', justifyContent: 'flex-end', alignItems: 'flex-start' }}>
-        <UserViolationDetails data={userViolationDetailsData} onExit={()=>setSwitcher(USER_LIST_COMPONENT)}/>
-      </Grid>
-     
-    </Grid>:<></>}
+    {switcher === VIOLATION_DETAILS_COMPONENT?<UserDetails onPress={()=>{setSwitcher(USER_DETAILS_COMPONENT)}}/>:<></>}
+    {switcher === VIOLATION_DETAILS_COMPONENT? 
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={6} lg={8} sx={{ position: 'relative', alignSelf: 'flex-start', justifyContent: 'flex-end', alignItems: 'flex-start' }}>
+          <UserViolationDetails data={userViolationDetailsData} onExit={()=>setSwitcher(USER_LIST_COMPONENT)}/>
+        </Grid>
+      </Grid>:<></>}
     </>
   );
 }
