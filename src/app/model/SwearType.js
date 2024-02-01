@@ -1,6 +1,6 @@
 import { FirebaseDatabase } from "../shared/firebase/firebaseDatabase";
 
-const SWEAR_TYPE_PATH = '/swearTypes';
+const SWEAR_TYPE_PATH = '/swearType';
 
 export class SwearType{
 
@@ -17,7 +17,7 @@ export class SwearType{
      description;
 
      /**@type {string} */
-     companyID = "";
+     teamID = "";
 
 
      /**
@@ -27,14 +27,14 @@ export class SwearType{
       * @param {string} swearType.name
       * @param {string} swearType.description
       * @param {"minor"|"major"|"medium"} swearType.levels
-      * @param {string} swearType.companyID
+      * @param {string} swearType.teamID
       */
     constructor(swearType){
         this.description= swearType.description || "";
         this.levels = swearType.levels || "minor";
         this.name = swearType.name || "";
         this.typeID = swearType.typeID || "";
-        this.companyID = swearType.companyID || ""
+        this.teamID = swearType.teamID || ""
     }
 
     /**
@@ -44,7 +44,7 @@ export class SwearType{
      * @param {string} query.name
      * @param {string} query.description
      * @param {"minor"|"major"|"medium"} query.levels
-     * @param {string} query.companyID
+     * @param {string} query.teamID
      * @returns {SwearType} 
      */
     static async createNewSwearType(query){
@@ -61,15 +61,15 @@ export class SwearType{
 
     /**
      * 
-     * @param {string} companyID 
-     * @returns {[SwearType]}
+     * @param {string} teamID 
+     * @returns {Promise<[SwearType]>}
      */
-    static async getSwearTypesByCompany(companyID){
+    static async getSwearTypesByCompany(teamID){
         const result = await FirebaseDatabase.readDataFromDByEquality({
-            equalValue:companyID,
-            queryKey:"companyID",
+            equalValue:teamID,
+            queryKey:"teamID",
             queryPath:SWEAR_TYPE_PATH,
         })
-        return Object.values(result)
+        return result?Object.values(result):[]
     }
 }

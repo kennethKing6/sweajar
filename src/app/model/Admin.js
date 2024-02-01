@@ -7,7 +7,7 @@ export class Admin{
      companyLogoUrl;
 
      /**@type {string} */
-     companyID;
+     teamID;
  
 
      /**
@@ -15,10 +15,10 @@ export class Admin{
       * @param {object} admin 
       * @param {string} admin.companyName
       * @param {string} admin.companyLogoUrl
-      * @param {string} admin.companyID
+      * @param {string} admin.teamID
       */
     constructor(admin){
-        this.companyID= admin.companyID;
+        this.teamID= admin.teamID;
         this.companyName = admin.companyName;
         this.companyLogoUrl = admin.companyLogoUrl;
     }
