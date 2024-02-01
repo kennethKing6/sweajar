@@ -16,11 +16,11 @@ import UserDetails from './components/UserDetails';
 
 const USER_LIST_COMPONENT = 'userLiist';
 const VIOLATION_LIST_COMPONENT = 'userViolations';
-const VIOLATION_DETAILS_COMPONENT = 'userViolationsDetails';
+const HOMEPAGE_LEADERBOARD = 'leaderboard';
 const USER_DETAILS_COMPONENT = 'userDetails';
 
 export default function Home() {
-   const [switcher,setSwitcher]  = useState(VIOLATION_LIST_COMPONENT)
+   const [switcher,setSwitcher]  = useState(HOMEPAGE_LEADERBOARD)
    const [user,setUser] = useState()
   const userViolationDetailsData = [
     { // Dummy user details
@@ -66,9 +66,9 @@ export default function Home() {
    <>
     {user?<>
       {switcher === USER_LIST_COMPONENT?<UsersList onPress={()=>{setSwitcher(VIOLATION_LIST_COMPONENT)}}/>:<></>}
-      {switcher === VIOLATION_LIST_COMPONENT?<ViolationSelectList onPress={()=>{setSwitcher(VIOLATION_DETAILS_COMPONENT)}}/>:<></>}
-      {switcher === VIOLATION_DETAILS_COMPONENT?<UserDetails onPress={()=>{setSwitcher(USER_DETAILS_COMPONENT)}}/>:<></>}
-      {switcher === VIOLATION_DETAILS_COMPONENT? 
+      {switcher === VIOLATION_LIST_COMPONENT?<ViolationSelectList onPress={()=>{setSwitcher(HOMEPAGE_LEADERBOARD)}}/>:<></>}
+      {switcher === HOMEPAGE_LEADERBOARD?<UserDetails onPress={()=>{setSwitcher(USER_DETAILS_COMPONENT)}}/>:<></>}
+      {switcher === HOMEPAGE_LEADERBOARD? 
       <Grid container spacing={2}>
         <Grid item xs={12} md={6} lg={8} sx={{ position: 'relative', alignSelf: 'flex-start', justifyContent: 'flex-end', alignItems: 'flex-start' }}>
           <UserViolationDetails data={userViolationDetailsData} onExit={()=>setSwitcher(USER_LIST_COMPONENT)}/>

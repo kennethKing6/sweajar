@@ -55,7 +55,7 @@ export default function ViolationSelectList({
             <ListItemIcon>
               <Checkbox checked={selected.includes("Profanity")} />
             </ListItemIcon>
-            <ListItemText>
+            <ListItemText sx={{color:'black'}}>
               Profanity
             </ListItemText>
           </ListItem>
@@ -66,7 +66,7 @@ export default function ViolationSelectList({
             <ListItemIcon>
               <Checkbox checked={selected.includes("Muted Microphone")} />
             </ListItemIcon>
-            <ListItemText>
+            <ListItemText sx={{color:'black'}}>
               Muted Microphone
             </ListItemText>
           </ListItem>
@@ -77,7 +77,7 @@ export default function ViolationSelectList({
             <ListItemIcon>
               <Checkbox checked={selected.includes("Late Arrival")} />
             </ListItemIcon>
-            <ListItemText>
+            <ListItemText sx={{color:'black'}}>
               Late Arrival
             </ListItemText>
           </ListItem>
