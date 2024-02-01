@@ -94,11 +94,12 @@ export default function ViolationSelectList({
             </ListItem>
           </Tooltip>
         ))}
-        <Divider/><br></br>
-        <AddSwearType/>
         <ListItem>
           <ReportButton onPress={onPress}/>
         </ListItem>
+        <br></br>
+        <Divider/>
+        <AddSwearType/>
       </List>
     </Box>
   );
