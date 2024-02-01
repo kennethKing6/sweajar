@@ -4,34 +4,34 @@
       "name": "Profanity Type A",
       "description": "This is a description for Profanity Type A.",
       "levels": "minor",
-      "companyID": "ABC123"
+      "teamID": "ABC123"
     },
     "swearType2": {
       "typeID": "2",
       "name": "Explicit Language Type B",
       "description": "Description for Explicit Language Type B.",
       "levels": "major",
-      "companyID": "XYZ789"
+      "teamID": "XYZ789"
     },
     "swearType3": {
       "typeID": "3",
       "name": "Inappropriate Language Type C",
       "description": "Description for Inappropriate Language Type C.",
       "levels": "medium",
-      "companyID": "DEF456"
+      "teamID": "DEF456"
     },
     "swearType4": {
       "typeID": "4",
       "name": "Vulgar Language Type D",
       "description": "Description for Vulgar Language Type D.",
       "levels": "minor",
-      "companyID": "GHI789"
+      "teamID": "GHI789"
     },
     "swearType5": {
       "typeID": "5",
       "name": "Offensive Language Type E",
       "description": "Description for Offensive Language Type E.",
       "levels": "major",
-      "companyID": "JKL012"
+      "teamID": "JKL012"
     }
   }

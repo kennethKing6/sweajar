@@ -1,5 +1,5 @@
 "use client"
-import { Grid,Avatar, Typography,Divider } from '@mui/material'
+import { Grid,Avatar, Typography,Divider, Button } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { User } from '../model/User';
 import { SignedInUser } from '../model/SignedInUser';
@@ -11,9 +11,9 @@ export default function UsersList({
     const [users,setUsers] = useState([]);
 
     useEffect(()=>{
-        User.getUsersByCompanyID(
+        User.getUsersByteamID(
             SignedInUser.user.userID,
-            SignedInUser.user.companyID
+            SignedInUser.user.teamID
             ).then((users)=>{
                 setUsers(users)
             }).catch((err)=>{
@@ -27,6 +27,7 @@ export default function UsersList({
   return (
     <Grid container p={2} sx={{flex:1,flexDirection:'column'}}>
          <Typography variant="h4" gutterBottom>Employees List</Typography>
+         <Button type="submit" variant="contained" color="primary" onClick={async ()=> await User.signOut()}>Sign out</Button>
         {users.map((data)=>{
             /**@type {User} */
             const currentUser = data

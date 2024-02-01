@@ -3,11 +3,15 @@
 import Button from "./components/Button";
 import UsersList from "./components/UsersList";
 import DropdownMenu from "./components/DropDownMenu"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import ReportButton from './components/ReportButton';
 import ReportList from './components/UserViolationDetails';
 import UserViolationDetails from './components/UserViolationDetails';
+import { FirebaseAuth } from "./shared/firebase/firebaseAuth";
+import { SignedInUser } from "./model/SignedInUser";
+import { User } from "./model/User";
+import Welcome from "./components/Welcome";
 
 const USER_LIST_COMPONENT = 'userLiist';
 const VIOLATION_LIST_COMPONENT = 'userViolations';
@@ -15,6 +19,7 @@ const VIOLATION_DETAILS_COMPONENT = 'userViolationsDetails';
 
 export default function Home() {
    const [switcher,setSwitcher]  = useState(USER_LIST_COMPONENT)
+   const [user,setUser] = useState()
   const userViolationDetailsData = [
     { // Dummy user details
       username: 'BobbyBoy123', 
@@ -33,16 +38,22 @@ export default function Home() {
       countPerViolation: ''}
   ];
 
+  useEffect(()=>{
+    User.listenForUserState((user)=>{
+      setUser(user)
+    })
+  },[])
+
   return (
    <>
-    {switcher === USER_LIST_COMPONENT?<UsersList onPress={()=>{setSwitcher(VIOLATION_LIST_COMPONENT)}}/>:<></>}
+    {user?<>{switcher === USER_LIST_COMPONENT?<UsersList onPress={()=>{setSwitcher(VIOLATION_LIST_COMPONENT)}}/>:<></>}
     {switcher === VIOLATION_LIST_COMPONENT?<DropdownMenu onPress={()=>{setSwitcher(VIOLATION_DETAILS_COMPONENT)}}/>:<></>}
    {switcher ===VIOLATION_DETAILS_COMPONENT? <Grid container spacing={2}>
       <Grid item xs={12} md={6} lg={8} sx={{ position: 'relative', alignSelf: 'flex-start', justifyContent: 'flex-end', alignItems: 'flex-start' }}>
         <UserViolationDetails data={userViolationDetailsData} onExit={()=>setSwitcher(USER_LIST_COMPONENT)}/>
       </Grid>
      
-    </Grid>:<></>}
+    </Grid>:<></>}</>:<Welcome/>}
     </>
   );
 }
