@@ -8,7 +8,7 @@ import { Avatar } from '@mui/material';
 import SortButton from './SortButton';
 import UserDetails from './UserDetails';
 
-export default function UserViolationDetails({
+export default function HomepageLeaderBoard({
   data,
   onExit = () => {},
   onPress = () => {},
@@ -25,6 +25,7 @@ export default function UserViolationDetails({
 
   const handleUserClick = (user) => {
     setSelectedUser(user);
+    onPress()
   }
 
   return (
@@ -77,9 +78,7 @@ export default function UserViolationDetails({
           </>
         </Box>
       </Grid>
-      {selectedUser && (
-        <UserDetails user={selectedUser} onPress={() => setSelectedUser(null)} />
-      )}
+      
     </Grid>
   );
 }

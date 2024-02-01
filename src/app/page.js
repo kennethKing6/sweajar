@@ -6,8 +6,8 @@ import React, { useEffect, useState } from 'react';
 import ViolationSelectList from "./components/ViolationSelectList"
 import Grid from '@mui/material/Grid';
 import ReportButton from './components/ReportButton';
-import ReportList from './components/UserViolationDetails';
-import UserViolationDetails from './components/UserViolationDetails';
+import ReportList from './components/HomepageLeaderBoard';
+import HomepageLeaderBoard from './components/HomepageLeaderBoard';
 import { FirebaseAuth } from "./shared/firebase/firebaseAuth";
 import { SignedInUser } from "./model/SignedInUser";
 import { User } from "./model/User";
@@ -22,7 +22,7 @@ const USER_DETAILS_COMPONENT = 'userDetails';
 export default function Home() {
    const [switcher,setSwitcher]  = useState(HOMEPAGE_LEADERBOARD)
    const [user,setUser] = useState()
-  const userViolationDetailsData = [
+  const HomepageLeaderBoardData = [
     { // Dummy user details
       username: 'BobbyBoy123', 
       profilePicture: 'https://img.freepik.com/free-photo/user-front-side-with-white-background_187299-40007.jpg?w=740&t=st=1705633868~exp=1705634468~hmac=76e3865f1fd041589284444d1270b80bd35408a9ce616303cd36e6abfd08f9e8', 
@@ -67,11 +67,11 @@ export default function Home() {
     {user?<>
       {switcher === USER_LIST_COMPONENT?<UsersList onPress={()=>{setSwitcher(VIOLATION_LIST_COMPONENT)}}/>:<></>}
       {switcher === VIOLATION_LIST_COMPONENT?<ViolationSelectList onPress={()=>{setSwitcher(HOMEPAGE_LEADERBOARD)}}/>:<></>}
-      {switcher === HOMEPAGE_LEADERBOARD?<UserDetails onPress={()=>{setSwitcher(USER_DETAILS_COMPONENT)}}/>:<></>}
+      {switcher ===  USER_DETAILS_COMPONENT  ?<UserDetails user={HomepageLeaderBoardData[0]} onPress={()=>{setSwitcher(HOMEPAGE_LEADERBOARD)}}/>:<></>}
       {switcher === HOMEPAGE_LEADERBOARD? 
       <Grid container spacing={2}>
         <Grid item xs={12} md={6} lg={8} sx={{ position: 'relative', alignSelf: 'flex-start', justifyContent: 'flex-end', alignItems: 'flex-start' }}>
-          <UserViolationDetails data={userViolationDetailsData} onExit={()=>setSwitcher(USER_LIST_COMPONENT)}/>
+          <HomepageLeaderBoard data={HomepageLeaderBoardData} onPress={()=>setSwitcher(USER_DETAILS_COMPONENT)}/>
         </Grid>
       </Grid>:<></>}</>:<Welcome/>}
 
