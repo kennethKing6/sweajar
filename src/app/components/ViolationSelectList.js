@@ -43,15 +43,29 @@ export default function ViolationSelectList({
     fetchItems().then().catch()
   }, []);
 
+  function addDefaultViolation({name,description}){
+    SwearType.selectReport({
+      name:name,
+      description:description,
+      levels:'minor'
+    })
+  }
+
   return (
     <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
       <List subheader={
         <ListSubheader component="div" id="list-subheader">
           Select the Violation
         </ListSubheader>
-      }>
+      } >
         <Tooltip title="Choose this option if the user used inappropriate language" placement="right">
-          <ListItem onClick={() => onToggle("Profanity")}>
+          <ListItem onClick={() => {
+            onToggle("Profanity")
+            addDefaultViolation({
+              name:"Profanity",
+              description:"Choose this option if the user used inappropriate language"
+            })
+          }}>
             <ListItemIcon>
               <Checkbox checked={selected.includes("Profanity")} />
             </ListItemIcon>
@@ -62,7 +76,13 @@ export default function ViolationSelectList({
         </Tooltip>
 
         <Tooltip title="Choose this option if the user's microphone was muted" placement="right">
-          <ListItem onClick={() => onToggle("Muted Microphone")}>
+          <ListItem onClick={() =>{ 
+            onToggle("Muted Microphone")
+            addDefaultViolation({
+              name:"Muted Microphone",
+              description:"Choose this option if the user's microphone was muted"
+            })
+            }}>
             <ListItemIcon>
               <Checkbox checked={selected.includes("Muted Microphone")} />
             </ListItemIcon>
@@ -73,7 +93,13 @@ export default function ViolationSelectList({
         </Tooltip>
 
         <Tooltip title="Choose this option if the user joined the meeting late" placement="right">
-          <ListItem onClick={() => onToggle("Late Arrival")}>
+          <ListItem onClick={() => {
+            onToggle("Late Arrival")
+            addDefaultViolation({
+              name:"Late Arrival",
+              description:"Choose this option if the user joined the meeting late"
+            })
+            }}>
             <ListItemIcon>
               <Checkbox checked={selected.includes("Late Arrival")} />
             </ListItemIcon>
@@ -85,7 +111,14 @@ export default function ViolationSelectList({
 
         {items.map( (item) => (
           <Tooltip title={item.description} placement="right" key={item.id}>
-            <ListItem onClick={() => onToggle(item.name)}>
+            <ListItem onClick={() => {
+              onToggle(item.name)
+              SwearType.selectReport({
+                description:item.description,
+                levels:item.level,
+                name:item.name
+              })
+            }}>
               <ListItemIcon>
                 <Checkbox checked={selected.includes(item.name)} />
               </ListItemIcon>
@@ -94,7 +127,17 @@ export default function ViolationSelectList({
           </Tooltip>
         ))}
         <ListItem>
-          <ReportButton onPress={onPress}/>
+          <ReportButton onPress={async ()=>{
+            try{
+              await SwearType.reportSelectedSwearTypes()
+              alert("Successfully added violatons")
+            }catch(err){
+              err = `${err}`
+              err = err.replace("Error:","")
+              alert(err)
+            }
+            setSelected([])
+          }}/>
         </ListItem>
         <br></br>
         <Divider/>
