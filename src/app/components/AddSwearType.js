@@ -18,8 +18,8 @@ export default function AddSwearType ({onAdd = () => {}}) {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [level, setLevel] = useState("");
-    const [teamID,setTeamID] = useState("")
-    const [teams,setTeams] = useState([])
+    const [teamID,setTeamID] = useState("");
+    const [teams,setTeams] = useState([]);
 
     useEffect(()=>{
         Teams.getTeams().then((teams)=>{
