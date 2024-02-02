@@ -17,7 +17,7 @@ export default function CreateNewTeam ({onAdd = () => {}}) {
             alert ("Please enter a name for the new team.");
             return;
         }
-        // Create a new swear type object
+        // Create a new team
         const newTeam = await Teams.createTeam(teamName);
         onAdd(newTeam);
         // Clear the input fields
