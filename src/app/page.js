@@ -19,6 +19,7 @@ const USER_LIST_COMPONENT = 'userLiist';
 const VIOLATION_LIST_COMPONENT = 'userViolations';
 const HOMEPAGE_LEADERBOARD = 'leaderboard';
 const USER_DETAILS_COMPONENT = 'userDetails';
+const TEAMS_MANAGEMENT = 'teams';
 
 export default function Home() {
    const [switcher,setSwitcher]  = useState(HOMEPAGE_LEADERBOARD )
@@ -80,7 +81,7 @@ export default function Home() {
       {switcher === HOMEPAGE_LEADERBOARD? 
       <Grid container spacing={2}>
         <Grid item xs={12} md={6} lg={8} sx={{ position: 'relative', alignSelf: 'flex-start', justifyContent: 'flex-end', alignItems: 'flex-start' }}>
-          <HomepageLeaderBoard data={HomepageLeaderBoardData} onPress={()=>setSwitcher(USER_DETAILS_COMPONENT)}/>
+          <HomepageLeaderBoard data={HomepageLeaderBoardData} onNavigateToTeams={()=>setSwitcher(TEAMS_MANAGEMENT)} onPress={()=>setSwitcher(USER_DETAILS_COMPONENT)}/>
         </Grid>
       </Grid>:<></>}</>:<Welcome/>}
 
