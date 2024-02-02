@@ -13,14 +13,16 @@ import { SignedInUser } from "./model/SignedInUser";
 import { User } from "./model/User";
 import Welcome from "./components/Welcome";
 import UserDetails from './components/UserDetails';
+import TeamViewer from "./components/TeamViewer";
 
 const USER_LIST_COMPONENT = 'userLiist';
 const VIOLATION_LIST_COMPONENT = 'userViolations';
 const HOMEPAGE_LEADERBOARD = 'leaderboard';
 const USER_DETAILS_COMPONENT = 'userDetails';
+const TEAM_VIEWER_COMPONENT = 'teamViewer';
 
 export default function Home() {
-   const [switcher,setSwitcher]  = useState(VIOLATION_LIST_COMPONENT)
+   const [switcher,setSwitcher]  = useState(TEAM_VIEWER_COMPONENT)
    const [user,setUser] = useState()
   const HomepageLeaderBoardData = [
     { // Dummy user details
@@ -65,6 +67,7 @@ export default function Home() {
   return (
    <>
     {user?<>
+      {switcher === TEAM_VIEWER_COMPONENT?<TeamViewer/>:<></>}
       {switcher === USER_LIST_COMPONENT?<UsersList onPress={()=>{setSwitcher(VIOLATION_LIST_COMPONENT)}}/>:<></>}
       {switcher === VIOLATION_LIST_COMPONENT?<ViolationSelectList onPress={()=>{setSwitcher(HOMEPAGE_LEADERBOARD)}}/>:<></>}
       {switcher ===  USER_DETAILS_COMPONENT  ?<UserDetails user={HomepageLeaderBoardData[0]} onPress={()=>{setSwitcher(HOMEPAGE_LEADERBOARD)}}/>:<></>}
