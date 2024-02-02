@@ -82,8 +82,11 @@ export class Teams{
        let participatingTeams = await FirebaseDatabase.readDataFromDB({
             queryPath:`${PARTICIPATING_TEAM}/${SignedInUser.user.userID}`,
         })
-        participatingTeams = Object.values(participatingTeams)
-        if(participatingTeams)result.push(...participatingTeams)
+        
+        if(participatingTeams){
+            participatingTeams = Object.values(participatingTeams)
+            result.push(...participatingTeams)
+        }
 
         let ownTeams = await FirebaseDatabase.readDataFromDByEquality({
             equalValue:`${SignedInUser.user.userID}`,
