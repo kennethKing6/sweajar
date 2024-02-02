@@ -11,6 +11,7 @@ import {
   Grid,
 } from "@mui/material";
 import { Teams } from "../model/Teams";
+import CreateNewTeam from "./CreateNewTeam";
 
 // TODO: create a team
 // TODO: add team member
@@ -61,6 +62,7 @@ export default function TeamViewer() {
                         ))}
                     </List>
                     <Divider color='white'/>
+                    <CreateNewTeam/>
                 </Box>
             </Grid>
         </Grid>
