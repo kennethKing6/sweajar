@@ -19,10 +19,6 @@ export default function TeamViewer() {
     const onToggle = (item) => {
         const index = selected.indexOf(item);
         if (index > -1) {
-            // Remove the item from the array
-            setSelected(selected.filter((i) => i !== item));
-        } else {
-            // Add the item to the array
             setSelected(item);
         }
     };
@@ -54,10 +50,7 @@ export default function TeamViewer() {
                     <List>
                         {items.map( (item) => (
                             <ListItem onClick={() => {
-                                onToggle(item.name)
-                                SwearType.selectReport({
-                                    name:item.name
-                                })
+                                onToggle(item.teamName)
                             }}>
                                 <ListItemIcon>
                                     <Checkbox checked={selected.includes(item.teamName)} />
