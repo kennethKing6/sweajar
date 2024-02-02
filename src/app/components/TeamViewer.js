@@ -6,13 +6,11 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  ListSubheader,
   Checkbox,
   Divider,
   Grid,
 } from "@mui/material";
 import { Teams } from "../model/Teams";
-import AddSwearType from "./AddSwearType";
 
 // TODO: create a team
 // TODO: add team member
@@ -49,7 +47,6 @@ export default function TeamViewer() {
                 }}>
                     <h1>
                     Team Viewer
-                    {/* <SortButton onPress={sortAlphabetically} /> */}
                     </h1>
                     <List>
                         {items.map( (item) => (
