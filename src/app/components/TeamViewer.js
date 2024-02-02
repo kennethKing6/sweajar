@@ -41,7 +41,7 @@ export default function TeamViewer() {
             <Grid item xs={12} md={6} lg={8} sx={{ position: 'relative', alignSelf: 'flex-start', justifyContent: 'flex-end', alignItems: 'flex-start' }}>
                 <Box sx={{ 
                     width: '100%', 
-                    bgcolor: 'black', 
+                    bgcolor: 'gray', 
                     color: 'white', 
                     padding: 2,
                     border: '2px solid yellow'
@@ -62,6 +62,7 @@ export default function TeamViewer() {
                         ))}
                     </List>
                     <Divider color='white'/>
+                    <br/>
                     <CreateNewTeam/>
                 </Box>
             </Grid>
