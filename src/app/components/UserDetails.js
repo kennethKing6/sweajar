@@ -15,7 +15,16 @@ export default function UserDetails({
         <div onClick={onPress}>
             <h2>User Details</h2>
             <div>
-                <img src={profilePicture} alt={`${firstName} ${lastName}`} />
+                <img 
+                    src={profilePicture} 
+                    alt={`${firstName} ${lastName}`} 
+                    style={{
+                        maxWidth: '20%',
+                        maxHeight: 'auto',
+                        borderRadius: '50%',
+                        padding: 2
+                    }}
+                />
             </div>
             <div>
                 <p>Name: {firstName} {lastName}</p>

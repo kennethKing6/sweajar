@@ -40,9 +40,9 @@ export default function HomepageLeaderBoard({
           }}>
           <>
             <h1>
-              User Violation Details{' '}
-              <SortButton onPress={sortAlphabetically} />
+              Homepage Leaderboard{' '}
             </h1>
+            <SortButton onPress={sortAlphabetically} />
             <nav aria-label="main reported folder">
               <List>
                 {sortedData.map((person, index) => (
