@@ -64,6 +64,8 @@ export default function TeamViewer() {
                     <Divider color='white'/>
                     <br/>
                     <CreateNewTeam/>
+                    <Divider color='white'/>
+                    <br/>
                 </Box>
             </Grid>
         </Grid>
