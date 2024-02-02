@@ -15,29 +15,43 @@ import {
 } from "@mui/material";
 import { Teams } from "../model/Teams";
 import CreateNewTeam from "./CreateNewTeam";
+import { User } from "../model/User";
+import { SignedInUser } from "../model/SignedInUser";
 
 // TODO: create a team
 // TODO: add team member
 
 export default function TeamViewer({onAdd = () => {}}) {
-    const [selected, setSelected] = useState([]);
+    const [selected, setSelected] = useState();
     const [items, setItems] = useState([]);
     const [teamMemberEmail, setTeamMemberEmail] = useState("");
-    const onToggle = (item) => {
-        const index = selected.indexOf(item);
-        if (index > -1) {
-            setSelected(item);
+    const onToggle = async (item) => {
+        if( selected && selected.teamName === item.teamName)setSelected(null)
+        else{
+            setSelected(item)
+            await User.updateCurrentTeam(item.teamID)
         }
+        
     };
 
-    const onAddTeamMember = async () => {
+    useEffect(()=>{
+        const teamID = SignedInUser.user.teamID
+        if(teamID){
+            Teams.getTeam(teamID).then((defaultTeam)=>{
+                setSelected(defaultTeam)
+            }).catch()
+
+        }
+    },[])
+
+    const onAddTeamMember = async (teamMemberEmail,teamID) => {
         // Validate the input fields
         if (!teamMemberEmail) {
             alert ("Please enter an email for the new team member.");
             return;
         }
         // Add a new team member
-        const newTeamMember = await Teams.addTeamMember(teamMemberEmail, selected.teamID);
+        const newTeamMember = await Teams.addTeamMember(teamMemberEmail, teamID);
         onAdd(newTeamMember);
         // Clear the input fields
         setTeamMemberEmail("");
@@ -47,7 +61,6 @@ export default function TeamViewer({onAdd = () => {}}) {
         // Fetch the list items from the database
         const fetchItems = async () => {
             const teams = await Teams.getTeams();
-            alert(JSON.stringify(teams))
             setItems(teams);
         };
         fetchItems().then().catch()
@@ -68,11 +81,11 @@ export default function TeamViewer({onAdd = () => {}}) {
                     </h1>
                     <List>
                         {items.map( (item) => (
-                            <ListItem onClick={() => {
-                                onToggle(item.teamName)
+                            <ListItem  key={JSON.stringify(item)} onClick={async () => {
+                                await onToggle(item)
                             }}>
                                 <ListItemIcon>
-                                    <Checkbox checked={selected.includes(item.teamName)} />
+                                    <Checkbox checked={selected?selected.teamName === item.teamName:null} />
                                 </ListItemIcon>
                                 <ListItemText primary={item.teamName} sx={{color:'black'}}/>
                             </ListItem>
@@ -96,7 +109,11 @@ export default function TeamViewer({onAdd = () => {}}) {
                             />
                         </ListItem>
                         <ListItem>
-                            <Button variant="contained" color="primary" onClick={onAddTeamMember}>
+                            <Button variant="contained" color="primary" onClick={async ()=>{
+                                if(!selected) alert("Please select a team to report to")
+                                await onAddTeamMember(teamMemberEmail,selected.teamID)
+                                alert("Team member was successfully added")
+                            }}>
                                 Add
                             </Button>
                         </ListItem>

@@ -38,7 +38,7 @@ export default function CreateNewTeam ({onAdd = () => {}}) {
                 />
             </ListItem>
             <ListItem>
-                <Button variant="contained" color="primary" onClick={onSubmit}>
+                <Button variant="contained" color="primary" onClick={async ()=> await onSubmit()}>
                     Create
                 </Button>
             </ListItem>

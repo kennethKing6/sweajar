@@ -83,7 +83,7 @@ export default function Home() {
       {switcher === HOMEPAGE_LEADERBOARD? 
       <Grid container spacing={2}>
         <Grid item xs={12} md={6} lg={8} sx={{ position: 'relative', alignSelf: 'flex-start', justifyContent: 'flex-end', alignItems: 'flex-start' }}>
-          <HomepageLeaderBoard data={HomepageLeaderBoardData} onNavigateToTeams={()=>setSwitcher(TEAMS_MANAGEMENT)} onPress={()=>setSwitcher(USER_DETAILS_COMPONENT)}/>
+          <HomepageLeaderBoard data={HomepageLeaderBoardData} onNavigateToTeams={()=>setSwitcher(TEAM_VIEWER_COMPONENT)} onPress={()=>setSwitcher(USER_DETAILS_COMPONENT)}/>
         </Grid>
       </Grid>:<></>}</>:<Welcome/>}
 

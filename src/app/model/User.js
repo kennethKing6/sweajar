@@ -96,15 +96,18 @@ export class User {
     static async signOut(){
         await FirebaseAuth.signOutUser()
         SignedInUser.user = null;
+        AppState.selectedProfile = null
     }
 
     static async updateCurrentTeam(teamID){
         if(!SignedInUser.user) await FirebaseAuth.signOutUser()
 
-        await FirebaseDatabase.updateDataOnDB({
-            newData:teamID,
+        await FirebaseDatabase.writeDataToDB({
+            data:teamID,
             queryPath:`/users/${SignedInUser.user.userID}/teamID`
         })
+        SignedInUser.user.teamID = teamID
+        AppState.selectedProfile = SignedInUser.user
     }
 
     static async getUsersByteamID(userID,teamID){
@@ -144,11 +147,17 @@ export class User {
     }
 
     static async getUserByEmail(email){
-        return await FirebaseDatabase.readDataFromDByEquality({
+        const data =  await FirebaseDatabase.readDataFromDByEquality({
              equalValue:email,
              queryKey:'email',
              queryPath:'/users'
         })
+        let result;
+        for(let key in data){
+            result = data[key]
+            if(!result)break
+        }
+        return result
     }
 
     static listenForUserState(callback){
@@ -159,6 +168,7 @@ export class User {
                   })
                 if(result){
                     SignedInUser.user = new User(result)
+                    AppState.selectedProfile = SignedInUser.user
                     callback(user)
                 }else{
                     callback(null)

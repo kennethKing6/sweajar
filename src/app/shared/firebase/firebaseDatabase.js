@@ -1,4 +1,4 @@
-import {child, equalTo, get, getDatabase, orderByChild, push,query, ref, remove, set, update} from 'firebase/database'
+import {child, equalTo, get, getDatabase, orderByChild, orderByValue, push,query, ref, remove, set, update} from 'firebase/database'
 import { FirebaseConfigs } from './FirebaseConfig'
 import firebase from 'firebase/database'
 
@@ -28,6 +28,22 @@ export class FirebaseDatabase{
      static async readDataFromDByEquality(userQuery){
       const reference = ref(db,userQuery.queryPath)
       const equalityQuery = query(reference,orderByChild(userQuery.queryKey),equalTo(userQuery.equalValue))
+
+      const snapshot = await get(equalityQuery )
+
+      return snapshot.val()
+   }
+
+    /**
+     * Read data from the database by checking equality
+     * @param {object} userQuery 
+     * @param {string} userQuery.queryPath
+     * @param {string} userQuery.equalValue
+     * @param {any} data
+     */
+   static async readFromDataByQueryValue(userQuery){
+    const reference = ref(db,userQuery.queryPath)
+      const equalityQuery = query(reference,orderByValue(userQuery.queryValue))
 
       const snapshot = await get(equalityQuery )
 

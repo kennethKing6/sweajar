@@ -1,21 +1,26 @@
 import { FirebaseDatabase } from "../shared/firebase/firebaseDatabase";
 import { SignedInUser } from "./SignedInUser";
+import { User } from "./User";
 
-
+ //123456789
+ // mail@gmail.com
+ //password
+ //mzafri@gmail.com
 const TEAMS_PATH ="/teams";
+const PARTICIPATING_TEAM = "/participating"
 
 export class Teams{
 
 
     static async createTeam(teamName){
         if(!SignedInUser.user.userID)throw new Error("Unauthorized")
-        const teamID =  FirebaseDatabase.generateUniqueKey()
+        const teamID =  await FirebaseDatabase.generateUniqueKey(TEAMS_PATH)
         await FirebaseDatabase.writeDataToDB({
             queryPath:`/${TEAMS_PATH}/${teamID}`,
             data:{
                 admin:SignedInUser.user.userID,
                 teamName:teamName,
-                teamMembers:{},
+                teamMembers:"",
                 teamID:teamID
             }
         })
@@ -38,15 +43,16 @@ export class Teams{
         
         const team = await this.getTeam(teamID)
         if(!team) throw new Error("Unauthorized")
-        if(!team.admin !== SignedInUser.user.userID)throw new Error("Unauthorized")
+        if(team.admin !== SignedInUser.user.userID){
+            alert("Only team admin can a new teammate")
+            throw new Error("Unauthorized")
+        }
+        const user = await User.getUserByEmail(email)
 
-        const data = team.teamMembers
-        data[`${email}`] = email;
-        await FirebaseDatabase.updateDataOnDB({
-            newData:data,
-            queryPath:`/${TEAMS_PATH}/${teamID}/teamMembers`
+        await FirebaseDatabase.writeDataToDB({
+            data:team,
+            queryPath:`/${PARTICIPATING_TEAM}/${user.userID}/${team.teamID}`
         })
-       
     }
 
 
@@ -73,20 +79,20 @@ export class Teams{
      */
     static async getTeams(){
         const result = []
-       const participatingTeams = await FirebaseDatabase.readDataFromDByEquality({
-            queryPath:`/${TEAMS_PATH}`,
-            equalValue:`${SignedInUser.user.email}`,
-            queryKey:`${SignedInUser.user.email}`
+       let participatingTeams = await FirebaseDatabase.readDataFromDB({
+            queryPath:`${PARTICIPATING_TEAM}/${SignedInUser.user.userID}`,
         })
-        if(participatingTeams)result.push([...participatingTeams])
+        participatingTeams = Object.values(participatingTeams)
+        if(participatingTeams)result.push(...participatingTeams)
 
-        const ownTeams = await FirebaseDatabase.readDataFromDByEquality({
-            queryPath:`/${TEAMS_PATH}`,
-            equalValue:'admin',
-            queryKey:`${SignedInUser.user.email}`
+        let ownTeams = await FirebaseDatabase.readDataFromDByEquality({
+            equalValue:`${SignedInUser.user.userID}`,
+            queryKey:'admin',
+            queryPath:`${TEAMS_PATH}`
         })
-        if(ownTeams)result.push([...ownTeams])
+        if(ownTeams)ownTeams = Object.values(ownTeams)
 
+        if(ownTeams)result.push(...ownTeams)
 
         return result
     }
