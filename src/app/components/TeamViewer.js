@@ -63,6 +63,7 @@ export default function TeamViewer() {
                             </ListItem>
                         ))}
                     </List>
+                    <Divider color='white'/>
                 </Box>
             </Grid>
         </Grid>
