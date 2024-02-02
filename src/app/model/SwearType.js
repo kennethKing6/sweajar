@@ -107,7 +107,7 @@ export class SwearType{
                 data:type
             }))
             }
-            if(promises)await Promise.all(promises)
+            try{if(promises)await Promise.all(promises)}catch(err){}
 
             this.teamToReportID = null;
             this.tempSelectedReports = {};
@@ -133,8 +133,6 @@ export class SwearType{
         }else{
             delete this.tempSelectedReports[query.name]
         }
-
-        console.log(this.tempSelectedReports)
         
     }
 
@@ -158,5 +156,9 @@ export class SwearType{
             queryPath:SWEAR_TYPE_PATH,
         })
         return result?Object.values(result):[]
+    }
+
+    static hasSwearTypes(){
+        return Object.values(this.tempSelectedReports).length > 0
     }
 }

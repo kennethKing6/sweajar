@@ -20,7 +20,7 @@ const HOMEPAGE_LEADERBOARD = 'leaderboard';
 const USER_DETAILS_COMPONENT = 'userDetails';
 
 export default function Home() {
-   const [switcher,setSwitcher]  = useState(VIOLATION_LIST_COMPONENT)
+   const [switcher,setSwitcher]  = useState(HOMEPAGE_LEADERBOARD )
    const [user,setUser] = useState()
   const HomepageLeaderBoardData = [
     { // Dummy user details
@@ -66,7 +66,7 @@ export default function Home() {
    <>
     {user?<>
       {switcher === USER_LIST_COMPONENT?<UsersList onPress={()=>{setSwitcher(VIOLATION_LIST_COMPONENT)}}/>:<></>}
-      {switcher === VIOLATION_LIST_COMPONENT?<ViolationSelectList onPress={()=>{setSwitcher(HOMEPAGE_LEADERBOARD)}}/>:<></>}
+      {switcher === VIOLATION_LIST_COMPONENT?<ViolationSelectList onNavigateToUserToReport={()=>setSwitcher(USER_LIST_COMPONENT)} onPress={()=>{setSwitcher(HOMEPAGE_LEADERBOARD)}}/>:<></>}
       {switcher ===  USER_DETAILS_COMPONENT  ?<UserDetails user={HomepageLeaderBoardData[0]} onPress={()=>{setSwitcher(HOMEPAGE_LEADERBOARD)}}/>:<></>}
       {switcher === HOMEPAGE_LEADERBOARD? 
       <Grid container spacing={2}>

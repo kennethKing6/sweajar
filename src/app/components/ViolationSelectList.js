@@ -15,9 +15,11 @@ import { SwearType } from "../model/SwearType";
 import { SignedInUser } from "../model/SignedInUser";
 import ReportButton from "./ReportButton";
 import AddSwearType from "./AddSwearType";
+import Button from "./Button";
 
 export default function ViolationSelectList({
-  onPress = ()=>{}
+  onPress = ()=>{},
+  onNavigateToUserToReport = ()=>{}
 }) {
   const [selected, setSelected] = useState([]);
   const [items, setItems] = useState([]);
@@ -127,21 +129,21 @@ export default function ViolationSelectList({
           </Tooltip>
         ))}
         <ListItem>
-          <ReportButton onPress={async ()=>{
-            try{
-              await SwearType.reportSelectedSwearTypes()
-              alert("Successfully added violatons")
-            }catch(err){
-              err = `${err}`
-              err = err.replace("Error:","")
-              alert(err)
-            }
-            setSelected([])
-          }}/>
+            <Button text="Next" onPress={()=>{
+              if(!SwearType.hasSwearTypes()){
+                alert("Please select a violation");
+                return
+              }
+              if(!SignedInUser.user.teamID){
+                alert("Please select a team")
+                return
+              }
+              onNavigateToUserToReport()
+            }}/>
         </ListItem>
         <br></br>
         <Divider/>
-        <AddSwearType/>
+        <AddSwearType />
       </List>
     </Box>
   );

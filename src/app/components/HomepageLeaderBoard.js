@@ -1,20 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import { Avatar } from '@mui/material';
+import { Avatar, Stack, Typography } from '@mui/material';
 import SortButton from './SortButton';
 import UserDetails from './UserDetails';
+import { User } from '../model/User';
+import { SignedInUser } from '../model/SignedInUser';
 
 export default function HomepageLeaderBoard({
   data,
   onExit = () => {},
   onPress = () => {},
+  onNavigateToTeams = ()=>{},
 }) {
-  const [sortedData, setSortedData] = useState([...data]);
+  const [sortedData, setSortedData] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
+
+
+  useEffect(()=>{
+    User.getUsersByteamID(
+      SignedInUser.user.userID,
+      SignedInUser.user.teamID
+      ).then((teams)=>setSortedData(teams)).catch()
+  },[])
 
   const sortAlphabetically = () => {
     const sorted = [...sortedData].sort((a, b) =>
@@ -30,7 +41,7 @@ export default function HomepageLeaderBoard({
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12} md={8} lg={6} alignSelf="flex-start">
+      {sortedData.length > 0?  <Grid item xs={12} md={8} lg={6} alignSelf="flex-start">
         <Box sx={{ 
           width: '100%', 
           bgcolor: 'black', 
@@ -77,8 +88,8 @@ export default function HomepageLeaderBoard({
             </nav>
           </>
         </Box>
-      </Grid>
-      
+      </Grid>:<Stack justifyContent="center" alignItems="center" sx={{ height: '100vh' }} onClick={onNavigateToTeams} ><Typography variant="h4" pl={4}>Add Teams here + </Typography>
+    </Stack>}  
     </Grid>
   );
 }

@@ -3,6 +3,8 @@ import { Grid,Avatar, Typography,Divider, Button } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { User } from '../model/User';
 import { SignedInUser } from '../model/SignedInUser';
+import ReportButton from './ReportButton';
+import { SwearType } from '../model/SwearType';
 
 export default function UsersList({
     onPress = ()=>{}, 
@@ -48,6 +50,16 @@ export default function UsersList({
                 </Grid>
             )
         })}
+        <ReportButton onPress={async ()=>{
+            try{
+              await SwearType.reportSelectedSwearTypes()
+              alert("Successfully added violatons")
+            }catch(err){
+              err = `${err}`
+              err = err.replace("Error:","")
+              alert(err)
+            }
+          }}/>
     </Grid>
   )
 }
