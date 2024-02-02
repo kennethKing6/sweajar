@@ -16,14 +16,28 @@ import CreateNewTeam from "./CreateNewTeam";
 // TODO: create a team
 // TODO: add team member
 
-export default function TeamViewer() {
+export default function TeamViewer({onAdd = () => {}}) {
     const [selected, setSelected] = useState([]);
     const [items, setItems] = useState([]);
+    const [teamMemberEmail, setTeamMemberEmail] = useState("");
     const onToggle = (item) => {
         const index = selected.indexOf(item);
         if (index > -1) {
             setSelected(item);
         }
+    };
+
+    const onAddTeamMember = async () => {
+        // Validate the input fields
+        if (!teamMemberEmail) {
+            alert ("Please enter an email for the new team member.");
+            return;
+        }
+        // Add a new team member
+        const newTeamMember = await Teams.addTeamMember(teamMemberEmail, selected);
+        onAdd(newTeamMember);
+        // Clear the input fields
+        setTeamMemberEmail("");
     };
 
     useEffect(() => {
@@ -66,6 +80,24 @@ export default function TeamViewer() {
                     <CreateNewTeam/>
                     <Divider color='white'/>
                     <br/>
+                    <List subheader={
+                        <ListSubheader component="div" id="newTeamMember-list-subheader" sx={{color: "white", bgcolor: "gray"}}>
+                            Add Team Member
+                        </ListSubheader>
+                    }>
+                        <ListItem>
+                            <TextField
+                                label="Team Member Email"
+                                value={teamMemberEmail}
+                                onChange={ (e) => setTeamMemberEmail(e.target.value)}
+                            />
+                        </ListItem>
+                        <ListItem>
+                            <Button variant="contained" color="primary" onClick={onAddTeamMember}>
+                                Add
+                            </Button>
+                        </ListItem>
+                    </List>
                 </Box>
             </Grid>
         </Grid>
