@@ -37,7 +37,7 @@ export default function TeamViewer({onAdd = () => {}}) {
             return;
         }
         // Add a new team member
-        const newTeamMember = await Teams.addTeamMember(teamMemberEmail, selected);
+        const newTeamMember = await Teams.addTeamMember(teamMemberEmail, selected.teamID);
         onAdd(newTeamMember);
         // Clear the input fields
         setTeamMemberEmail("");
