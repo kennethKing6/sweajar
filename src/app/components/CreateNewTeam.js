@@ -26,7 +26,7 @@ export default function CreateNewTeam ({onAdd = () => {}}) {
 
     return (
         <List subheader={
-            <ListSubheader component="div" id="newTeam-list-subheader">
+            <ListSubheader component="div" id="newTeam-list-subheader" sx={{color: "white", bgcolor: "gray"}}>
                 Create a New Team
             </ListSubheader>
         }>
