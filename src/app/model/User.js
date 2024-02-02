@@ -1,5 +1,6 @@
 import { FirebaseAuth } from "../shared/firebase/firebaseAuth";
 import { FirebaseDatabase } from "../shared/firebase/firebaseDatabase";
+import { AppState } from "./AppState";
 import { SignedInUser } from "./SignedInUser";
 
 export class User {
@@ -89,7 +90,7 @@ export class User {
       })
 
       SignedInUser.user = new User(result)
-
+      AppState.selectedProfile = SignedInUser.user
     }
 
     static async signOut(){

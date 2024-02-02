@@ -1,4 +1,5 @@
 import React from 'react';
+import { AppState } from '../model/AppState';
 
 export default function UserDetails({
     user,
@@ -10,13 +11,12 @@ export default function UserDetails({
     }
 
     const { firstName, lastName, username, profilePicture, violationType, countPerViolation } = user;
-
     return (
         <div onClick={onPress}>
             <h2>User Details</h2>
             <div>
                 <img 
-                    src={profilePicture} 
+                    src={AppState.selectedProfile.profilePicture} 
                     alt={`${firstName} ${lastName}`} 
                     style={{
                         maxWidth: '20%',
@@ -27,8 +27,9 @@ export default function UserDetails({
                 />
             </div>
             <div>
-                <p>Name: {firstName} {lastName}</p>
-                <p>Username: {username}</p>
+                <p>Name: {AppState.selectedProfile.firstName} {AppState.selectedProfile.lastName}</p>
+                
+                {/* <p>Username: {username}</p> */}
                 <p>Violation Type: {violationType}</p>
                 <p>Count per Violation: {countPerViolation}</p>
             </div>
