@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
     List,
     ListItem,
@@ -12,11 +12,20 @@ import {
     Select,
 } from "@mui/material";
 import { SwearType } from "../model/SwearType";
+import { Teams } from "../model/Teams";
 
 export default function AddSwearType ({onAdd = () => {}}) {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [level, setLevel] = useState("");
+    const [teamID,setTeamID] = useState("")
+    const [teams,setTeams] = useState([])
+
+    useEffect(()=>{
+        Teams.getTeams().then((teams)=>{
+            setTeams(teams)
+        }).catch()
+    },[])
 
     const onSubmit = async () => {
         // Validate the input fields
@@ -25,13 +34,14 @@ export default function AddSwearType ({onAdd = () => {}}) {
             return;
         }
         // Create a new swear type object
-        const query = {name, description, level};
+        const query = {name, description, level,teamID};
         const newSwearType = await SwearType.createNewSwearType(query);
         onAdd(newSwearType);
         // Clear the input fields
         setName("");
         setDescription("");
         setLevel("");
+        setTeamID("")
     };
 
     return (

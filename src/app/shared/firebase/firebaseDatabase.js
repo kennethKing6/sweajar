@@ -77,4 +77,13 @@ export class FirebaseDatabase{
         })
       }
 
+      /**
+       * 
+       * @param {string} path 
+       * @returns {string}
+       */
+      static generateUniqueKey(path){
+        return  push(child(ref(db),path)).key
+      }
+
 }

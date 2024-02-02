@@ -1,11 +1,9 @@
 import { FirebaseDatabase } from "../shared/firebase/firebaseDatabase";
+import { SignedInUser } from "./SignedInUser";
 
 const SWEAR_TYPE_PATH = '/swearType';
 
 export class SwearType{
-
-    /**@type {string} */
-    typeID = "";
 
      /**@type {string} */
      name = "";
@@ -19,44 +17,133 @@ export class SwearType{
      /**@type {string} */
      teamID = "";
 
+     /**
+      * @private
+      * @type {{}}
+      */
+     static tempSelectedReports = {}
+
+     /**
+      * @private
+      * @type {string}
+      */
+     static userToReportID
+
+     /**
+      * @private
+      * @type {string}
+      */
+     static teamToReportID;
+
 
      /**
       * 
       * @param {object} swearType 
-      * @param {string} swearType.typeID
       * @param {string} swearType.name
       * @param {string} swearType.description
       * @param {"minor"|"major"|"medium"} swearType.levels
       * @param {string} swearType.teamID
+      * @param {string} swearType.userID
       */
     constructor(swearType){
         this.description= swearType.description || "";
         this.levels = swearType.levels || "minor";
-        this.name = swearType.name || "";
-        this.typeID = swearType.typeID || "";
-        this.teamID = swearType.teamID || ""
+        this.name = swearType.name;
+        this.teamID = swearType.teamID;
+        this.userID = swearType.userID || "";
     }
 
     /**
      * 
      * @param {object} query 
-     * @param {string} query.typeID
      * @param {string} query.name
      * @param {string} query.description
-     * @param {"minor"|"major"|"medium"} query.levels
      * @param {string} query.teamID
+     * @param {"minor"|"major"|"medium"} query.levels
      * @returns {SwearType} 
      */
     static async createNewSwearType(query){
-        const type = new SwearType(query)
-        const keyValueSwearType = {}
-        keyValueSwearType[type.name] = type
+        if(!query.name)throw new Error("Please provide a name for your team")
 
+        if(!query.teamID)throw new Error("Please select a team to report to")
+
+        const type = new SwearType({
+            description:query.description,
+            levels:query.levels,
+            name:query.name,
+            teamID: query.teamID,
+
+        })
+       
         await FirebaseDatabase.writeDataToDB({
             queryPath:SWEAR_TYPE_PATH,
-            data:keyValueSwearType
+            data:type
         })
         return type
+    }
+
+
+    static async reportSelectedSwearTypes(){
+
+
+            if(!this.teamToReportID)throw new Error("Please select a team to report to")
+    
+            if(!this.userToReportID)throw new Error("Please select someone to report")
+    
+            const promises = [];
+    
+            for(let key in this.tempSelectedReports){
+                const currentSwearType = this.tempSelectedReports[key]
+                const type = new SwearType({
+                    description:currentSwearType.description,
+                    levels:currentSwearType.level,
+                    name:currentSwearType.name,
+                    teamID: this.teamToReportID,
+                    userID:this.userToReportID
+        
+                })
+               promises.push( FirebaseDatabase.writeDataToDB({
+                queryPath:SWEAR_TYPE_PATH,
+                data:type
+            }))
+            }
+            if(promises)await Promise.all(promises)
+
+            this.teamToReportID = null;
+            this.tempSelectedReports = {};
+            this.userToReportID = null
+        }
+    
+
+     /**
+     * 
+     * @param {object} query 
+     * @param {string} query.name
+     * @param {string} query.description
+     * @param {"minor"|"major"|"medium"} query.levels
+     * @returns {SwearType} 
+     */
+    static selectReport(query){
+        if(!this.tempSelectedReports[query.name]){
+            this.tempSelectedReports[query.name] = {
+                name:query.name,
+                description:query.description,
+                levels:query.levels
+            }
+        }else{
+            delete this.tempSelectedReports[query.name]
+        }
+
+        console.log(this.tempSelectedReports)
+        
+    }
+
+    static selectuserToReportID(userID){
+        this.userToReportID = userID
+    }
+
+    static selectteamToReportID(teamID){
+        this.teamToReportID = teamID
     }
 
     /**
@@ -70,7 +157,6 @@ export class SwearType{
             queryKey:"teamID",
             queryPath:SWEAR_TYPE_PATH,
         })
-        console.log(result)
         return result?Object.values(result):[]
     }
 }

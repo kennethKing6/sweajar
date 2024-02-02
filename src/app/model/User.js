@@ -142,6 +142,14 @@ export class User {
         })
     }
 
+    static async getUserByEmail(email){
+        return await FirebaseDatabase.readDataFromDByEquality({
+             equalValue:email,
+             queryKey:'email',
+             queryPath:'/users'
+        })
+    }
+
     static listenForUserState(callback){
         FirebaseAuth.listenForUserAuthState(async (user)=>{
             if(user){
