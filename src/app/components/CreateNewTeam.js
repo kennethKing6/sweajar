@@ -26,7 +26,7 @@ export default function CreateNewTeam ({onAdd = () => {}}) {
 
     return (
         <List subheader={
-            <ListSubheader component="div" id="newTeam-list-subheader" sx={{color: "white", bgcolor: "gray"}}>
+            <ListSubheader component="div" id="newTeam-list-subheader" sx={{color: "white", bgcolor: "black"}}>
                 Create a New Team
             </ListSubheader>
         }>
@@ -35,10 +35,24 @@ export default function CreateNewTeam ({onAdd = () => {}}) {
                     label="Team Name"
                     value={teamName}
                     onChange={ (e) => setTeamName(e.target.value)}
+                    sx={{
+                        input: { color: 'white' },
+                        label: { color: 'white' },
+                        "& .MuiOutlinedInput-notchedOutline": { borderColor: 'white' },}}
                 />
             </ListItem>
             <ListItem>
-                <Button variant="contained" color="primary" onClick={async ()=> await onSubmit()}>
+                <Button
+                    variant="contained"
+                    onClick={async ()=> await onSubmit()}
+                    sx={{ 
+                        backgroundColor: '#FFEB3B', 
+                        color: 'black', 
+                        '&:hover':{
+                            backgroundColor: '#FFC107',
+                        }
+                    }}
+                >
                     Create
                 </Button>
             </ListItem>
