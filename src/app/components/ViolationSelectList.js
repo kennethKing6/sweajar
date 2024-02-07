@@ -54,12 +54,12 @@ export default function ViolationSelectList({
   }
 
   return (
-    <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+    <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'black', color: 'white', padding: 2, border: '2px solid yellow'}}>
       <List subheader={
-        <ListSubheader component="div" id="list-subheader">
+        <ListSubheader component="div" id="list-subheader" sx={{color: "white", bgcolor: "black"}}>
           Select the Violation
         </ListSubheader>
-      } >
+      }>
         <Tooltip title="Choose this option if the user used inappropriate language" placement="right">
           <ListItem onClick={() => {
             onToggle("Profanity")
@@ -69,9 +69,9 @@ export default function ViolationSelectList({
             })
           }}>
             <ListItemIcon>
-              <Checkbox checked={selected.includes("Profanity")} />
+              <Checkbox checked={selected.includes("Profanity")} sx={{color:'white'}}/>
             </ListItemIcon>
-            <ListItemText sx={{color:'black'}}>
+            <ListItemText sx={{color:'white'}}>
               Profanity
             </ListItemText>
           </ListItem>
@@ -86,9 +86,9 @@ export default function ViolationSelectList({
             })
             }}>
             <ListItemIcon>
-              <Checkbox checked={selected.includes("Muted Microphone")} />
+              <Checkbox checked={selected.includes("Muted Microphone")} sx={{color:'white'}}/>
             </ListItemIcon>
-            <ListItemText sx={{color:'black'}}>
+            <ListItemText sx={{color:'white'}}>
               Muted Microphone
             </ListItemText>
           </ListItem>
@@ -103,9 +103,9 @@ export default function ViolationSelectList({
             })
             }}>
             <ListItemIcon>
-              <Checkbox checked={selected.includes("Late Arrival")} />
+              <Checkbox checked={selected.includes("Late Arrival")} sx={{color:'white'}}/>
             </ListItemIcon>
-            <ListItemText sx={{color:'black'}}>
+            <ListItemText sx={{color:'white'}}>
               Late Arrival
             </ListItemText>
           </ListItem>
@@ -122,27 +122,37 @@ export default function ViolationSelectList({
               })
             }}>
               <ListItemIcon>
-                <Checkbox checked={selected.includes(item.name)} />
+                <Checkbox checked={selected.includes(item.name)} sx={{color:'white'}}/>
               </ListItemIcon>
-              <ListItemText primary={item.name} sx={{color:'black'}}/>
+              <ListItemText primary={item.name} sx={{color:'white'}}/>
             </ListItem>
           </Tooltip>
         ))}
         <ListItem>
-            <Button text="Next" onPress={()=>{
-              if(!SwearType.hasSwearTypes()){
-                alert("Please select a violation");
-                return
-              }
-              if(!SignedInUser.user.teamID){
-                alert("Please select a team")
-                return
-              }
-              onNavigateToUserToReport()
-            }}/>
+            <Button text="Next"
+              onPress={()=>{
+                if(!SwearType.hasSwearTypes()){
+                  alert("Please select a violation");
+                  return
+                }
+                if(!SignedInUser.user.teamID){
+                  alert("Please select a team")
+                  return
+                }
+                onNavigateToUserToReport()
+              }}
+              sx={{ 
+                backgroundColor: '#FFEB3B', 
+                color: 'black', 
+                '&:hover':{
+                    backgroundColor: '#FFC107',
+                }
+              }}
+            />
         </ListItem>
         <br></br>
-        <Divider/>
+        <Divider color='white'/>
+        <br></br>
         <AddSwearType />
       </List>
     </Box>

@@ -38,7 +38,8 @@ export default function CreateNewTeam ({onAdd = () => {}}) {
                     sx={{
                         input: { color: 'white' },
                         label: { color: 'white' },
-                        "& .MuiOutlinedInput-notchedOutline": { borderColor: 'white' },}}
+                        "& .MuiOutlinedInput-notchedOutline": { borderColor: 'white' },
+                    }}
                 />
             </ListItem>
             <ListItem>

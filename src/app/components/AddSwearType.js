@@ -45,9 +45,9 @@ export default function AddSwearType ({onAdd = () => {}}) {
     };
 
     return (
-        <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper'}}>
+        <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'black'}}>
             <List subheader={
-                <ListSubheader component="div" id="newType-list-subheader">
+                <ListSubheader component="div" id="newType-list-subheader" sx={{color: "white", bgcolor: "black"}}>
                     Add new Swear Type
                 </ListSubheader>
             }>
@@ -56,6 +56,11 @@ export default function AddSwearType ({onAdd = () => {}}) {
                         label="Name"
                         value={name}
                         onChange={ (e) => setName(e.target.value)}
+                        sx={{
+                            input: { color: 'white' },
+                            label: { color: 'white' },
+                            "& .MuiOutlinedInput-notchedOutline": { borderColor: 'white' },
+                        }}
                     />
                 </ListItem>
                 <ListItem>
@@ -63,16 +68,28 @@ export default function AddSwearType ({onAdd = () => {}}) {
                         label="Description"
                         value={description}
                         onChange={ (e) => setDescription(e.target.value)}
+                        sx={{
+                            input: { color: 'white' },
+                            label: { color: 'white' },
+                            "& .MuiOutlinedInput-notchedOutline": { borderColor: 'white' },
+                        }}
                     />
                 </ListItem>
                 <ListItem>
-                    <FormControl fullWidth>
+                    <FormControl fullWidth
+                        sx={{
+                            selected: { color: 'white' },
+                            label: { color: 'white' },
+                            "& .MuiOutlinedInput-notchedOutline": { borderColor: 'white' },
+                        }}
+                    >
                         <InputLabel id="demo-simple-select-label">Select Level</InputLabel>
                         <Select
                             labelId="demo-simple-select-label"
                             value={level}
                             label="Level"
                             onChange={ (e) => setLevel(e.target.value)}
+                            sx={{ color: 'white' }}
                         >
                             <MenuItem value="minor">Minor</MenuItem>
                             <MenuItem value="medium">Medium</MenuItem>
@@ -81,7 +98,17 @@ export default function AddSwearType ({onAdd = () => {}}) {
                     </FormControl>
                 </ListItem>
                 <ListItem>
-                    <Button variant="contained" color="primary" onClick={onSubmit}>
+                    <Button
+                        variant="contained"
+                        onClick={onSubmit}
+                        sx={{ 
+                            backgroundColor: '#FFEB3B', 
+                            color: 'black', 
+                            '&:hover':{
+                                backgroundColor: '#FFC107',
+                            }
+                        }}
+                    >
                         Submit
                     </Button>
                 </ListItem>

@@ -85,7 +85,7 @@ export default function TeamViewer({onAdd = () => {}}) {
                                 await onToggle(item)
                             }}>
                                 <ListItemIcon>
-                                    <Checkbox checked={selected?selected.teamName === item.teamName:null} />
+                                    <Checkbox checked={selected?selected.teamName === item.teamName:null} sx={{color:'white'}}/>
                                 </ListItemIcon>
                                 <ListItemText primary={item.teamName} sx={{color:'white'}}/>
                             </ListItem>
@@ -109,7 +109,8 @@ export default function TeamViewer({onAdd = () => {}}) {
                                 sx={{
                                     input: { color: 'white' },
                                     label: { color: 'white' },
-                                    "& .MuiOutlinedInput-notchedOutline": { borderColor: 'white' },}}
+                                    "& .MuiOutlinedInput-notchedOutline": { borderColor: 'white' },
+                                }}
                             />
                         </ListItem>
                         <ListItem>
