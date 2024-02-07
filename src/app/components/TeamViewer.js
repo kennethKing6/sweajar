@@ -71,7 +71,7 @@ export default function TeamViewer({onAdd = () => {}}) {
             <Grid item xs={12} md={6} lg={8} sx={{ position: 'relative', alignSelf: 'flex-start', justifyContent: 'flex-end', alignItems: 'flex-start' }}>
                 <Box sx={{ 
                     width: '100%', 
-                    bgcolor: 'gray', 
+                    bgcolor: 'black', 
                     color: 'white', 
                     padding: 2,
                     border: '2px solid yellow'
@@ -87,7 +87,7 @@ export default function TeamViewer({onAdd = () => {}}) {
                                 <ListItemIcon>
                                     <Checkbox checked={selected?selected.teamName === item.teamName:null} />
                                 </ListItemIcon>
-                                <ListItemText primary={item.teamName} sx={{color:'black'}}/>
+                                <ListItemText primary={item.teamName} sx={{color:'white'}}/>
                             </ListItem>
                         ))}
                     </List>
@@ -97,7 +97,7 @@ export default function TeamViewer({onAdd = () => {}}) {
                     <Divider color='white'/>
                     <br/>
                     <List subheader={
-                        <ListSubheader component="div" id="newTeamMember-list-subheader" sx={{color: "white", bgcolor: "gray"}}>
+                        <ListSubheader component="div" id="newTeamMember-list-subheader" sx={{color: "white", bgcolor: "black"}}>
                             Add Team Member
                         </ListSubheader>
                     }>
@@ -106,14 +106,28 @@ export default function TeamViewer({onAdd = () => {}}) {
                                 label="Team Member Email"
                                 value={teamMemberEmail}
                                 onChange={ (e) => setTeamMemberEmail(e.target.value)}
+                                sx={{
+                                    input: { color: 'white' },
+                                    label: { color: 'white' },
+                                    "& .MuiOutlinedInput-notchedOutline": { borderColor: 'white' },}}
                             />
                         </ListItem>
                         <ListItem>
-                            <Button variant="contained" color="primary" onClick={async ()=>{
-                                if(!selected) alert("Please select a team to report to")
-                                await onAddTeamMember(teamMemberEmail,selected.teamID)
-                                alert("Team member was successfully added")
-                            }}>
+                            <Button
+                                variant="contained"
+                                onClick={async ()=>{
+                                    if(!selected) alert("Please select a team to report to")
+                                    await onAddTeamMember(teamMemberEmail,selected.teamID)
+                                    alert("Team member was successfully added")
+                                }}
+                                sx={{ 
+                                    backgroundColor: '#FFEB3B', 
+                                    color: 'black', 
+                                    '&:hover':{
+                                        backgroundColor: '#FFC107',
+                                    }
+                                }}
+                            >
                                 Add
                             </Button>
                         </ListItem>
