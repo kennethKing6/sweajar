@@ -13,6 +13,7 @@ import {
   Divider,
   Grid,
   Item,
+  IconButton
 } from "@mui/material";
 import { Teams } from "../model/Teams";
 import CreateNewTeam from "./CreateNewTeam";
@@ -25,13 +26,14 @@ export default function TeamViewer({onAdd = () => {}}) {
     const [selected, setSelected] = useState();
     const [items, setItems] = useState([]);
     const [teamMemberEmail, setTeamMemberEmail] = useState("");
+    const [showAdd, setShowAdd] = useState(false);
+    const [showNewTeam, setShowNewTeam] = useState(false);
     const onToggle = async (item) => {
         if( selected && selected.teamName === item.teamName)setSelected(null)
         else{
             setSelected(item)
             await User.updateCurrentTeam(item.teamID)
         }
-        
     };
 
     useEffect(()=>{
@@ -77,27 +79,12 @@ export default function TeamViewer({onAdd = () => {}}) {
                     padding: 2,
                     border: '2px solid yellow'
                 }}>
-                    {/* <Grid container spacing={2}>
-                        <Grid item xs={6}>
-                            <Item>
-                                <h1>
-                                    Team Viewer
-                                </h1>
-                            </Item>
-                        </Grid>
-                        <Grid item xs={3}>
-                            <Item><AddIcon></AddIcon></Item>
-                        </Grid>
-                        <Grid item xs={3}>
-                            <Item><svg data-testid="GroupAddIcon" sx={{ backgroundColor: 'yellow' }}></svg></Item>
-                        </Grid>
-                    </Grid> */}
                     <Box display={"flex"}>
                         <h1>
                             Team Viewer
                         </h1>
-                        <AddIcon sx={{ backgroundColor: 'yellow', color: 'black' }}/>
-                        <GroupAddIcon sx={{ backgroundColor: 'yellow', color: 'black' }}/>
+                        <IconButton onClick={() => setShowNewTeam(!showNewTeam)}><AddIcon sx={{ backgroundColor: 'yellow', color: 'black' }}/></IconButton>
+                        <IconButton onClick={() => setShowAdd(!showAdd)}><GroupAddIcon sx={{ backgroundColor: 'yellow', color: 'black' }}/></IconButton>
                     </Box>
                     <List>
                         {items.map( (item) => (
@@ -113,46 +100,50 @@ export default function TeamViewer({onAdd = () => {}}) {
                     </List>
                     <Divider color='white'/>
                     <br/>
-                    <CreateNewTeam/>
+                    {showNewTeam && (<CreateNewTeam/>)}
                     <Divider color='white'/>
                     <br/>
-                    <List subheader={
-                        <ListSubheader component="div" id="newTeamMember-list-subheader" sx={{color: "white", bgcolor: "black"}}>
-                            Add Team Member
-                        </ListSubheader>
-                    }>
-                        <ListItem>
-                            <TextField
-                                label="Team Member Email"
-                                value={teamMemberEmail}
-                                onChange={ (e) => setTeamMemberEmail(e.target.value)}
-                                sx={{
-                                    input: { color: 'white' },
-                                    label: { color: 'white' },
-                                    "& .MuiOutlinedInput-notchedOutline": { borderColor: 'white' },
-                                }}
-                            />
-                        </ListItem>
-                        <ListItem>
-                            <Button
-                                variant="contained"
-                                onClick={async ()=>{
-                                    if(!selected) alert("Please select a team to report to")
-                                    await onAddTeamMember(teamMemberEmail,selected.teamID)
-                                    alert("Team member was successfully added")
-                                }}
-                                sx={{ 
-                                    backgroundColor: '#FFEB3B', 
-                                    color: 'black', 
-                                    '&:hover':{
-                                        backgroundColor: '#FFC107',
-                                    }
-                                }}
-                            >
-                                Add
-                            </Button>
-                        </ListItem>
-                    </List>
+                    {showAdd && (
+                        <List subheader={
+                            <ListSubheader component="div" id="newTeamMember-list-subheader" sx={{color: "white", bgcolor: "black"}}>
+                                Add Team Member
+                            </ListSubheader>
+                        }>
+                            <ListItem>
+                                <TextField
+                                    label="Team Member Email"
+                                    value={teamMemberEmail}
+                                    onChange={ (e) => setTeamMemberEmail(e.target.value)}
+                                    sx={{
+                                        input: { color: 'white' },
+                                        label: { color: 'white' },
+                                        "& .MuiOutlinedInput-notchedOutline": { borderColor: 'white' },
+                                        "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: 'yellow' },
+                                        "& .MuiFormLabel-root.Mui-focused": { color: 'yellow' },
+                                    }}
+                                />
+                            </ListItem>
+                            <ListItem>
+                                <Button
+                                    variant="contained"
+                                    onClick={async ()=>{
+                                        if(!selected) alert("Please select a team to report to")
+                                        await onAddTeamMember(teamMemberEmail,selected.teamID)
+                                        alert("Team member was successfully added")
+                                    }}
+                                    sx={{ 
+                                        backgroundColor: '#FFEB3B', 
+                                        color: 'black', 
+                                        '&:hover':{
+                                            backgroundColor: '#FFC107',
+                                        }
+                                    }}
+                                >
+                                    Add
+                                </Button>
+                            </ListItem>
+                        </List>
+                    )}
                 </Box>
             </Grid>
         </Grid>

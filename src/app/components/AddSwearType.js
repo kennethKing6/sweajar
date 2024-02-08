@@ -60,6 +60,8 @@ export default function AddSwearType ({onAdd = () => {}}) {
                             input: { color: 'white' },
                             label: { color: 'white' },
                             "& .MuiOutlinedInput-notchedOutline": { borderColor: 'white' },
+                            "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: 'yellow' },
+                            "& .MuiFormLabel-root.Mui-focused": { color: 'yellow' },
                         }}
                     />
                 </ListItem>
@@ -72,6 +74,8 @@ export default function AddSwearType ({onAdd = () => {}}) {
                             input: { color: 'white' },
                             label: { color: 'white' },
                             "& .MuiOutlinedInput-notchedOutline": { borderColor: 'white' },
+                            "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: 'yellow' },
+                            "& .MuiFormLabel-root.Mui-focused": { color: 'yellow' },
                         }}
                     />
                 </ListItem>
@@ -81,6 +85,8 @@ export default function AddSwearType ({onAdd = () => {}}) {
                             selected: { color: 'white' },
                             label: { color: 'white' },
                             "& .MuiOutlinedInput-notchedOutline": { borderColor: 'white' },
+                            "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: 'yellow' },
+                            "& .MuiFormLabel-root.Mui-focused": { color: 'yellow' },
                         }}
                     >
                         <InputLabel id="demo-simple-select-label">Select Level</InputLabel>

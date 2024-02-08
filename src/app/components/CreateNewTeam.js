@@ -39,6 +39,8 @@ export default function CreateNewTeam ({onAdd = () => {}}) {
                         input: { color: 'white' },
                         label: { color: 'white' },
                         "& .MuiOutlinedInput-notchedOutline": { borderColor: 'white' },
+                        "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: 'yellow' },
+                        "& .MuiFormLabel-root.Mui-focused": { color: 'yellow' },
                     }}
                 />
             </ListItem>
