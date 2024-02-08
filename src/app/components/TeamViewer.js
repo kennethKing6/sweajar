@@ -12,14 +12,14 @@ import {
   Checkbox,
   Divider,
   Grid,
+  Item,
 } from "@mui/material";
 import { Teams } from "../model/Teams";
 import CreateNewTeam from "./CreateNewTeam";
 import { User } from "../model/User";
 import { SignedInUser } from "../model/SignedInUser";
-
-// TODO: create a team
-// TODO: add team member
+import AddIcon from "@mui/icons-material/Add";
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
 
 export default function TeamViewer({onAdd = () => {}}) {
     const [selected, setSelected] = useState();
@@ -70,15 +70,35 @@ export default function TeamViewer({onAdd = () => {}}) {
         <Grid container spacing={2}>
             <Grid item xs={12} md={6} lg={8} sx={{ position: 'relative', alignSelf: 'flex-start', justifyContent: 'flex-end', alignItems: 'flex-start' }}>
                 <Box sx={{ 
-                    width: '100%', 
+                    width: '100%',
+                    maxWidth: 360, 
                     bgcolor: 'black', 
                     color: 'white', 
                     padding: 2,
                     border: '2px solid yellow'
                 }}>
-                    <h1>
-                    Team Viewer
-                    </h1>
+                    {/* <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                            <Item>
+                                <h1>
+                                    Team Viewer
+                                </h1>
+                            </Item>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <Item><AddIcon></AddIcon></Item>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <Item><svg data-testid="GroupAddIcon" sx={{ backgroundColor: 'yellow' }}></svg></Item>
+                        </Grid>
+                    </Grid> */}
+                    <Box display={"flex"}>
+                        <h1>
+                            Team Viewer
+                        </h1>
+                        <AddIcon sx={{ backgroundColor: 'yellow', color: 'black' }}/>
+                        <GroupAddIcon sx={{ backgroundColor: 'yellow', color: 'black' }}/>
+                    </Box>
                     <List>
                         {items.map( (item) => (
                             <ListItem  key={JSON.stringify(item)} onClick={async () => {
