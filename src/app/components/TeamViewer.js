@@ -12,8 +12,8 @@ import {
   Checkbox,
   Divider,
   Grid,
-  Item,
-  IconButton
+  Tooltip,
+  IconButton,
 } from "@mui/material";
 import { Teams } from "../model/Teams";
 import CreateNewTeam from "./CreateNewTeam";
@@ -83,10 +83,22 @@ export default function TeamViewer({onAdd = () => {}}) {
                         <h1>
                             Team Viewer
                         </h1>
-                        <IconButton onClick={() => setShowNewTeam(!showNewTeam)}><AddIcon sx={{ backgroundColor: 'yellow', color: 'black' }}/></IconButton>
-                        <IconButton onClick={() => setShowAdd(!showAdd)}><GroupAddIcon sx={{ backgroundColor: 'yellow', color: 'black' }}/></IconButton>
+                        <Tooltip title="Create a New Team" placement="top">
+                            <IconButton onClick={() => setShowNewTeam(!showNewTeam)}>
+                                <AddIcon sx={{ backgroundColor: 'yellow', color: 'black' }}/>
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Add Team Member" placement="top">
+                            <IconButton onClick={() => setShowAdd(!showAdd)}>
+                                <GroupAddIcon sx={{ backgroundColor: 'yellow', color: 'black' }}/>
+                            </IconButton>
+                        </Tooltip>
                     </Box>
-                    <List>
+                    <List subheader={
+                            <ListSubheader component="div" id="userTeams-list-subheader" sx={{color: "white", bgcolor: "black"}}>
+                                Your Teams:
+                            </ListSubheader>
+                    }>
                         {items.map( (item) => (
                             <ListItem  key={JSON.stringify(item)} onClick={async () => {
                                 await onToggle(item)

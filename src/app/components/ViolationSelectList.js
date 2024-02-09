@@ -10,12 +10,14 @@ import {
   Checkbox,
   Tooltip,
   Divider,
+  IconButton,
 } from "@mui/material";
 import { SwearType } from "../model/SwearType";
 import { SignedInUser } from "../model/SignedInUser";
 import ReportButton from "./ReportButton";
 import AddSwearType from "./AddSwearType";
 import Button from "./Button";
+import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 
 export default function ViolationSelectList({
   onPress = ()=>{},
@@ -23,6 +25,7 @@ export default function ViolationSelectList({
 }) {
   const [selected, setSelected] = useState([]);
   const [items, setItems] = useState([]);
+  const [showAddSwearType, setShowAddSwearType] = useState(false);
   const onToggle = (item) => {
     const index = selected.indexOf(item);
     if (index > -1) {
@@ -55,6 +58,16 @@ export default function ViolationSelectList({
 
   return (
     <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'black', color: 'white', padding: 2, border: '2px solid yellow'}}>
+      <Box display={"flex"}>
+        <h1>
+          New Report
+        </h1>
+        <Tooltip title="Add a New Swear Type" placement="top">
+          <IconButton onClick={() => setShowAddSwearType(!showAddSwearType)}>
+            <PlaylistAddIcon sx={{ backgroundColor: 'yellow', color: 'black' }}/>
+          </IconButton>
+        </Tooltip>
+      </Box>
       <List subheader={
         <ListSubheader component="div" id="list-subheader" sx={{color: "white", bgcolor: "black"}}>
           Select the Violation
@@ -153,7 +166,7 @@ export default function ViolationSelectList({
         <br></br>
         <Divider color='white'/>
         <br></br>
-        <AddSwearType />
+        {showAddSwearType && (<AddSwearType />)}
       </List>
     </Box>
   );
