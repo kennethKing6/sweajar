@@ -1,5 +1,6 @@
 import { FirebaseAuth } from "../shared/firebase/firebaseAuth";
 import { FirebaseDatabase } from "../shared/firebase/firebaseDatabase";
+import { UserReduxActions } from "../shared/redux/actions/userReduxActions";
 import { AppState } from "./AppState";
 import { SignedInUser } from "./SignedInUser";
 
@@ -90,6 +91,7 @@ export class User {
       })
 
       SignedInUser.user = new User(result)
+      UserReduxActions.setSignedInUser(user)
       AppState.selectedProfile = SignedInUser.user
     }
 
@@ -97,6 +99,7 @@ export class User {
         await FirebaseAuth.signOutUser()
         SignedInUser.user = null;
         AppState.selectedProfile = null
+        UserReduxActions.setSignedInUser(null)
     }
 
     static async updateCurrentTeam(teamID){
@@ -108,6 +111,7 @@ export class User {
         })
         SignedInUser.user.teamID = teamID
         AppState.selectedProfile = SignedInUser.user
+        UserReduxActions.setSignedInUser(SignedInUser.user)
     }
 
     static async getUsersByteamID(userID,teamID){
@@ -141,9 +145,11 @@ export class User {
      * @param {string} userID 
      */
     static async getUserByID(userID){
-        return await FirebaseDatabase.readDataFromDB({
+        const user =  await FirebaseDatabase.readDataFromDB({
             queryPath:`/users/${userID}`
         })
+        UserReduxActions.setSignedInUser(new User(user))
+        return user
     }
 
     static async getUserByEmail(email){
@@ -157,6 +163,8 @@ export class User {
             result = data[key]
             if(!result)break
         }
+        UserReduxActions.setSignedInUser(new User(result))
+
         return result
     }
 
@@ -169,12 +177,15 @@ export class User {
                 if(result){
                     SignedInUser.user = new User(result)
                     AppState.selectedProfile = SignedInUser.user
+                    UserReduxActions.setSignedInUser(new User(result))
                     callback(user)
                 }else{
                     callback(null)
+                    UserReduxActions.setSignedInUser(null)
                 }
             }else{
                 callback(null)
+                UserReduxActions.setSignedInUser(null)
             }
         })
     }

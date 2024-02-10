@@ -1,5 +1,5 @@
 "use client"
-
+import { Provider } from 'react-redux'
 import Button from "./components/Button";
 import UsersList from "./components/UsersList";
 import React, { useEffect, useState } from 'react';
@@ -15,7 +15,7 @@ import Welcome from "./components/Welcome";
 import UserDetails from './components/UserDetails';
 import NavBar from './components/NavBar'
 import TeamViewer from "./components/TeamViewer";
-
+import { reduxStore } from './shared/redux/reduxStore';
 const USER_LIST_COMPONENT = 'userLiist';
 const VIOLATION_LIST_COMPONENT = 'userViolations';
 const HOMEPAGE_LEADERBOARD = 'leaderboard';
@@ -66,7 +66,7 @@ export default function Home() {
   },[])
 
   return (
-   <>
+   <Provider store={reduxStore}>
    <NavBar
    onLeaderboardClick={()=>setSwitcher(HOMEPAGE_LEADERBOARD)}
    onNewReportClick={()=>setSwitcher(VIOLATION_LIST_COMPONENT)}
@@ -87,6 +87,6 @@ export default function Home() {
         </Grid>
       </Grid>:<></>}</>:<Welcome/>}
 
-    </>
+    </Provider>
   );
 }
