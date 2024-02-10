@@ -35,6 +35,12 @@ export class SwearType{
       */
      static teamToReportID;
 
+     /**
+      * @private
+      * @type {string}
+      */
+     swearTypeID
+
 
      /**
       * 
@@ -44,8 +50,10 @@ export class SwearType{
       * @param {"minor"|"major"|"medium"} swearType.levels
       * @param {string} swearType.teamID
       * @param {string} swearType.userID
+      * @param {string} swearType.swearTypeID
       */
     constructor(swearType){
+        this.swearTypeID = swearType.swearTypeID
         this.description= swearType.description || "";
         this.levels = swearType.levels || "minor";
         this.name = swearType.name;
@@ -67,16 +75,17 @@ export class SwearType{
 
         if(!query.teamID)throw new Error("Please select a team to report to")
 
+        const swearTypeID = FirebaseDatabase.generateUniqueKey(SWEAR_TYPE_PATH)
         const type = new SwearType({
             description:query.description,
             levels:query.levels,
             name:query.name,
             teamID: query.teamID,
-
+            swearTypeID:swearTypeID,
         })
        
         await FirebaseDatabase.writeDataToDB({
-            queryPath:SWEAR_TYPE_PATH,
+            queryPath:`${SWEAR_TYPE_PATH}/${swearTypeID}`,
             data:type
         })
         return type
@@ -160,5 +169,11 @@ export class SwearType{
 
     static hasSwearTypes(){
         return Object.values(this.tempSelectedReports).length > 0
+    }
+
+    static async getSwearTypeDetails(swearTypeID){
+       return await FirebaseDatabase.readDataFromDB({
+            queryPath:`${SWEAR_TYPE_PATH}/${swearTypeID}`
+        })
     }
 }
