@@ -1,6 +1,9 @@
 import { FirebaseDatabase } from "../shared/firebase/firebaseDatabase";
+import { SignedInUser } from "./SignedInUser";
+import { SwearType } from "./SwearType";
+import { User } from "./User";
 
-const REPORT_PATH = "/reports";
+const REPORT_PATH = "/reports"
 
 export class Report{
 
@@ -44,18 +47,21 @@ export class Report{
      /**
       * 
       * @param {object} query 
-      * @param {string} query.reporterID
       * @param {string} query.reportedID
       * @param {string} query.teamID
       * @param {string} query.typeID
-      * @param {EpochTimeStamp} query.dateEntry
       * @param {string} query.teamID
+      * @param {string} query.swearTypeID
       */
     static async reportThisUser(query){
         const report = new Report(query)
         await FirebaseDatabase.pushDataToDB({
-            newData:report,
-            queryPath:REPORT_PATH,
+            newData:{
+              ...query,
+              dateEntry: Date.now(),
+              reporterID:SignedInUser.userID,
+            },
+            queryPath:`${REPORT_PATH}/${query.teamID}/${query.reportedID}/${query.swearTypeID}`,
         })
         return report
     }
@@ -63,15 +69,45 @@ export class Report{
     /**
      * 
      * @param {string} userID 
-     * @returns {[Report]}
+     * @returns {{
+     *  '[swearTypeID:string]':{
+     *    '[pushID:string]':Report
+     *  }
+     * }}
      */
-    static async getReportedUserByUserID(userID){
-      const result = await FirebaseDatabase.readDataFromDByEquality({
-        equalValue:userID,
-        queryKey:'reportedID',
-        queryPath:REPORT_PATH
-      }) 
+    static async getReportedUserByUserID(userID,teamID){
+      const result = await FirebaseDatabase.readDataFromDB({
+        queryPath:`${REPORT_PATH}/${teamID}/${userID}`
+      })
+      return result
+    }
+
+    static async getUsersInTeam(teamID){
+      const result = await FirebaseDatabase.readDataFromDB({
+        queryPath:`${REPORT_PATH}/${teamID}`
+      })
       return Object.values(result)
+    }
+
+    static async getTheHighestViolationByUserID(userID,teamID){
+     const swearTypes = await this.getReportedUserByUserID(userID,teamID)
+     let count  = 0;
+     let swearType;
+      for(let swearTypeID in swearTypes){
+          let currentCount = Object.values(swearTypes[swearTypeID]).length
+          if(currentCount > count){
+            count = currentCount;
+            swearType = swearTypeID
+          }
+      }
+
+      if(!swearType) return null
+
+      const result = await SwearType.getSwearTypeDetails(swearType)
+      return {
+        highestViolationCount:count,
+        swearType:result
+      }
     }
 }
 
