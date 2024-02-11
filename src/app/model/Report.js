@@ -1,7 +1,5 @@
 import { FirebaseDatabase } from "../shared/firebase/firebaseDatabase";
 import { SignedInUser } from "./SignedInUser";
-import { SwearType } from "./SwearType";
-import { User } from "./User";
 
 const REPORT_PATH = "/reports";
 
