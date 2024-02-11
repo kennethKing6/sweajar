@@ -3,12 +3,15 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
 import { Avatar, Stack, Typography } from '@mui/material';
 import SortButton from './SortButton';
 import UserDetails from './UserDetails';
 import { User } from '../model/User';
 import { SignedInUser } from '../model/SignedInUser';
+import { Report } from '../model/Report';
+import { ListItemSecondaryAction,Chip,ListItemText,ListItemAvatar,ListItemButton } from '@mui/material';
+import { Colors } from '../assets/colors';
+import { FontSizes } from '../assets/fonts';
 
 export default function HomepageLeaderBoard({
   data,
@@ -57,32 +60,7 @@ export default function HomepageLeaderBoard({
             <nav aria-label="main reported folder">
               <List>
                 {sortedData.map((person, index) => (
-                  <ListItem key={index}>
-                    <ListItemText 
-                      primary={
-                        <Grid container alignItems="center">
-                          {person.profilePicture ? (
-                            <Avatar alt={`${person.firstName} ${person.lastName}`} 
-                              src={person.profilePicture}
-                              onClick={(event) => handleUserClick(person, event)} />
-                          ) : (
-                            <Avatar sx={{ bgcolor: '#FF5733' }}
-                             onClick={(event) => handleUserClick(person, event)}>
-                              {`${person.firstName.charAt(0)}${person.lastName.charAt(0)}`}
-                            </Avatar>
-                          )}
-                          <Box sx={{ marginLeft: '10px', flexGrow: 1 }}>{person.firstName} {person.lastName}</Box>
-                        </Grid>
-                      }
-                      secondary={
-                        <Grid container alignItems="center" fontSize="18px">
-                          <span style={{ marginLeft: '50px', color: 'white' }}>{person.violationType}</span>
-                          <span style={{ marginLeft: '20px', color: 'white' }}>{person.countPerViolation}</span>
-                        </Grid>
-                      }
-                      sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
-                    />
-                  </ListItem>
+                  <UserItem person={person} index={index}/>
                 ))}
               </List>
             </nav>
@@ -92,4 +70,40 @@ export default function HomepageLeaderBoard({
     </Stack>}  
     </Grid>
   );
+}
+
+function UserItem({person,index}){
+  const [highestViolation,setHighestViolation] = useState(null)
+  const [highestViolationCount,setHighestViolationCount] = useState('0')
+  const [violationColor,setViolationColor] = useState(Colors.ACCENT_COLOR_2)
+  useEffect(()=>{
+    Report.getTheHighestViolationByUserID(person.userID,SignedInUser.user.teamID).then((data)=>{
+      console.log(data)
+      setHighestViolationCount(data.highestViolationsMetrics.highestViolationCount)
+      setHighestViolation(data.highestViolationsMetrics.swearType.name)
+    }).catch((err)=>console.error(err))
+  },[])
+  return (
+    <ListItem key={index}>
+            <ListItemButton>
+              <ListItemAvatar>
+                <Avatar alt={`${person.firstName}`} src={person.profilePicture} />
+              </ListItemAvatar>
+              <ListItemText 
+              primary={`${person.firstName} ${person.lastName}`} 
+              secondary={highestViolation?<Chip label={`${highestViolation}`} 
+              sx={{
+                backgroundColor:violationColor,
+                color:Colors.TEXT_COLOR,
+                fontSize:FontSizes.captionFontSize}}/>:<></>} />
+
+                <ListItemSecondaryAction > <Chip label={highestViolationCount} sx={{
+                backgroundColor:violationColor,
+                color:Colors.TEXT_COLOR,
+                fontWeight:'bold',
+                fontSize:FontSizes.captionFontSize}} /></ListItemSecondaryAction>
+            </ListItemButton>
+                  
+      </ListItem>
+  )
 }

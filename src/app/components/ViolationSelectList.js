@@ -16,6 +16,7 @@ import { SignedInUser } from "../model/SignedInUser";
 import ReportButton from "./ReportButton";
 import AddSwearType from "./AddSwearType";
 import Button from "./Button";
+import { ReportViolationsController } from "../controllers/reportViolationsController";
 
 export default function ViolationSelectList({
   onPress = ()=>{},
@@ -39,17 +40,17 @@ export default function ViolationSelectList({
     const fetchItems = async () => {
       const companyID = SignedInUser.user.companyID;
       const swearTypes = await SwearType.getSwearTypesByCompany(companyID);
-      alert(JSON.stringify(swearTypes))
       setItems(swearTypes);
     };
     fetchItems().then().catch()
   }, []);
 
   function addDefaultViolation({name,description}){
-    SwearType.selectReport({
+    ReportViolationsController.selectSwearType({
       name:name,
       description:description,
-      levels:'minor'
+      levels:'minor',
+      swearTypeID:name
     })
   }
 
@@ -115,10 +116,11 @@ export default function ViolationSelectList({
           <Tooltip title={item.description} placement="right" key={item.id}>
             <ListItem onClick={() => {
               onToggle(item.name)
-              SwearType.selectReport({
+              ReportViolationsController.selectSwearType({
                 description:item.description,
-                levels:item.level,
-                name:item.name
+                levels:item.levels,
+                name:item.name,
+                swearTypeID:item.name,
               })
             }}>
               <ListItemIcon>
@@ -130,11 +132,11 @@ export default function ViolationSelectList({
         ))}
         <ListItem>
             <Button text="Next" onPress={()=>{
-              if(!SwearType.hasSwearTypes()){
+              if(!ReportViolationsController.hasSwearTypes()){
                 alert("Please select a violation");
                 return
               }
-              if(!SignedInUser.user.teamID){
+              if(!ReportViolationsController.hasSelectedTeam()){
                 alert("Please select a team")
                 return
               }
