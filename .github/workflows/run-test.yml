@@ -7,7 +7,7 @@ jobs:
         - name: install prettier
           run: npm install --save-dev --save-exact prettier
         - name: Ensure a consistent code style
-          run: npm run prettier
+          run: npx prettier . --write
         - name: Check if the files follow a consistent code style
           run: npx prettier --check .
         - name: Run All Test
