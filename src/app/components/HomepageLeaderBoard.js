@@ -20,6 +20,9 @@ import { Colors } from "../assets/colors";
 import { FontSizes } from "../assets/fonts";
 import { Charts } from "react-charts";
 import LeaderboardChart from "./LeaderboardChart";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import { MARGIN_SIZES } from "../assets/sizes";
 
 // Sample user data for testing charts
 const sampleUserData = [
@@ -116,6 +119,7 @@ function UserItem({ person, index }) {
   const [highestViolation, setHighestViolation] = useState(null);
   const [highestViolationCount, setHighestViolationCount] = useState("0");
   const [violationColor, setViolationColor] = useState(Colors.ACCENT_COLOR_2);
+  const [chartData, setChartData] = useState([]);
   useEffect(() => {
     Report.getTheHighestViolationByUserID(
       person.userID,
@@ -127,47 +131,58 @@ function UserItem({ person, index }) {
           data.highestViolationsMetrics.highestViolationCount,
         );
         setHighestViolation(data.highestViolationsMetrics.swearType.name);
+        setChartData(data.sortedViolations);
       })
       .catch((err) => console.error(err));
   }, []);
   return (
-    <ListItem key={index}>
-      <ListItemButton>
-        <ListItemAvatar>
-          <Avatar alt={`${person.firstName}`} src={person.profilePicture} />
-        </ListItemAvatar>
-        <ListItemText
-          primary={`${person.firstName} ${person.lastName}`}
-          secondary={
-            highestViolation ? (
-              <Chip
-                label={`${highestViolation}`}
-                sx={{
-                  backgroundColor: violationColor,
-                  color: Colors.TEXT_COLOR,
-                  fontSize: FontSizes.captionFontSize,
-                }}
-              />
-            ) : (
-              <></>
-            )
-          }
-        />
+    <ListItem
+      key={index}
+      sx={{ backgroundColor: "white", marginTop: MARGIN_SIZES.MARGIN_4 }}
+    >
+      <Grid container>
+        {chartData.length > 0 ? (
+          <LeaderboardChart chartData={chartData} />
+        ) : (
+          <></>
+        )}
 
-        <ListItemSecondaryAction>
-          <LeaderboardChart userData={sampleUserData} />
+        <ListItemButton>
+          <ListItemAvatar>
+            <Avatar alt={`${person.firstName}`} src={person.profilePicture} />
+          </ListItemAvatar>
+          <ListItemText
+            primary={`${person.firstName} ${person.lastName}`}
+            sx={{ color: Colors.TEXT_COLOR_SECONDARY }}
+            secondary={
+              highestViolation ? (
+                <Chip
+                  label={`${highestViolation}`}
+                  sx={{
+                    backgroundColor: violationColor,
+                    color: Colors.TEXT_COLOR_SECONDARY,
+                    fontSize: FontSizes.captionFontSize,
+                  }}
+                />
+              ) : (
+                <></>
+              )
+            }
+          />
 
-          {/* <Chip
-            label={highestViolationCount}
-            sx={{
-              backgroundColor: violationColor,
-              color: Colors.TEXT_COLOR,
-              fontWeight: "bold",
-              fontSize: FontSizes.captionFontSize,
-            }}
-          /> */}
-        </ListItemSecondaryAction>
-      </ListItemButton>
+          <ListItemSecondaryAction>
+            <Chip
+              label={highestViolationCount}
+              sx={{
+                backgroundColor: violationColor,
+                color: Colors.TEXT_COLOR,
+                fontWeight: "bold",
+                fontSize: FontSizes.captionFontSize,
+              }}
+            />
+          </ListItemSecondaryAction>
+        </ListItemButton>
+      </Grid>
     </ListItem>
   );
 }

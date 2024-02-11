@@ -160,8 +160,9 @@ export class Report {
       let currentCount = Object.values(swearTypes[swearTypeID]).length;
 
       swears.push({
-        violationName: swearTypeID,
-        count: currentCount,
+        username: swearTypeID,
+        violationType: swearTypeID,
+        countPerViolation: currentCount,
       });
     }
 

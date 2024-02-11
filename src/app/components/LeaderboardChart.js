@@ -1,42 +1,33 @@
-import React from 'react';
-import { BarChart } from '@mui/x-charts/BarChart';
-import { CHART_COLOR, CHART_TEXT, CHART_LABEL } from '../assets/colors';
+import React from "react";
+import { BarChart } from "@mui/x-charts/BarChart";
+import { CHART_COLOR, CHART_TEXT, CHART_LABEL } from "../assets/colors";
 
 const chartSetting = {
   margin: { bottom: 20, left: 25, right: 5 },
   yAxis: [
     {
-      label: 'Count',
+      label: "",
     },
   ],
-  width: 200,
-  height: 200,
+  height: 100,
 };
 
 const chartStyles = {
-  '.recharts-label': {
-    fill: 'white', // NOT WORKING
+  ".recharts-label": {
+    fill: "white", // NOT WORKING
   },
 };
 
-export default function LeaderboardChart({ userData }) {
-  const flattenedData = userData.flatMap(user =>
-    user.violations.map(violation => ({
-      username: user.username,
-      violationType: violation.violationType,
-      countPerViolation: violation.countPerViolation,
-    }))
-  );
-
+export default function LeaderboardChart({ chartData }) {
   return (
     <BarChart
-      dataset={flattenedData}
-      xAxis={[{ scaleType: 'band', dataKey: 'violationType' }]}
+      dataset={chartData}
+      xAxis={[{ scaleType: "band", dataKey: "violationType" }]}
       series={[
         {
-          dataKey: 'countPerViolation',
-          label: 'Violation Count',
-          color: '#FFC107',
+          dataKey: "countPerViolation",
+          label: "Violation Count",
+          color: "#FFC107",
         },
       ]}
       {...chartSetting}
