@@ -1,10 +1,9 @@
 import { SignedInUser } from "./SignedInUser";
 
 /**
- * This class is responsible for storing the state of the app while 
+ * This class is responsible for storing the state of the app while
  * the app is running
  */
-export class AppState{
-
-    static selectedProfile = SignedInUser.user
+export class AppState {
+  static selectedProfile = SignedInUser.user;
 }

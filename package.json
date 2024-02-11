@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "build:extension": "next build  && mv out/_next out/next && cp -R ./extension/manifest.json ./out"
+    "build:extension": "next build  && mv out/_next out/next && cp -R ./extension/manifest.json ./out",
+    "test": "npm run test",
+    "prettier": "npx prettier --write ."
   },
   "dependencies": {
     "@emotion/react": "^11.11.3",
@@ -23,5 +25,9 @@
     "react-redux": "^9.1.0",
     "redux": "^5.0.1",
     "redux-thunk": "^3.1.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "prettier": "3.2.5"
   }
 }

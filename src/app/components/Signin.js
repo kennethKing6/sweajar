@@ -1,23 +1,20 @@
-import React, { useState } from 'react';
-import { Button, TextField } from '@mui/material';
-import { User } from '../model/User';
+import React, { useState } from "react";
+import { Button, TextField } from "@mui/material";
+import { User } from "../model/User";
 
-export default function Signin({
-    onBackButton=()=>{}
-}) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+export default function Signin({ onBackButton = () => {} }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await User.signIn(email,password)
-    window.alert("Successfully signed in")
+    await User.signIn(email, password);
+    window.alert("Successfully signed in");
     // Handle form submission here
   };
 
-
   return (
-    <form onSubmit={async (e)=>await handleSubmit(e)}>
+    <form onSubmit={async (e) => await handleSubmit(e)}>
       <TextField
         label="Email"
         variant="outlined"
@@ -26,10 +23,10 @@ export default function Signin({
         fullWidth
         margin="normal"
         sx={{
-            '& .MuiInputBase-input': {
-              color: 'white',
-            },
-          }}
+          "& .MuiInputBase-input": {
+            color: "white",
+          },
+        }}
         focused
       />
       <TextField
@@ -42,10 +39,10 @@ export default function Signin({
         margin="normal"
         focused
         sx={{
-            '& .MuiInputBase-input': {
-              color: 'white',
-            },
-          }}
+          "& .MuiInputBase-input": {
+            color: "white",
+          },
+        }}
       />
       <Button type="submit" variant="contained" color="primary">
         Sign In
@@ -56,5 +53,3 @@ export default function Signin({
     </form>
   );
 }
-
-

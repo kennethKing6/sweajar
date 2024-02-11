@@ -4,5 +4,9 @@ jobs:
    Example:
      runs-on: ubuntu-latest
      steps:
+        - name: Ensure a consistent code style
+          run: npm run prettier
+        - name: Check if the files follow a consistent code style
+          run: npx prettier --check .
         - name: Run All Test
           run: npm run test

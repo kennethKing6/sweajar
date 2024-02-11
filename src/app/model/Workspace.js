@@ -1,3 +1,1 @@
-export class Workspace {
-    
-}
+export class Workspace {}

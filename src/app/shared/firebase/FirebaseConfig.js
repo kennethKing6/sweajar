@@ -1,7 +1,7 @@
-"use client"
+"use client";
 // Import the functions you need from the SDKs you need
-import {initializeApp} from "firebase/app";
-import 'firebase/database';
+import { initializeApp } from "firebase/app";
+import "firebase/database";
 import { getAuth } from "firebase/auth";
 
 // import "firebase/analytics";
@@ -19,17 +19,16 @@ const firebaseConfig = {
   storageBucket: `${process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET}`,
   messagingSenderId: `${process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID}`,
   appId: `${process.env.NEXT_PUBLIC_FIREBASE_APP_ID}`,
-  measurementId: `${process.env.NEXT_PUBLIC_FIREBASE_MESUREMENT_ID}`
+  measurementId: `${process.env.NEXT_PUBLIC_FIREBASE_MESUREMENT_ID}`,
 };
-
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
-const firebaseAuth = getAuth(firebaseApp)
+const firebaseAuth = getAuth(firebaseApp);
 // const firebaseAnalytics = getAnalytics(firebaseApp);
 
 export const FirebaseConfigs = {
-    firebaseApp,
-    firebaseAuth
-    // firebaseAnalytics
-}
+  firebaseApp,
+  firebaseAuth,
+  // firebaseAnalytics
+};

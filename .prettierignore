@@ -1,0 +1,11 @@
+# Ignore artifacts:
+build
+coverage
+.next
+.github
+node_modules
+out
+public
+.env.local
+package-lock.json
+.gitignore

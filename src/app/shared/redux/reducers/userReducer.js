@@ -1,7 +1,7 @@
-import * as type from '../types/userTypes';
+import * as type from "../types/userTypes";
 
 const data = {
-    signedUser:null
+  signedUser: null,
 };
 
 /**
@@ -14,7 +14,7 @@ const data = {
 export const userReducer = (state = data, action) => {
   switch (action.type) {
     case type.SAVE_SIGNED_IN_USER:
-      const currentState = {...data, signedUser: action.data};
+      const currentState = { ...data, signedUser: action.data };
       state = currentState;
       break;
     default:
