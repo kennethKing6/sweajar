@@ -12,5 +12,7 @@ jobs:
           run: npx prettier --check .
         - name: install jest on github actions
           run: npm install --save-dev jest
+        - name: Show all the files in that directory
+          run: ls
         - name: Run All Test
           run: cd swearjar && npx jest .
