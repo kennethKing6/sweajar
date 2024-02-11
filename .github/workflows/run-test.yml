@@ -6,6 +6,8 @@ jobs:
      steps:
         - name: Checkout repository
           uses: actions/checkout@v2
+        - name: install packages
+          run: npm install
         - name: install prettier
           run: npm install --save-dev --save-exact prettier
         - name: Ensure a consistent code style
@@ -14,7 +16,5 @@ jobs:
           run: npx prettier --check .
         - name: install jest on github actions
           run: npm install --save-dev jest
-        - name: Show all the files in that directory
-          run: ls
         - name: Run All Test
-          run: cd swearjar && npx jest .
+          run:  npx jest 
