@@ -9,6 +9,8 @@ import SortButton from './SortButton';
 import UserDetails from './UserDetails';
 import { User } from '../model/User';
 import { SignedInUser } from '../model/SignedInUser';
+import {Charts} from 'react-charts';
+import LeaderboardChart from './LeaderboardChart'
 
 export default function HomepageLeaderBoard({
   data,
@@ -39,11 +41,31 @@ export default function HomepageLeaderBoard({
     onPress()
   }
 
+   // Sample user data for testing charts
+   const sampleUserData = [
+    {
+      username: 'JohnDoe',
+      violations: [
+        { violationType: 'Profanity', countPerViolation: 10 },
+        { violationType: 'Messy', countPerViolation: 10 },
+        { violationType: 'Late', countPerViolation: 5 },
+      ],
+    },
+    {
+      username: 'JaneSmith',
+      violations: [
+        { violationType: 'Disruption', countPerViolation: 11 },
+        { violationType: 'Gossip', countPerViolation: 3 },
+        { violationType: 'Late', countPerViolation: 3 },
+      ],
+    }
+  ];
+
   return (
     <Grid container spacing={2}>
       {sortedData.length > 0?  <Grid item xs={12} md={8} lg={6} alignSelf="flex-start">
         <Box sx={{ 
-          width: '100%', 
+          width: '100%',
           bgcolor: 'black', 
           color: 'white', 
           padding: 2 ,
@@ -75,7 +97,9 @@ export default function HomepageLeaderBoard({
                         </Grid>
                       }
                       secondary={
+                        // LeaderboardChart is passing dummy data now. Change to person for database data
                         <Grid container alignItems="center" fontSize="18px">
+                          <LeaderboardChart userData={sampleUserData} /> 
                           <span style={{ marginLeft: '50px', color: 'white' }}>{person.violationType}</span>
                           <span style={{ marginLeft: '20px', color: 'white' }}>{person.countPerViolation}</span>
                         </Grid>

@@ -5,6 +5,10 @@ const ACCENT_COLOR_2 = "#FFC107";
 const ACCENT_COLOR_3 = "#FF5733";
 const ACCENT_COLOR_4 = "#FFEB3B"
 const ACCENT_COLOR_5 = "#F2BB13"
+const CHART_COLOR = '#FFFF00';
+const CHART_TEXT = '#FFFFFF';
+const CHART_LABEL = '#FFFFFF';
+const CHART_BACKGROUND = 'black';
 
 
 
@@ -15,5 +19,9 @@ export const Colors = {
     ACCENT_COLOR_2,
     ACCENT_COLOR_3,
     ACCENT_COLOR_4,
-    ACCENT_COLOR_5
+    ACCENT_COLOR_5,
+    CHART_COLOR,
+    CHART_TEXT,
+    CHART_LABEL,
+    CHART_BACKGROUND,
 }
