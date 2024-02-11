@@ -4,6 +4,8 @@ jobs:
    Example:
      runs-on: ubuntu-latest
      steps:
+        - name: Checkout repository
+          run: actions/checkout@v2
         - name: install prettier
           run: npm install --save-dev --save-exact prettier
         - name: Ensure a consistent code style
