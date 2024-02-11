@@ -18,6 +18,28 @@ import {
 } from "@mui/material";
 import { Colors } from "../assets/colors";
 import { FontSizes } from "../assets/fonts";
+import { Charts } from "react-charts";
+import LeaderboardChart from "./LeaderboardChart";
+
+// Sample user data for testing charts
+const sampleUserData = [
+  {
+    username: "JohnDoe",
+    violations: [
+      { violationType: "Profanity", countPerViolation: 10 },
+      { violationType: "Messy", countPerViolation: 10 },
+      { violationType: "Late", countPerViolation: 5 },
+    ],
+  },
+  {
+    username: "JaneSmith",
+    violations: [
+      { violationType: "Disruption", countPerViolation: 11 },
+      { violationType: "Gossip", countPerViolation: 3 },
+      { violationType: "Late", countPerViolation: 3 },
+    ],
+  },
+];
 
 export default function HomepageLeaderBoard({
   data,
@@ -133,8 +155,9 @@ function UserItem({ person, index }) {
         />
 
         <ListItemSecondaryAction>
-          {" "}
-          <Chip
+          <LeaderboardChart userData={sampleUserData} />
+
+          {/* <Chip
             label={highestViolationCount}
             sx={{
               backgroundColor: violationColor,
@@ -142,7 +165,7 @@ function UserItem({ person, index }) {
               fontWeight: "bold",
               fontSize: FontSizes.captionFontSize,
             }}
-          />
+          /> */}
         </ListItemSecondaryAction>
       </ListItemButton>
     </ListItem>
