@@ -1,4 +1,5 @@
 name: Run all test and evaluate code coverage
+run-name: branch testers
 on: [push]
 jobs:
    Example:
