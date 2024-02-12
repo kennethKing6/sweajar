@@ -15,15 +15,17 @@ import Welcome from "./components/Welcome";
 import UserDetails from './components/UserDetails';
 import NavBar from './components/NavBar'
 import TeamViewer from "./components/TeamViewer";
+import TeamDetails from "./components/TeamDetails";
 
 const USER_LIST_COMPONENT = 'userLiist';
 const VIOLATION_LIST_COMPONENT = 'userViolations';
 const HOMEPAGE_LEADERBOARD = 'leaderboard';
 const USER_DETAILS_COMPONENT = 'userDetails';
 const TEAM_VIEWER_COMPONENT = 'teamViewer';
+const TEAM_DETAILS_COMPONENT = 'teamDetails';
 
 export default function Home() {
-   const [switcher,setSwitcher]  = useState(HOMEPAGE_LEADERBOARD)
+   const [switcher,setSwitcher]  = useState(TEAM_DETAILS_COMPONENT)
    const [user,setUser] = useState()
   const HomepageLeaderBoardData = [
     { // Dummy user details
@@ -77,6 +79,7 @@ export default function Home() {
     />
     {user?<>
       {switcher === TEAM_VIEWER_COMPONENT?<TeamViewer/>:<></>}
+      {switcher === TEAM_DETAILS_COMPONENT?<TeamDetails/>:<></>}
       {switcher === USER_LIST_COMPONENT?<UsersList onPress={()=>{setSwitcher(VIOLATION_LIST_COMPONENT)}}/>:<></>}
       {switcher === VIOLATION_LIST_COMPONENT?<ViolationSelectList onNavigateToUserToReport={()=>setSwitcher(USER_LIST_COMPONENT)} onPress={()=>{setSwitcher(HOMEPAGE_LEADERBOARD)}}/>:<></>}
       {switcher ===  USER_DETAILS_COMPONENT  ?<UserDetails user={HomepageLeaderBoardData[0]} onPress={()=>{setSwitcher(HOMEPAGE_LEADERBOARD)}}/>:<></>}
