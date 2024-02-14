@@ -9,3 +9,6 @@ public
 .env.local
 package-lock.json
 .gitignore
+.babelrc
+.prettierrc
+.vscode/settings.json

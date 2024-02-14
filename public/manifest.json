@@ -1,0 +1,15 @@
+{
+  "short_name": "React App",
+  "name": "swearjar",
+  "manifest_version": 3,
+  "version": "1.0.0",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff",
+  "permissions": ["scripting"],
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Open"
+  }
+}
