@@ -1,0 +1,109 @@
+const WIDTH_4 = 4;
+const WIDTH_8 = 8;
+const WIDTH_12 = 12;
+const WIDTH_16 = 16;
+const WIDTH_20 = 20;
+const WIDTH_24 = 24;
+const WIDTH_28 = 28;
+const WIDTH_32 = 32;
+const WIDTH_36 = 36;
+const WIDTH_40 = 40;
+const WIDTH_44 = 44;
+const WIDTH_48 = 48;
+const WIDTH_52 = 52;
+const WIDTH_56 = 56;
+const WIDTH_60 = 60;
+const WIDTH_64 = 64;
+const WIDTH_68 = 68;
+const WIDTH_72 = 72;
+const WIDTH_76 = 76;
+const WIDTH_80 = 80;
+const WIDTH_84 = 84;
+const WIDTH_88 = 88;
+const WIDTH_92 = 92;
+const WIDTH_96 = 96;
+const WIDTH_100 = 100;
+const WIDTH_104 = 104;
+const WIDTH_108 = 108;
+const WIDTH_112 = 112;
+const WIDTH_116 = 116;
+const WIDTH_120 = 120;
+const WIDTH_124 = 124;
+const WIDTH_128 = 128;
+const WIDTH_132 = 132;
+const WIDTH_136 = 136;
+const WIDTH_140 = 140;
+const WIDTH_144 = 144;
+const WIDTH_148 = 148;
+const WIDTH_152 = 152;
+const WIDTH_156 = 156;
+const WIDTH_160 = 160;
+const WIDTH_164 = 164;
+const WIDTH_168 = 168;
+const WIDTH_172 = 172;
+const WIDTH_176 = 176;
+const WIDTH_180 = 180;
+const WIDTH_184 = 184;
+const WIDTH_188 = 188;
+const WIDTH_192 = 192;
+const WIDTH_196 = 196;
+const WIDTH_200 = 200;
+const BUTTON_WIDTH_SM = "100px";
+const BUTTON_WIDTH_MD = "150px";
+const BUTTON_WIDTH_LG = "200px";
+
+export const width_sizes = {
+  WIDTH_4,
+  WIDTH_8,
+  WIDTH_12,
+  WIDTH_16,
+  WIDTH_20,
+  WIDTH_24,
+  WIDTH_28,
+  WIDTH_32,
+  WIDTH_36,
+  WIDTH_40,
+  WIDTH_44,
+  WIDTH_48,
+  WIDTH_52,
+  WIDTH_56,
+  WIDTH_60,
+  WIDTH_64,
+  WIDTH_68,
+  WIDTH_72,
+  WIDTH_76,
+  WIDTH_80,
+  WIDTH_84,
+  WIDTH_88,
+  WIDTH_92,
+  WIDTH_96,
+  WIDTH_100,
+  WIDTH_104,
+  WIDTH_108,
+  WIDTH_112,
+  WIDTH_116,
+  WIDTH_120,
+  WIDTH_124,
+  WIDTH_128,
+  WIDTH_132,
+  WIDTH_136,
+  WIDTH_140,
+  WIDTH_144,
+  WIDTH_148,
+  WIDTH_152,
+  WIDTH_156,
+  WIDTH_160,
+  WIDTH_164,
+  WIDTH_168,
+  WIDTH_172,
+  WIDTH_176,
+  WIDTH_180,
+  WIDTH_184,
+  WIDTH_188,
+  WIDTH_192,
+  WIDTH_196,
+  WIDTH_200,
+  BUTTON_WIDTH_SM,
+  BUTTON_WIDTH_MD,
+  BUTTON_WIDTH_LG,
+};

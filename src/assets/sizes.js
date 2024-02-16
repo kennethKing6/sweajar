@@ -104,3 +104,12 @@ export const MARGIN_SIZES = {
 };
 export const TEXT_SIZES = {};
 export const PADDING_SIZES = {};
+
+const BORDER_SM = 8;
+const BORDER_MD = 12;
+const BORDER_LG = 18;
+export const Border_Sizes = {
+  BORDER_SM,
+  BORDER_MD,
+  BORDER_LG,
+};

@@ -141,6 +141,32 @@ export class User {
     return [];
   }
 
+  static async getUsersByteamIDByProfanity(userID, teamID) {
+    if (userID && teamID) {
+      var result = await FirebaseDatabase.readDataFromDByEquality({
+        equalValue: userID,
+        queryKey: "/userID",
+        queryPath: "/users",
+      });
+      result = Object.values(result)[0];
+      //check if user requesting is saved under that company
+      if (!result) throw new Error("Unauthorized");
+
+      const user = new User(result);
+
+      if (user.teamID !== teamID) throw new Error("UnAuthorized");
+
+      const users = await FirebaseDatabase.readDataFromDByEquality({
+        equalValue: teamID,
+        queryKey: "teamID",
+        queryPath: "/users",
+      });
+      return Object.values(users);
+    }
+
+    return [];
+  }
+
   /**
    *
    * @param {string} userID

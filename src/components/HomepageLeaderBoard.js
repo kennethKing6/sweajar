@@ -5,7 +5,6 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import { Avatar, Stack, Typography } from "@mui/material";
 import SortButton from "./SortButton";
-import UserDetails from "./UserDetails";
 import { User } from "../model/User";
 import { SignedInUser } from "../model/SignedInUser";
 import { Report } from "../model/Report";
@@ -24,6 +23,12 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { MARGIN_SIZES } from "../assets/sizes";
 import { appDimensions } from "../assets/appDimensions";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import { width_sizes } from "../assets/width";
+import NativeSelect from "@mui/material/NativeSelect";
 
 // Sample user data for testing charts
 const sampleUserData = [
@@ -53,12 +58,23 @@ export default function HomepageLeaderBoard({
 }) {
   const [sortedData, setSortedData] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [profanitySorter, setProfanitySorter] = useState(null);
 
   useEffect(() => {
-    User.getUsersByteamID(SignedInUser.user.userID, SignedInUser.user.teamID)
-      .then((teams) => setSortedData(teams))
-      .catch();
-  }, []);
+    if (!profanitySorter) {
+      User.getUsersByteamID(SignedInUser.user.userID, SignedInUser.user.teamID)
+        .then((teams) => setSortedData(teams))
+        .catch();
+    } else if (profanitySorter) {
+      User.getUsersByteamIDByProfanity(
+        SignedInUser.user.userID,
+        SignedInUser.user.teamID,
+        profanitySorter,
+      )
+        .then((teams) => setSortedData(teams))
+        .catch();
+    }
+  }, [profanitySorter]);
 
   const sortAlphabetically = () => {
     const sorted = [...sortedData].sort((a, b) =>
@@ -75,20 +91,24 @@ export default function HomepageLeaderBoard({
   };
 
   return (
-    <Grid sx={{ width: appDimensions.EXTENSION_WIDTH }} spacing={2}>
+    <Grid
+      sx={{
+        width: appDimensions.EXTENSION_WIDTH,
+        bgcolor: Colors.BACKGROUND_COLOR,
+      }}
+      spacing={2}
+    >
       {sortedData.length > 0 ? (
         <Grid item alignSelf="flex-start">
           <Box
             sx={{
-              bgcolor: "black",
               color: "white",
               padding: 2,
-              border: "2px solid yellow",
             }}
           >
             <>
-              <h1>Homepage Leaderboard </h1>
-              <SortButton onPress={sortAlphabetically} />
+              <h1 style={{ fontWeight: "900" }}>Leaderboard </h1>
+              <FilterDropDown />
               <nav aria-label="main reported folder">
                 <List>
                   {sortedData.map((person, index) => (
@@ -103,7 +123,7 @@ export default function HomepageLeaderBoard({
         <Stack
           justifyContent="center"
           alignItems="center"
-          sx={{ height: "100vh" }}
+          sx={{ height: "100vh", color: Colors.TEXT_COLOR }}
           onClick={onNavigateToTeams}
         >
           <Typography variant="h4" pl={4}>
@@ -126,7 +146,6 @@ function UserItem({ person, index }) {
       SignedInUser.user.teamID,
     )
       .then((data) => {
-        console.log(data);
         setHighestViolationCount(
           data.highestViolationsMetrics.highestViolationCount,
         );
@@ -184,5 +203,47 @@ function UserItem({ person, index }) {
         </ListItemButton>
       </Grid>
     </ListItem>
+  );
+}
+
+function FilterDropDown({ labels = ["All", "Late Arrival", "Profanity"] }) {
+  const [age, setAge] = React.useState("");
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
+
+  return (
+    <Box
+      sx={{
+        width: width_sizes.BUTTON_WIDTH_LG,
+        bgcolor: Colors.ACCENT_COLOR_3,
+        padding: MARGIN_SIZES.MARGIN_4 / 4,
+        borderRadius: MARGIN_SIZES.MARGIN_4,
+      }}
+    >
+      <FormControl fullWidth>
+        <NativeSelect
+          defaultValue={30}
+          labelId="demo-controlled-open-select-label"
+          id="demo-controlled-open-select"
+          inputProps={{
+            name: "age",
+            id: "uncontrolled-native",
+            sx: {
+              color: Colors.TEXT_COLOR,
+              borderWidth: 0,
+              borderColor: "brown",
+            },
+          }}
+        >
+          {labels.map((v) => (
+            <option key={v} value={10}>
+              {v}
+            </option>
+          ))}
+        </NativeSelect>
+      </FormControl>
+    </Box>
   );
 }

@@ -3,6 +3,7 @@ import {
   equalTo,
   get,
   getDatabase,
+  limitToFirst,
   orderByChild,
   orderByValue,
   push,
@@ -11,11 +12,13 @@ import {
   remove,
   set,
   update,
+  startAt,
+  endAt,
 } from "firebase/database";
 import { FirebaseConfigs } from "./FirebaseConfig";
-import firebase from "firebase/database";
 
 const db = getDatabase(FirebaseConfigs.firebaseApp);
+const DEFAULT_PAGINATION = 50;
 export class FirebaseDatabase {
   /**
    * Read data from the database at a specific path
@@ -35,6 +38,7 @@ export class FirebaseDatabase {
    * @param {string} userQuery.queryPath
    * @param {string} userQuery.equalValue
    * @param {string} userQuery.queryKey
+   * @param {number} userQuery.resultLimiter
    * @param {any} data
    */
   static async readDataFromDByEquality(userQuery) {
@@ -43,6 +47,9 @@ export class FirebaseDatabase {
       reference,
       orderByChild(userQuery.queryKey),
       equalTo(userQuery.equalValue),
+      limitToFirst(
+        userQuery.resultLimiter ? userQuery.resultLimiter : DEFAULT_PAGINATION,
+      ),
     );
 
     const snapshot = await get(equalityQuery);
@@ -50,6 +57,35 @@ export class FirebaseDatabase {
     return snapshot.val();
   }
 
+  /**
+   * Read data from the database by checking equality
+   * @param {object} userQuery
+   * @param {string} userQuery.queryPath
+   * @param {string} userQuery.equalValue
+   * @param {string} userQuery.queryKey
+   * @param {number} userQuery.resultLimiter
+   * @param {string} userQuery.startQueryKey
+   * @param {any} userQuery.startQueryValue
+   * @param {string} userQuery.endQueryKey
+   * @param {any} userQuery.endQueryValue
+   */
+  static async readDataFromDByEqualityStartnEnd(userQuery) {
+    const reference = ref(db, userQuery.queryPath);
+    const equalityQuery = query(
+      reference,
+      orderByChild(userQuery.queryKey),
+      equalTo(userQuery.equalValue),
+      limitToFirst(
+        userQuery.resultLimiter ? userQuery.resultLimiter : DEFAULT_PAGINATION,
+      ),
+      startAt(userQuery.startQueryValue, userQuery.startQueryKey),
+      endAt(userQuery.endQueryValue, userQuery.endQueryKey),
+    );
+
+    const snapshot = await get(equalityQuery);
+
+    return snapshot.val();
+  }
   /**
    * Read data from the database by checking equality
    * @param {object} userQuery
