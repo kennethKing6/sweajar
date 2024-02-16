@@ -7,7 +7,7 @@ import {
     ListSubheader
 } from "@mui/material";
 
-export default function AddTeamMember ({ teamMemberEmail, setTeamMemberEmail, onAddTeamMember, selected}) {
+export default function AddTeamMember ({ teamMemberEmail, setTeamMemberEmail, onAddTeamMember, teamID}) {
     return (
         <List subheader={
             <ListSubheader component="div" id="newTeamMember-list-subheader" sx={{color: "white", bgcolor: "black"}}>
@@ -32,9 +32,8 @@ export default function AddTeamMember ({ teamMemberEmail, setTeamMemberEmail, on
                 <Button
                     variant="contained"
                     onClick={async ()=>{
-                        if(!selected) alert("Please select a team to report to")
-                        await onAddTeamMember(teamMemberEmail,selected.teamID)
-                        alert("Team member was successfully added")
+                        await onAddTeamMember(teamMemberEmail, teamID)
+                        //alert("Team member was successfully added")
                     }}
                     sx={{ 
                         backgroundColor: '#FFEB3B', 

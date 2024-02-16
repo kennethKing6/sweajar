@@ -27,9 +27,7 @@ import GroupAddIcon from '@mui/icons-material/GroupAdd';
 export default function TeamViewer({onPress = ()=>{}}) {
     const [selected, setSelected] = useState();
     const [items, setItems] = useState([]);
-    //const [teamMemberEmail, setTeamMemberEmail] = useState("");
     const [showUserTeams, setShowUserTeams] = useState(true);
-    //const [showAdd, setShowAdd] = useState(false);
     const [showNewTeam, setShowNewTeam] = useState(false);
     const onToggle = async (item) => {
         if( selected && selected.teamName === item.teamName)setSelected(null)
@@ -48,19 +46,6 @@ export default function TeamViewer({onPress = ()=>{}}) {
 
         }
     },[])
-
-    // const onAddTeamMember = async (teamMemberEmail,teamID) => {
-    //     // Validate the input fields
-    //     if (!teamMemberEmail) {
-    //         alert ("Please enter an email for the new team member.");
-    //         return;
-    //     }
-    //     // Add a new team member
-    //     const newTeamMember = await Teams.addTeamMember(teamMemberEmail, teamID);
-    //     onAdd(newTeamMember);
-    //     // Clear the input fields
-    //     setTeamMemberEmail("");
-    // };
 
     useEffect(() => {
         // Fetch the list items from the database
@@ -96,11 +81,6 @@ export default function TeamViewer({onPress = ()=>{}}) {
                                 <AddIcon sx={{ backgroundColor: 'yellow', color: 'black' }}/>
                             </IconButton>
                         </Tooltip>
-                        {/* <Tooltip title="Add Team Member" placement="top">
-                            <IconButton onClick={() => setShowAdd(!showAdd)}>
-                                <GroupAddIcon sx={{ backgroundColor: 'yellow', color: 'black' }}/>
-                            </IconButton>
-                        </Tooltip> */}
                     </Box>
                     {showUserTeams && (
                         <List subheader={
@@ -136,14 +116,6 @@ export default function TeamViewer({onPress = ()=>{}}) {
                         </List>
                     )}
                     {showNewTeam && (<CreateNewTeam/>)}
-                    {/* {showAdd && (
-                        <AddTeamMember
-                            teamMemberEmail={teamMemberEmail}
-                            setTeamMemberEmail={setTeamMemberEmail}
-                            onAddTeamMember={onAddTeamMember}
-                            selected={selected}
-                        />
-                    )} */}
                 </Box>
             </Grid>
         </Grid>
