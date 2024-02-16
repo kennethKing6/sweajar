@@ -21,6 +21,7 @@ import { SignedInUser } from "../model/SignedInUser";
 import AddTeamMember from "./AddTeamMember";
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import GroupRemoveIcon from '@mui/icons-material/GroupRemove';
 
 export default function TeamDetails({onAdd = () => {}}) {
     const [selected, setSelected] = useState();
