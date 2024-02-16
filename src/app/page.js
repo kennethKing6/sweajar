@@ -78,7 +78,7 @@ export default function Home() {
     style={{ zIndex: 1000 }}
     />
     {user?<>
-      {switcher === TEAM_VIEWER_COMPONENT?<TeamViewer/>:<></>}
+      {switcher === TEAM_VIEWER_COMPONENT?<TeamViewer onPress={()=>{setSwitcher(TEAM_DETAILS_COMPONENT)}}/>:<></>}
       {switcher === TEAM_DETAILS_COMPONENT?<TeamDetails/>:<></>}
       {switcher === USER_LIST_COMPONENT?<UsersList onPress={()=>{setSwitcher(VIOLATION_LIST_COMPONENT)}}/>:<></>}
       {switcher === VIOLATION_LIST_COMPONENT?<ViolationSelectList onNavigateToUserToReport={()=>setSwitcher(USER_LIST_COMPONENT)} onPress={()=>{setSwitcher(HOMEPAGE_LEADERBOARD)}}/>:<></>}

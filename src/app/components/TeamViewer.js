@@ -19,15 +19,17 @@ import { Teams } from "../model/Teams";
 import { User } from "../model/User";
 import { SignedInUser } from "../model/SignedInUser";
 import CreateNewTeam from "./CreateNewTeam";
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import AddTeamMember from "./AddTeamMember";
 import AddIcon from "@mui/icons-material/Add";
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 
-export default function TeamViewer({onAdd = () => {}}) {
+export default function TeamViewer({onPress = ()=>{}}) {
     const [selected, setSelected] = useState();
     const [items, setItems] = useState([]);
-    const [teamMemberEmail, setTeamMemberEmail] = useState("");
-    const [showAdd, setShowAdd] = useState(false);
+    //const [teamMemberEmail, setTeamMemberEmail] = useState("");
+    const [showUserTeams, setShowUserTeams] = useState(true);
+    //const [showAdd, setShowAdd] = useState(false);
     const [showNewTeam, setShowNewTeam] = useState(false);
     const onToggle = async (item) => {
         if( selected && selected.teamName === item.teamName)setSelected(null)
@@ -47,18 +49,18 @@ export default function TeamViewer({onAdd = () => {}}) {
         }
     },[])
 
-    const onAddTeamMember = async (teamMemberEmail,teamID) => {
-        // Validate the input fields
-        if (!teamMemberEmail) {
-            alert ("Please enter an email for the new team member.");
-            return;
-        }
-        // Add a new team member
-        const newTeamMember = await Teams.addTeamMember(teamMemberEmail, teamID);
-        onAdd(newTeamMember);
-        // Clear the input fields
-        setTeamMemberEmail("");
-    };
+    // const onAddTeamMember = async (teamMemberEmail,teamID) => {
+    //     // Validate the input fields
+    //     if (!teamMemberEmail) {
+    //         alert ("Please enter an email for the new team member.");
+    //         return;
+    //     }
+    //     // Add a new team member
+    //     const newTeamMember = await Teams.addTeamMember(teamMemberEmail, teamID);
+    //     onAdd(newTeamMember);
+    //     // Clear the input fields
+    //     setTeamMemberEmail("");
+    // };
 
     useEffect(() => {
         // Fetch the list items from the database
@@ -84,46 +86,64 @@ export default function TeamViewer({onAdd = () => {}}) {
                         <h1>
                             Team Viewer
                         </h1>
+                        <Tooltip title="Show My Teams" placement="top">
+                            <IconButton onClick={() => {setShowNewTeam(false), setShowUserTeams(true)}}>
+                                <FormatListBulletedIcon sx={{ backgroundColor: 'yellow', color: 'black' }}/>
+                            </IconButton>
+                        </Tooltip>
                         <Tooltip title="Create a New Team" placement="top">
-                            <IconButton onClick={() => setShowNewTeam(!showNewTeam)}>
+                            <IconButton onClick={() => {setShowNewTeam(true), setShowUserTeams(false)}}>
                                 <AddIcon sx={{ backgroundColor: 'yellow', color: 'black' }}/>
                             </IconButton>
                         </Tooltip>
-                        <Tooltip title="Add Team Member" placement="top">
+                        {/* <Tooltip title="Add Team Member" placement="top">
                             <IconButton onClick={() => setShowAdd(!showAdd)}>
                                 <GroupAddIcon sx={{ backgroundColor: 'yellow', color: 'black' }}/>
                             </IconButton>
-                        </Tooltip>
+                        </Tooltip> */}
                     </Box>
-                    <List subheader={
+                    {showUserTeams && (
+                        <List subheader={
                             <ListSubheader component="div" id="userTeams-list-subheader" sx={{color: "white", bgcolor: "black"}}>
                                 Your Teams:
                             </ListSubheader>
-                    }>
-                        {items.map( (item) => (
-                            <ListItem  key={JSON.stringify(item)} onClick={async () => {
-                                await onToggle(item)
-                            }}>
-                                <ListItemIcon>
-                                    <Checkbox checked={selected?selected.teamName === item.teamName:null} sx={{color:'white'}}/>
-                                </ListItemIcon>
-                                <ListItemText primary={item.teamName} sx={{color:'white'}}/>
+                        }>
+                            {items.map( (item) => (
+                                <ListItem  key={JSON.stringify(item)} onClick={async () => {
+                                    await onToggle(item)
+                                }}>
+                                    <ListItemIcon>
+                                        <Checkbox checked={selected?selected.teamName === item.teamName:null} sx={{color:'white'}}/>
+                                    </ListItemIcon>
+                                    <ListItemText primary={item.teamName} sx={{color:'white'}}/>
+                                </ListItem>
+                            ))}
+                            <ListItem>
+                                <Button
+                                    variant="contained"
+                                    onClick={onPress}
+                                    sx={{ 
+                                        backgroundColor: '#FFEB3B', 
+                                        color: 'black', 
+                                        '&:hover':{
+                                            backgroundColor: '#FFC107',
+                                        }
+                                    }}
+                                >
+                                    View Details
+                                </Button>
                             </ListItem>
-                        ))}
-                    </List>
-                    <Divider color='white'/>
-                    <br/>
+                        </List>
+                    )}
                     {showNewTeam && (<CreateNewTeam/>)}
-                    <Divider color='white'/>
-                    <br/>
-                    {showAdd && (
+                    {/* {showAdd && (
                         <AddTeamMember
                             teamMemberEmail={teamMemberEmail}
                             setTeamMemberEmail={setTeamMemberEmail}
                             onAddTeamMember={onAddTeamMember}
                             selected={selected}
                         />
-                    )}
+                    )} */}
                 </Box>
             </Grid>
         </Grid>
