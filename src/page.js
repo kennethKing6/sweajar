@@ -21,12 +21,14 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 import { appDimensions } from "./assets/appDimensions";
+import TeamDetails from "./components/TeamDetails";
 
 const USER_LIST_COMPONENT = "userLiist";
 const VIOLATION_LIST_COMPONENT = "userViolations";
 const HOMEPAGE_LEADERBOARD = "leaderboard";
 const USER_DETAILS_COMPONENT = "userDetails";
 const TEAM_VIEWER_COMPONENT = "teamViewer";
+const TEAM_DETAILS_COMPONENT = "teamDetails";
 
 const cache = createCache({ key: "css", prepend: true });
 
@@ -105,7 +107,15 @@ function App() {
       />
       {user ? (
         <>
-          {switcher === TEAM_VIEWER_COMPONENT ? <TeamViewer /> : <></>}
+          {switcher === TEAM_VIEWER_COMPONENT ? (
+            <TeamViewer
+              onPress={() => {
+                setSwitcher(TEAM_DETAILS_COMPONENT);
+              }}
+            />
+          ) : (
+            <></>
+          )}
           {switcher === USER_LIST_COMPONENT ? (
             <UsersList
               onPress={() => {
@@ -135,6 +145,7 @@ function App() {
           ) : (
             <></>
           )}
+          {switcher === TEAM_DETAILS_COMPONENT ? <TeamDetails /> : <></>}
           {switcher === HOMEPAGE_LEADERBOARD ? (
             <Grid container spacing={2}>
               <Grid
