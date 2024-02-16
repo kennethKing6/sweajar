@@ -61,9 +61,12 @@ export default function HomepageLeaderBoard({
   const [profanitySorter, setProfanitySorter] = useState(null);
 
   useEffect(() => {
-    if (!profanitySorter) {
+    if (!profanitySorter || profanitySorter === "All") {
       User.getUsersByteamID(SignedInUser.user.userID, SignedInUser.user.teamID)
-        .then((teams) => setSortedData(teams))
+        .then((teams) => {
+          setSortedData(teams);
+          console.log(teams);
+        })
         .catch();
     } else if (profanitySorter) {
       User.getUsersByteamIDByProfanity(
@@ -108,7 +111,9 @@ export default function HomepageLeaderBoard({
           >
             <>
               <h1 style={{ fontWeight: "900" }}>Leaderboard </h1>
-              <FilterDropDown />
+              <FilterDropDown
+                onSelectFilter={(filter) => setProfanitySorter(filter)}
+              />
               <nav aria-label="main reported folder">
                 <List>
                   {sortedData.map((person, index) => (
@@ -206,13 +211,10 @@ function UserItem({ person, index }) {
   );
 }
 
-function FilterDropDown({ labels = ["All", "Late Arrival", "Profanity"] }) {
-  const [age, setAge] = React.useState("");
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
-
+function FilterDropDown({
+  labels = ["All", "Late Arrival", "Profanity"],
+  onSelectFilter = () => {},
+}) {
   return (
     <Box
       sx={{
@@ -227,8 +229,10 @@ function FilterDropDown({ labels = ["All", "Late Arrival", "Profanity"] }) {
           defaultValue={30}
           labelId="demo-controlled-open-select-label"
           id="demo-controlled-open-select"
+          onChange={(e) => {
+            onSelectFilter(e.target.value);
+          }}
           inputProps={{
-            name: "age",
             id: "uncontrolled-native",
             sx: {
               color: Colors.TEXT_COLOR,
@@ -238,7 +242,7 @@ function FilterDropDown({ labels = ["All", "Late Arrival", "Profanity"] }) {
           }}
         >
           {labels.map((v) => (
-            <option key={v} value={10}>
+            <option key={v} value={v}>
               {v}
             </option>
           ))}
