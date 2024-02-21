@@ -23,10 +23,9 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import GroupRemoveIcon from '@mui/icons-material/GroupRemove';
 
-export default function TeamDetails({onAdd = () => {}}) {
+export default function TeamDetails() {
     const [selected, setSelected] = useState();
     const [items, setItems] = useState(null);
-    const [teamMemberEmail, setTeamMemberEmail] = useState("");
     const [showTeamMembers, setShowTeamMembers] = useState(true);
     const [showAdd, setShowAdd] = useState(false);
     const onToggle = async (item) => {
@@ -70,19 +69,6 @@ export default function TeamDetails({onAdd = () => {}}) {
           countPerViolation: '1000'}
     ];
 
-    const onAddTeamMember = async (teamMemberEmail, teamID) => {
-        // Validate the input fields
-        if (!teamMemberEmail) {
-            alert ("Please enter an email for the new team member.");
-            return;
-        }
-        // Add a new team member
-        const newTeamMember = await Teams.addTeamMember(teamMemberEmail, teamID);
-        onAdd(newTeamMember);
-        // Clear the input fields
-        setTeamMemberEmail("");
-    };
-
     useEffect(() => {
         // Fetch the list items from the database
         const fetchItems = async () => {
@@ -112,7 +98,7 @@ export default function TeamDetails({onAdd = () => {}}) {
                                 <FormatListBulletedIcon sx={{ backgroundColor: 'yellow', color: 'black' }}/>
                             </IconButton>
                         </Tooltip>
-                        <Tooltip title="Add Team Member" placement="top">
+                        <Tooltip title="Add/Delete Team Member" placement="top">
                             <IconButton onClick={() => {setShowTeamMembers(false), setShowAdd(true)}}>
                                 <GroupAddIcon sx={{ backgroundColor: 'yellow', color: 'black' }}/>
                             </IconButton>
@@ -148,12 +134,7 @@ export default function TeamDetails({onAdd = () => {}}) {
                         </List>
                     )}
                     {showAdd && (
-                        <AddTeamMember
-                            teamMemberEmail={teamMemberEmail}
-                            setTeamMemberEmail={setTeamMemberEmail}
-                            onAddTeamMember={onAddTeamMember}
-                            teamID={SignedInUser.user.teamID}
-                        />
+                        <AddTeamMember/>
                     )}
                 </Box>
             </Grid>
