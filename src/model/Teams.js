@@ -18,7 +18,6 @@ export class Teams {
       data: {
         admin: SignedInUser.user.userID,
         teamName: teamName,
-        teamMembers: "",
         teamID: teamID,
       },
     });
@@ -45,10 +44,14 @@ export class Teams {
       throw new Error("Unauthorized");
     }
     const user = await User.getUserByEmail(email);
+    const newTeamMember = {
+      ...team,
+      userID: user.userID,
+    };
 
     await FirebaseDatabase.writeDataToDB({
-      data: team,
-      queryPath: `/${PARTICIPATING_TEAM}/${user.userID}/${team.teamID}`,
+      data: newTeamMember,
+      queryPath: `/${PARTICIPATING_TEAM}/${team.teamID}/${user.userID}`,
     });
   }
 
@@ -60,11 +63,9 @@ export class Teams {
     if (!team.admin !== SignedInUser.user.userID)
       throw new Error("Unauthorized");
 
-    const data = team.teamMembers;
-    delete data[`${email}`];
-    await FirebaseDatabase.updateDataOnDB({
-      newData: data,
-      queryPath: `/${TEAMS_PATH}/${teamID}/teamMembers`,
+    const user = await User.getUserByEmail(email);
+    await FirebaseDatabase.deleteDataFromDB({
+      queryPath: `/${PARTICIPATING_TEAM}/${teamID}/${user.userID}`,
     });
   }
 
@@ -94,5 +95,17 @@ export class Teams {
     if (ownTeams) result.push(...ownTeams);
 
     return result;
+  }
+
+  /**
+   * This function is responsible for querying all participants/team members in a team
+   * @param {string} teamID
+   */
+  static async getTeamMembers(teamID) {
+    const result = await FirebaseDatabase.readDataFromDB({
+      queryPath: `${PARTICIPATING_TEAM}/${teamID}`,
+    });
+
+    return Object.values(result);
   }
 }

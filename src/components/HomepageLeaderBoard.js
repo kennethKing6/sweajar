@@ -29,6 +29,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { width_sizes } from "../assets/width";
 import NativeSelect from "@mui/material/NativeSelect";
+import { Teams } from "../model/Teams";
 
 // Sample user data for testing charts
 const sampleUserData = [
@@ -62,12 +63,18 @@ export default function HomepageLeaderBoard({
 
   useEffect(() => {
     if (!profanitySorter || profanitySorter === "All") {
-      User.getUsersByteamID(SignedInUser.user.userID, SignedInUser.user.teamID)
-        .then((teams) => {
-          setSortedData(teams);
-          console.log(teams);
+      Teams.getTeamMembers(SignedInUser.user.teamID)
+        .then((result) => {
+          console.log("Teams Result", result);
+          setSortedData(result);
         })
-        .catch();
+        .catch((e) => console.log("Teams Error", e));
+      // User.getUsersByteamID(SignedInUser.user.userID, SignedInUser.user.teamID)
+      //   .then((teams) => {
+      //     setSortedData(teams);
+      //     console.log("getUsersByteamID", teams);
+      //   })
+      //   .catch();
     } else if (profanitySorter) {
       User.getUsersByteamIDByProfanity(
         SignedInUser.user.userID,
@@ -141,10 +148,20 @@ export default function HomepageLeaderBoard({
 }
 
 function UserItem({ person, index }) {
+  const [user, setUser] = useState(null);
   const [highestViolation, setHighestViolation] = useState(null);
   const [highestViolationCount, setHighestViolationCount] = useState("0");
   const [violationColor, setViolationColor] = useState(Colors.ACCENT_COLOR_2);
   const [chartData, setChartData] = useState([]);
+
+  useEffect(() => {
+    User.getUserByID(person.userID)
+      .then((currentUser) => setUser(currentUser))
+      .catch((err) => {
+        console.log(err);
+        setUser(null);
+      });
+  }, []);
   useEffect(() => {
     Report.getTheHighestViolationByUserID(
       person.userID,
@@ -158,7 +175,7 @@ function UserItem({ person, index }) {
         setChartData(data.sortedViolations);
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [user]);
   return (
     <ListItem
       key={index}
@@ -173,10 +190,14 @@ function UserItem({ person, index }) {
 
         <ListItemButton>
           <ListItemAvatar>
-            <Avatar alt={`${person.firstName}`} src={person.profilePicture} />
+            {user ? (
+              <Avatar alt={`${user.firstName}`} src={user.profilePicture} />
+            ) : (
+              <></>
+            )}
           </ListItemAvatar>
           <ListItemText
-            primary={`${person.firstName} ${person.lastName}`}
+            primary={`${user ? user.firstName : ""} ${user ? user.lastName : ""}`}
             sx={{ color: Colors.TEXT_COLOR_SECONDARY }}
             secondary={
               highestViolation ? (

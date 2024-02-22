@@ -1,5 +1,8 @@
 module.exports = {
   testEnvironment: "jsdom",
+  testEnvironmentOptions: {
+    customExportConditions: ["node", "node-addons"],
+  },
   transform: {
     "^.+\\.(js|jsx|ts|tsx)$": "babel-jest",
   },
@@ -7,6 +10,7 @@ module.exports = {
   collectCoverageFrom: [
     "**/*.{js,jsx}",
     "!**/out/**",
+    "!**/src/*.{svg,ico,css}",
     "!**/extension/**",
     "!**/coverage/**",
     "!**/node_modules/**",

@@ -18,6 +18,7 @@ import AddSwearType from "./AddSwearType";
 import Button from "./Button";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
+import { ReportViolationsController } from "../controllers/reportViolationsController";
 
 export default function ViolationSelectList({
   onPress = () => {},
@@ -49,10 +50,11 @@ export default function ViolationSelectList({
   }, []);
 
   function addDefaultViolation({ name, description }) {
-    SwearType.selectReport({
+    ReportViolationsController.selectSwearType({
       name: name,
       description: description,
       levels: "minor",
+      swearTypeID: name,
     });
   }
 
@@ -185,10 +187,11 @@ export default function ViolationSelectList({
               <ListItem
                 onClick={() => {
                   onToggle(item.name);
-                  SwearType.selectReport({
+                  ReportViolationsController.selectSwearType({
                     description: item.description,
-                    levels: item.level,
+                    levels: item.levels,
                     name: item.name,
+                    swearTypeID: item.name,
                   });
                 }}
               >
@@ -206,11 +209,11 @@ export default function ViolationSelectList({
             <Button
               text="Next"
               onPress={() => {
-                if (!SwearType.hasSwearTypes()) {
+                if (!ReportViolationsController.hasSwearTypes()) {
                   alert("Please select a violation");
                   return;
                 }
-                if (!SignedInUser.user.teamID) {
+                if (!ReportViolationsController.hasSelectedTeam()) {
                   alert("Please select a team");
                   return;
                 }

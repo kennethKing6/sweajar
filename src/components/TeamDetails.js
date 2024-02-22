@@ -29,6 +29,7 @@ export default function TeamDetails({ onAdd = () => {} }) {
   const [teamMemberEmail, setTeamMemberEmail] = useState("");
   const [showTeamMembers, setShowTeamMembers] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
+  const [teamMembers, setTeamMembers] = useState([]);
   const onToggle = async (item) => {
     if (selected && selected.teamName === item.teamName) setSelected(null);
     else {
@@ -36,50 +37,6 @@ export default function TeamDetails({ onAdd = () => {} }) {
       await User.updateCurrentTeam(item.teamID);
     }
   };
-  const HomepageLeaderBoardData = [
-    {
-      // Dummy user details
-      username: "BobbyBoy123",
-      profilePicture:
-        "https://img.freepik.com/free-photo/user-front-side-with-white-background_187299-40007.jpg?w=740&t=st=1705633868~exp=1705634468~hmac=76e3865f1fd041589284444d1270b80bd35408a9ce616303cd36e6abfd08f9e8",
-      violationType: "Profanity",
-      firstName: "Bobby",
-      lastName: "Boy",
-      countPerViolation: "20",
-    },
-
-    {
-      // Dummy user details
-      username: "SobbyBoy123",
-      profilePicture:
-        "https://img.freepik.com/free-photo/user-front-side-with-white-background_187299-40007.jpg?w=740&t=st=1705633868~exp=1705634468~hmac=76e3865f1fd041589284444d1270b80bd35408a9ce616303cd36e6abfd08f9e8",
-      violationType: "Profanity",
-      firstName: "Sobby",
-      lastName: "Boy",
-      countPerViolation: "20",
-    },
-
-    {
-      // Dummy user details
-      username: "LobbyBoy123",
-      profilePicture:
-        "https://img.freepik.com/free-photo/user-front-side-with-white-background_187299-40007.jpg?w=740&t=st=1705633868~exp=1705634468~hmac=76e3865f1fd041589284444d1270b80bd35408a9ce616303cd36e6abfd08f9e8",
-      violationType: "Profanity",
-      firstName: "Lobby",
-      lastName: "Boy",
-      countPerViolation: "20",
-    },
-
-    {
-      // Finalize the variables here
-      username: "KenK123",
-      profilePicture: "",
-      violationType: "Forgot to unmute",
-      firstName: "Ken",
-      lastName: "K",
-      countPerViolation: "1000",
-    },
-  ];
 
   const onAddTeamMember = async (teamMemberEmail, teamID) => {
     // Validate the input fields
@@ -92,15 +49,16 @@ export default function TeamDetails({ onAdd = () => {} }) {
     onAdd(newTeamMember);
     // Clear the input fields
     setTeamMemberEmail("");
+    alert("Successfully Added Team Member");
   };
 
   useEffect(() => {
     // Fetch the list items from the database
-    const fetchItems = async () => {
-      const teams = await Teams.getTeam(SignedInUser.user.teamID);
-      setItems(teams);
-    };
-    fetchItems().then().catch();
+    Teams.getTeamMembers(SignedInUser.user.teamID)
+      .then((data) => {
+        setTeamMembers(data);
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   return (
@@ -154,6 +112,7 @@ export default function TeamDetails({ onAdd = () => {} }) {
               </IconButton>
             </Tooltip>
           </Box>
+
           {showTeamMembers && (
             <List
               subheader={
@@ -166,13 +125,10 @@ export default function TeamDetails({ onAdd = () => {} }) {
                 </ListSubheader>
               }
             >
-              {HomepageLeaderBoardData &&
-                HomepageLeaderBoardData.map((user, index) => (
+              {teamMembers &&
+                teamMembers.map((member, index) => (
                   <ListItem key={index}>
-                    <Checkbox sx={{ color: "white" }} />
-                    <ListItemText
-                      primary={`${user.firstName} ${user.lastName}`}
-                    />
+                    <TeamMemberItem userID={member.userID} />
                   </ListItem>
                 ))}
               {/* {items && Object.entries(items.teamMembers).map(([userID, firstName, lastName]) => (
@@ -203,5 +159,25 @@ export default function TeamDetails({ onAdd = () => {} }) {
         </Box>
       </Grid>
     </Grid>
+  );
+}
+function TeamMemberItem({ userID }) {
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    User.getUserByID(userID)
+      .then((currentUser) => setUser(currentUser))
+      .catch((err) => console.log(err));
+  }, [userID]);
+  return (
+    <>
+      {user ? (
+        <>
+          <Checkbox sx={{ color: "white" }} />
+          <ListItemText primary={`${user.firstName} ${user.lastName}`} />
+        </>
+      ) : (
+        <></>
+      )}
+    </>
   );
 }

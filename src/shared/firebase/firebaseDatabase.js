@@ -47,9 +47,26 @@ export class FirebaseDatabase {
       reference,
       orderByChild(userQuery.queryKey),
       equalTo(userQuery.equalValue),
-      limitToFirst(
-        userQuery.resultLimiter ? userQuery.resultLimiter : DEFAULT_PAGINATION,
-      ),
+    );
+
+    const snapshot = await get(equalityQuery);
+
+    return snapshot.val();
+  }
+
+  /**
+   * Read data from the database by checking equality
+   * @param {object} userQuery
+   * @param {string} userQuery.queryPath
+   * @param {string} userQuery.equalValue
+   * @param {string} userQuery.queryKey
+   * @param {any} data
+   */
+  static async readDataFromRefEquality(userQuery) {
+    const reference = ref(db, userQuery.queryPath);
+    let equalityQuery = query(
+      reference,
+      orderByValue(`${userQuery.equalValue}`),
     );
 
     const snapshot = await get(equalityQuery);

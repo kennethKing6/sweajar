@@ -179,6 +179,11 @@ export class User {
     return user;
   }
 
+  /**
+   *
+   * @param {string} email
+   * @returns {User | null}
+   */
   static async getUserByEmail(email) {
     const data = await FirebaseDatabase.readDataFromDByEquality({
       equalValue: email,

@@ -18,6 +18,7 @@ import { SignedInUser } from "../model/SignedInUser";
 import ReportButton from "./ReportButton";
 import { Colors } from "../assets/colors";
 import { ReportViolationsController } from "../controllers/reportViolationsController";
+import { Teams } from "../model/Teams";
 
 export default function UsersList({ onPress = () => {} }) {
   /**@param {[User]} */
@@ -25,7 +26,7 @@ export default function UsersList({ onPress = () => {} }) {
   const [checked, setChecked] = React.useState([1]);
 
   useEffect(() => {
-    User.getUsersByteamID(SignedInUser.user.userID, SignedInUser.user.teamID)
+    Teams.getTeamMembers(SignedInUser.user.teamID)
       .then((users) => {
         setUsers(users);
       })
@@ -34,21 +35,6 @@ export default function UsersList({ onPress = () => {} }) {
         setUsers([]);
       });
   }, []);
-
-  const handleToggle = (value, currentUser) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-      ReportViolationsController.selectUser(currentUser);
-    } else {
-      newChecked.splice(currentIndex, 1);
-      ReportViolationsController.selectUser(currentUser);
-    }
-
-    setChecked(newChecked);
-  };
 
   return (
     <Grid container p={2} sx={{ flex: 1, flexDirection: "column" }}>
@@ -70,41 +56,72 @@ export default function UsersList({ onPress = () => {} }) {
         bgColor={Colors.BUTTON_PRIMARY_COLOR}
       />
       <List dense sx={{ width: "100%" }}>
-        {users.map((value) => {
-          const labelId = `checkbox-list-secondary-label-${value}`;
+        {users.map((user) => {
           /**@type {User} */
-          const currentUser = value;
           return (
-            <ListItem
-              key={value}
-              secondaryAction={
-                <Checkbox
-                  edge="end"
-                  onChange={handleToggle(value, currentUser)}
-                  color="success"
-                  checked={checked.indexOf(value) !== -1}
-                  inputProps={{ "aria-labelledby": labelId }}
-                  sx={{ bgcolor: Colors.BORDER_COLOR, borderWidth: 2 }}
-                />
-              }
-              disablePadding
-            >
-              <ListItemButton>
-                <ListItemAvatar>
-                  <Avatar
-                    alt={`Avatar n°${value + 1}`}
-                    src={currentUser.profilePicture}
-                  />
-                </ListItemAvatar>
-                <ListItemText
-                  id={labelId}
-                  primary={`${currentUser.firstName} ${currentUser.lastName}`}
-                />
-              </ListItemButton>
-            </ListItem>
+            <TeamMemberItem
+              value={user.userID}
+              checked={checked}
+              setChecked={setChecked}
+            />
           );
         })}
       </List>
     </Grid>
+  );
+}
+function TeamMemberItem({ value, checked, setChecked }) {
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    User.getUserByID(value)
+      .then((user) => setCurrentUser(user))
+      .catch((err) => console.log(err));
+  }, [value]);
+
+  const handleToggle = (value, currentUser) => () => {
+    const currentIndex = checked.indexOf(value);
+    const newChecked = [...checked];
+
+    if (currentIndex === -1) {
+      newChecked.push(value);
+      ReportViolationsController.selectUser(currentUser);
+    } else {
+      newChecked.splice(currentIndex, 1);
+      ReportViolationsController.selectUser(currentUser);
+    }
+
+    setChecked(newChecked);
+  };
+  const labelId = `checkbox-list-secondary-label-${value}`;
+
+  return (
+    <ListItem
+      key={value}
+      secondaryAction={
+        <Checkbox
+          edge="end"
+          onChange={handleToggle(value, currentUser)}
+          color="success"
+          checked={checked.indexOf(value) !== -1}
+          inputProps={{ "aria-labelledby": labelId }}
+          sx={{ bgcolor: Colors.BORDER_COLOR, borderWidth: 2 }}
+        />
+      }
+      disablePadding
+    >
+      <ListItemButton>
+        <ListItemAvatar>
+          <Avatar
+            alt={`Avatar n°${value + 1}`}
+            src={currentUser ? currentUser.profilePicture : ""}
+          />
+        </ListItemAvatar>
+        <ListItemText
+          id={labelId}
+          primary={`${currentUser ? currentUser.firstName : ""} ${currentUser ? currentUser.lastName : ""}`}
+        />
+      </ListItemButton>
+    </ListItem>
   );
 }
