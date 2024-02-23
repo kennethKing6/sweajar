@@ -32,6 +32,38 @@
     "eject": "react-scripts eject",
     "prettier": "npx prettier --write ."
   },
+  "jest": {
+    "collectCoverageFrom": [
+      "**/*.{js,jsx}",
+      "!**/out/**",
+      "!**/src/*.{svg,ico,css}",
+      "!**/extension/**",
+      "!**/coverage/**",
+      "!**/node_modules/**",
+      "!**/.github/**",
+      "!**/.next/**",
+      "!**/.vscode/**",
+      "!**/public/**",
+      "!**/extension/**",
+      "!**/*.config.{js,jsx}",
+      "!**/lcov-report/**",
+      "!**/.env/**",
+      "!**/public/**",
+      "!**/build/**",
+      "!**/package.json/**",
+      "!**/package-lock.json/**",
+      "!**/reportWebVitals.js/**",
+      "!**/setupTests.js/**",
+      "!**/src/assets/**"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "functions": 50,
+        "lines": 50,
+        "statements": -50
+      }
+    }
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
