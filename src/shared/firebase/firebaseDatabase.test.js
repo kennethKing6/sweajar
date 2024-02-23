@@ -1,6 +1,10 @@
 import "./__mock__/mockFirebase";
 import { FirebaseDatabase } from "./firebaseDatabase";
 
+beforeEach(() => {
+  jest.spyOn(FirebaseDatabase, "getSnapshot").mockReturnValue({});
+  jest.spyOn(FirebaseDatabase, "getPushKey").mockReturnValue("skdhfds");
+});
 describe("Read data from fake database", () => {
   test("Test reading fake data from the database", async () => {
     const mockedData = {};

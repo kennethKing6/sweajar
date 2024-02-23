@@ -2,6 +2,11 @@ import "text-encoding";
 import "./__mock__/mockFirebase";
 import { FirebaseAuth } from "./firebaseAuth";
 
+beforeEach(() => {
+  jest.spyOn(FirebaseAuth, "signUserAnonymously").mockReturnValue({});
+  jest.spyOn(FirebaseAuth, "signInUser").mockReturnValue({});
+  jest.spyOn(FirebaseAuth, "signUserUp").mockReturnValue({});
+});
 test("Signin in anymously", async () => {
   const mockUser = {
     /* mock user object */
