@@ -18,4 +18,4 @@ jobs:
         - name: install jest on github actions
           run: npm install --save-dev jest
         - name: Run All Test
-          run:  npx jest .
+          run:  npm run test

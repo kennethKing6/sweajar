@@ -28,7 +28,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest --coverage",
+    "test": "CI=true react-scripts test --coverage=true src --colors",
     "eject": "react-scripts eject",
     "prettier": "npx prettier --write ."
   },
