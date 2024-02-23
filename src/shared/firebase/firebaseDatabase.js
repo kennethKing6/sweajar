@@ -14,6 +14,7 @@ import {
   update,
   startAt,
   endAt,
+  DataSnapshot,
 } from "firebase/database";
 import { FirebaseConfigs } from "./FirebaseConfig";
 
@@ -29,7 +30,7 @@ export class FirebaseDatabase {
     const dbRef = ref(db, "/");
     const reference = child(dbRef, userQuery.queryPath);
     const snapshot = await get(reference);
-    return snapshot.val();
+    return this.getSnapshot(snapshot);
   }
 
   /**
@@ -51,7 +52,7 @@ export class FirebaseDatabase {
 
     const snapshot = await get(equalityQuery);
 
-    return snapshot.val();
+    return this.getSnapshot(snapshot);
   }
 
   /**
@@ -71,7 +72,7 @@ export class FirebaseDatabase {
 
     const snapshot = await get(equalityQuery);
 
-    return snapshot.val();
+    return this.getSnapshot(snapshot);
   }
 
   /**
@@ -101,7 +102,7 @@ export class FirebaseDatabase {
 
     const snapshot = await get(equalityQuery);
 
-    return snapshot.val();
+    return this.getSnapshot(snapshot);
   }
   /**
    * Read data from the database by checking equality
@@ -116,7 +117,7 @@ export class FirebaseDatabase {
 
     const snapshot = await get(equalityQuery);
 
-    return snapshot.val();
+    return this.getSnapshot(snapshot);
   }
 
   /**
@@ -155,7 +156,9 @@ export class FirebaseDatabase {
    * @param {object} userQuery.newData
    */
   static async pushDataToDB(userQuery) {
-    const newPostKey = push(child(ref(db), userQuery.queryPath)).key;
+    const newPostKey = this.getPushKey(
+      push(child(ref(db), userQuery.queryPath)),
+    );
     await this.updateDataOnDB({
       newData: userQuery.newData,
       queryPath: `${userQuery.queryPath}/${newPostKey}`,
@@ -168,6 +171,21 @@ export class FirebaseDatabase {
    * @returns {string}
    */
   static generateUniqueKey(path) {
-    return push(child(ref(db), path)).key;
+    return this.getPushKey(push(child(ref(db), path)));
+  }
+
+  static getPushKey(pushData) {
+    if (!pushData) throw new Error("pushData is required");
+    const { key } = pushData;
+    return key;
+  }
+
+  /**
+   * @param {*} snapshot
+   * @returns {DataSnapshot}
+   */
+  static getSnapshot(snapshot) {
+    if (!snapshot) throw new Error("pushData is required");
+    return snapshot.val();
   }
 }
