@@ -30,26 +30,7 @@ import Select from "@mui/material/Select";
 import { width_sizes } from "../assets/width";
 import NativeSelect from "@mui/material/NativeSelect";
 import { Teams } from "../model/Teams";
-
-// Sample user data for testing charts
-const sampleUserData = [
-  {
-    username: "JohnDoe",
-    violations: [
-      { violationType: "Profanity", countPerViolation: 10 },
-      { violationType: "Messy", countPerViolation: 10 },
-      { violationType: "Late", countPerViolation: 5 },
-    ],
-  },
-  {
-    username: "JaneSmith",
-    violations: [
-      { violationType: "Disruption", countPerViolation: 11 },
-      { violationType: "Gossip", countPerViolation: 3 },
-      { violationType: "Late", countPerViolation: 3 },
-    ],
-  },
-];
+import { HomePageLeaderBoardController } from "../controllers/homePageLeaderBoardController";
 
 export default function HomepageLeaderBoard({
   data,
@@ -63,37 +44,17 @@ export default function HomepageLeaderBoard({
 
   useEffect(() => {
     if (!profanitySorter || profanitySorter === "All") {
-      Teams.getTeamMembers(SignedInUser.user.teamID)
-        .then((result) => {
-          console.log("Teams Result", result);
-          setSortedData(result);
-        })
-        .catch((e) => console.log("Teams Error", e));
-      // User.getUsersByteamID(SignedInUser.user.userID, SignedInUser.user.teamID)
-      //   .then((teams) => {
-      //     setSortedData(teams);
-      //     console.log("getUsersByteamID", teams);
-      //   })
-      //   .catch();
+      HomePageLeaderBoardController.getAllTeamMembers()
+        .then((teamMembers) => setSortedData(teamMembers))
+        .catch();
     } else if (profanitySorter) {
-      User.getUsersByteamIDByProfanity(
-        SignedInUser.user.userID,
-        SignedInUser.user.teamID,
+      HomePageLeaderBoardController.selectAllTeamMembersByViolations(
         profanitySorter,
       )
-        .then((teams) => setSortedData(teams))
+        .then((teamMembers) => setSortedData(teamMembers))
         .catch();
     }
   }, [profanitySorter]);
-
-  const sortAlphabetically = () => {
-    const sorted = [...sortedData].sort((a, b) =>
-      `${a.firstName} ${a.lastName}`.localeCompare(
-        `${b.firstName} ${b.lastName}`,
-      ),
-    );
-    setSortedData(sorted);
-  };
 
   const handleUserClick = (user) => {
     setSelectedUser(user);
@@ -124,7 +85,13 @@ export default function HomepageLeaderBoard({
               <nav aria-label="main reported folder">
                 <List>
                   {sortedData.map((person, index) => (
-                    <UserItem person={person} index={index} />
+                    <>
+                      {person ? (
+                        <UserItem person={person} index={index} />
+                      ) : (
+                        <></>
+                      )}
+                    </>
                   ))}
                 </List>
               </nav>
@@ -232,10 +199,13 @@ function UserItem({ person, index }) {
   );
 }
 
-function FilterDropDown({
-  labels = ["All", "Late Arrival", "Profanity"],
-  onSelectFilter = () => {},
-}) {
+function FilterDropDown({ onSelectFilter = () => {} }) {
+  const [filters, setFilters] = useState([]);
+  useEffect(() => {
+    HomePageLeaderBoardController.getReportTypesPerTeam()
+      .then((data) => setFilters(data))
+      .catch();
+  }, []);
   return (
     <Box
       sx={{
@@ -262,7 +232,7 @@ function FilterDropDown({
             },
           }}
         >
-          {labels.map((v) => (
+          {filters.map((v) => (
             <option key={v} value={v}>
               {v}
             </option>

@@ -106,6 +106,6 @@ export class Teams {
       queryPath: `${PARTICIPATING_TEAM}/${teamID}`,
     });
 
-    return Object.values(result);
+    return result ? Object.values(result) : [];
   }
 }

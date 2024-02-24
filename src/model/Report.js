@@ -2,7 +2,7 @@ import { FirebaseDatabase } from "../shared/firebase/firebaseDatabase";
 import { SignedInUser } from "./SignedInUser";
 
 const REPORT_PATH = "/reports";
-
+const REPORT_SWEAR_TYPE_CATEGORY = "teamSwearTypes";
 /**
  * Report is another name for violations
  */
@@ -58,6 +58,8 @@ export class Report {
    * @param {string} query.swearType
    */
   static async reportThisUser(query) {
+    await this.TrackTeamReportType(query.teamID, query.swearTypeID);
+
     const data = new Report({
       dateEntry: Date.now(),
       reportedID: query.reportedID,
@@ -72,6 +74,34 @@ export class Report {
       data: data,
       queryPath: `${path}/${pushID}`,
     });
+  }
+
+  /**
+   * @private
+   */
+  static async TrackTeamReportType(teamID, swearType) {
+    //Keeps track of the name of the swearType that each team has
+    let path = `${REPORT_PATH}/${teamID}/${REPORT_SWEAR_TYPE_CATEGORY}`;
+    const savedSwearTypes = await FirebaseDatabase.readDataFromDB({
+      queryPath: path,
+    });
+    if (savedSwearTypes) {
+      const swearTypeSet = new Set(savedSwearTypes);
+      swearTypeSet.add(swearType);
+      await FirebaseDatabase.writeDataToDB({
+        data: [...swearTypeSet],
+        queryPath: path,
+      });
+    } else {
+      const swearTypeSet = new Set();
+      swearTypeSet.add("All");
+      swearTypeSet.add(swearType);
+
+      await FirebaseDatabase.writeDataToDB({
+        data: [...swearTypeSet],
+        queryPath: path,
+      });
+    }
   }
 
   /**
@@ -102,27 +132,21 @@ export class Report {
     const sortedViolations = this.sortUserViolationsByHighest(swearTypes);
     const highestViolationsMetrics =
       this.getHighestViolationMetrics(swearTypes);
-    const legends = this.getViolationsLegends(swearTypes);
     return {
       sortedViolations: sortedViolations,
       highestViolationsMetrics: highestViolationsMetrics,
-      legends: legends,
     };
   }
 
   /**
    *
-   * @private
    * @param {*} swearTypes
    * @returns
    */
-  static getViolationsLegends(swearTypes) {
-    const result = {};
-    for (let swearTypeID in swearTypes) {
-      result[swearTypeID] = swearTypeID;
-    }
-
-    return result;
+  static async getReportsLegends(teamID) {
+    return await FirebaseDatabase.readDataFromDB({
+      queryPath: `${REPORT_PATH}/${teamID}/${REPORT_SWEAR_TYPE_CATEGORY}`,
+    });
   }
 
   /**
@@ -167,5 +191,17 @@ export class Report {
     }
 
     return swears;
+  }
+
+  /**
+   *
+   * @param {*} teamID
+   * @param {*} userID
+   * @param {*} reportType
+   */
+  static async getUserReportsByType(teamID, userID, reportType) {
+    return await FirebaseDatabase.readDataFromDB({
+      queryPath: `${REPORT_PATH}/${teamID}/${userID}/${reportType}`,
+    });
   }
 }
