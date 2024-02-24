@@ -1,5 +1,6 @@
 import React from 'react';
 import { AppState } from '../model/AppState';
+import ViolationsLineChart from "./ViolationsLineChart";
 
 export default function UserDetails({
     user,
@@ -32,6 +33,7 @@ export default function UserDetails({
                 {/* <p>Username: {username}</p> */}
                 <p>Violation Type: {violationType}</p>
                 <p>Count per Violation: {countPerViolation}</p>
+                <ViolationsLineChart/>
             </div>
         </div>
     );
