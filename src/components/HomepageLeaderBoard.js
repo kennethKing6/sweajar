@@ -31,6 +31,7 @@ import { width_sizes } from "../assets/width";
 import NativeSelect from "@mui/material/NativeSelect";
 import { Teams } from "../model/Teams";
 import { HomePageLeaderBoardController } from "../controllers/homePageLeaderBoardController";
+import { FirebaseDatabase } from "../shared/firebase/firebaseDatabase";
 
 export default function HomepageLeaderBoard({
   data,

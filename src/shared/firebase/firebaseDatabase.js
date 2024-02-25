@@ -108,6 +108,29 @@ export class FirebaseDatabase {
    * Read data from the database by checking equality
    * @param {object} userQuery
    * @param {string} userQuery.queryPath
+   * @param {string} userQuery.queryKey
+   * @param {string} userQuery.startQueryKey
+   * @param {any} userQuery.startQueryValue
+   * @param {string} userQuery.endQueryKey
+   * @param {any} userQuery.endQueryValue
+   */
+  static async readDataFromDByStartnEnd(userQuery) {
+    const reference = ref(db, userQuery.queryPath);
+    const equalityQuery = query(
+      reference,
+      orderByChild(userQuery.queryKey),
+      startAt(userQuery.startQueryValue),
+      endAt(userQuery.endQueryValue),
+    );
+
+    const snapshot = await get(equalityQuery);
+
+    return this.getSnapshot(snapshot);
+  }
+  /**
+   * Read data from the database by checking equality
+   * @param {object} userQuery
+   * @param {string} userQuery.queryPath
    * @param {string} userQuery.equalValue
    * @param {any} data
    */

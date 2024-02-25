@@ -3,6 +3,7 @@ import { SignedInUser } from "./SignedInUser";
 
 const REPORT_PATH = "/reports";
 const REPORT_SWEAR_TYPE_CATEGORY = "teamSwearTypes";
+const REPORT_TIMESTAMP = `${REPORT_PATH}/sortedByDateEntries`;
 /**
  * Report is another name for violations
  */
@@ -58,7 +59,7 @@ export class Report {
    * @param {string} query.swearType
    */
   static async reportThisUser(query) {
-    await this.TrackTeamReportType(query.teamID, query.swearTypeID);
+    await this.trackTeamReportType(query.teamID, query.swearTypeID);
 
     const data = new Report({
       dateEntry: Date.now(),
@@ -68,6 +69,7 @@ export class Report {
       teamID: query.teamID,
       swearType: query.swearType,
     });
+    await this.pushReportByDateEntry(query.teamID, data);
     let path = `${REPORT_PATH}/${query.teamID}/${query.reportedID}/${query.swearTypeID}`;
     const pushID = FirebaseDatabase.generateUniqueKey(path);
     await FirebaseDatabase.writeDataToDB({
@@ -78,8 +80,20 @@ export class Report {
 
   /**
    * @private
+   * @param {*} teamID
+   * @param {*} report
    */
-  static async TrackTeamReportType(teamID, swearType) {
+  static async pushReportByDateEntry(teamID, report) {
+    const path = `${REPORT_TIMESTAMP}/${teamID}`;
+    await FirebaseDatabase.pushDataToDB({
+      newData: report,
+      queryPath: path,
+    });
+  }
+  /**
+   * @private
+   */
+  static async trackTeamReportType(teamID, swearType) {
     //Keeps track of the name of the swearType that each team has
     let path = `${REPORT_PATH}/${teamID}/${REPORT_SWEAR_TYPE_CATEGORY}`;
     const savedSwearTypes = await FirebaseDatabase.readDataFromDB({
@@ -202,6 +216,24 @@ export class Report {
   static async getUserReportsByType(teamID, userID, reportType) {
     return await FirebaseDatabase.readDataFromDB({
       queryPath: `${REPORT_PATH}/${teamID}/${userID}/${reportType}`,
+    });
+  }
+  /**
+   *
+   * @param {object} query
+   * @param {string} query.teamID
+   * @param {EpochTimeStamp} query.startTime
+   * @param {EpochTimeStamp} query.endTime
+   */
+  static async getReportsWithinPeriod(query) {
+    let path = `${REPORT_TIMESTAMP}/${query.teamID}`;
+    return await FirebaseDatabase.readDataFromDByStartnEnd({
+      queryPath: path,
+      queryKey: "dateEntry",
+      startQueryKey: "dateEntry",
+      startQueryValue: query.startTime,
+      endQueryKey: "dateEntry",
+      endQueryValue: query.endTime,
     });
   }
 }
