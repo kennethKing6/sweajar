@@ -6,4 +6,5 @@ import { SignedInUser } from "./SignedInUser";
  */
 export class AppState {
   static selectedProfile = SignedInUser.user;
+  static selectUserID;
 }

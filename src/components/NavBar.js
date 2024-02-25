@@ -9,6 +9,8 @@ import AssessmentIcon from "@mui/icons-material/Assessment";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { Border_Sizes } from "../assets/sizes";
+import { AppState } from "../model/AppState";
+import { SignedInUser } from "../model/SignedInUser";
 export default function NavBar({
   onLeaderboardClick,
   onTeamsClick,
@@ -96,7 +98,11 @@ export default function NavBar({
         onMouseOut={(e) => (e.target.style.border = "1px solid transparent")}
       >
         <AccountCircleIcon />
-        <Grid item sx={styles.text}>
+        <Grid
+          item
+          sx={styles.text}
+          onClick={() => (AppState.selectUserID = SignedInUser.user.userID)}
+        >
           Profile
         </Grid>
       </Grid>

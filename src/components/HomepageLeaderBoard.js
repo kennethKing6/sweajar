@@ -32,6 +32,7 @@ import NativeSelect from "@mui/material/NativeSelect";
 import { Teams } from "../model/Teams";
 import { HomePageLeaderBoardController } from "../controllers/homePageLeaderBoardController";
 import { FirebaseDatabase } from "../shared/firebase/firebaseDatabase";
+import { AppState } from "../model/AppState";
 
 export default function HomepageLeaderBoard({
   data,
@@ -58,6 +59,7 @@ export default function HomepageLeaderBoard({
   }, [profanitySorter]);
 
   const handleUserClick = (user) => {
+    AppState.selectUserID = user;
     setSelectedUser(user);
     onPress();
   };
@@ -88,7 +90,11 @@ export default function HomepageLeaderBoard({
                   {sortedData.map((person, index) => (
                     <>
                       {person ? (
-                        <UserItem person={person} index={index} />
+                        <UserItem
+                          person={person}
+                          index={index}
+                          pageDetails={handleUserClick}
+                        />
                       ) : (
                         <></>
                       )}
@@ -115,7 +121,7 @@ export default function HomepageLeaderBoard({
   );
 }
 
-function UserItem({ person, index }) {
+function UserItem({ person, index, pageDetails = () => {} }) {
   const [user, setUser] = useState(null);
   const [highestViolation, setHighestViolation] = useState(null);
   const [highestViolationCount, setHighestViolationCount] = useState("0");
@@ -146,6 +152,7 @@ function UserItem({ person, index }) {
   }, [user]);
   return (
     <ListItem
+      onClick={() => pageDetails(person.userID)}
       key={index}
       sx={{ backgroundColor: "white", marginTop: MARGIN_SIZES.MARGIN_4 }}
     >

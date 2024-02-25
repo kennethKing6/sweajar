@@ -1,27 +1,29 @@
-import React from "react";
+import React, { useEffect, useState, useEff } from "react";
 import { AppState } from "../model/AppState";
+import { SignedInUser } from "../model/SignedInUser";
+import { User } from "../model/User";
 
-export default function UserDetails({ user, onPress = () => {} }) {
-  if (!user) {
-    // If there's no user, return null or some placeholder
-    return null;
-  }
+export default function UserDetails({ onPress = () => {} }) {
+  const [user, setUser] = useState(null);
 
-  const {
-    firstName,
-    lastName,
-    username,
-    profilePicture,
-    violationType,
-    countPerViolation,
-  } = user;
+  useEffect(() => {
+    if (!AppState.selectUserID) {
+      User.getUserByID(SignedInUser.user.userID)
+        .then((data) => setUser(data))
+        .catch();
+    } else {
+      User.getUserByID(AppState.selectUserID)
+        .then((data) => setUser(data))
+        .catch();
+    }
+  }, []);
   return (
     <div onClick={onPress}>
       <h2>User Details</h2>
       <div>
         <img
-          src={AppState.selectedProfile.profilePicture}
-          alt={`${firstName} ${lastName}`}
+          src={user ? user.profilePicture : ""}
+          alt={`${user ? user.firstName : ""} ${user ? user.lastName : ""}`}
           style={{
             maxWidth: "20%",
             maxHeight: "auto",
@@ -32,13 +34,13 @@ export default function UserDetails({ user, onPress = () => {} }) {
       </div>
       <div>
         <p>
-          Name: {AppState.selectedProfile.firstName}{" "}
-          {AppState.selectedProfile.lastName}
+          Name: {user ? user.firstName : ""} {""}
+          {user ? user.lastName : ""}
         </p>
 
         {/* <p>Username: {username}</p> */}
-        <p>Violation Type: {violationType}</p>
-        <p>Count per Violation: {countPerViolation}</p>
+        {/* <p>Violation Type: {violationType}</p>
+        <p>Count per Violation: {countPerViolation}</p> */}
       </div>
     </div>
   );
