@@ -19,6 +19,7 @@ import Button from "./Button";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import { ReportViolationsController } from "../controllers/reportViolationsController";
+import { DefaultViolations } from "../model/DefaultViolations";
 
 export default function ViolationSelectList({
   onPress = () => {},
@@ -108,79 +109,34 @@ export default function ViolationSelectList({
             </ListSubheader>
           }
         >
-          <Tooltip
-            title="Choose this option if the user used inappropriate language"
-            placement="right"
-          >
-            <ListItem
-              onClick={() => {
-                onToggle("Profanity");
-                addDefaultViolation({
-                  name: "Profanity",
-                  description:
-                    "Choose this option if the user used inappropriate language",
-                });
-              }}
-            >
-              <ListItemIcon>
-                <Checkbox
-                  checked={selected.includes("Profanity")}
-                  sx={{ color: "white" }}
-                />
-              </ListItemIcon>
-              <ListItemText sx={{ color: "white" }}>Profanity</ListItemText>
-            </ListItem>
-          </Tooltip>
-
-          <Tooltip
-            title="Choose this option if the user's microphone was muted"
-            placement="right"
-          >
-            <ListItem
-              onClick={() => {
-                onToggle("Muted Microphone");
-                addDefaultViolation({
-                  name: "Muted Microphone",
-                  description:
-                    "Choose this option if the user's microphone was muted",
-                });
-              }}
-            >
-              <ListItemIcon>
-                <Checkbox
-                  checked={selected.includes("Muted Microphone")}
-                  sx={{ color: "white" }}
-                />
-              </ListItemIcon>
-              <ListItemText sx={{ color: "white" }}>
-                Muted Microphone
-              </ListItemText>
-            </ListItem>
-          </Tooltip>
-
-          <Tooltip
-            title="Choose this option if the user joined the meeting late"
-            placement="right"
-          >
-            <ListItem
-              onClick={() => {
-                onToggle("Late Arrival");
-                addDefaultViolation({
-                  name: "Late Arrival",
-                  description:
-                    "Choose this option if the user joined the meeting late",
-                });
-              }}
-            >
-              <ListItemIcon>
-                <Checkbox
-                  checked={selected.includes("Late Arrival")}
-                  sx={{ color: "white" }}
-                />
-              </ListItemIcon>
-              <ListItemText sx={{ color: "white" }}>Late Arrival</ListItemText>
-            </ListItem>
-          </Tooltip>
+          {DefaultViolations.map((violation) => {
+            return (
+              <>
+                {" "}
+                <Tooltip title={violation.description} placement="right">
+                  <ListItem
+                    onClick={() => {
+                      onToggle(violation.name);
+                      addDefaultViolation({
+                        name: violation.name,
+                        description: violation.description,
+                      });
+                    }}
+                  >
+                    <ListItemIcon>
+                      <Checkbox
+                        checked={selected.includes(violation.name)}
+                        sx={{ color: "white" }}
+                      />
+                    </ListItemIcon>
+                    <ListItemText sx={{ color: "white" }}>
+                      {violation.name}
+                    </ListItemText>
+                  </ListItem>
+                </Tooltip>
+              </>
+            );
+          })}
 
           {items.map((item) => (
             <Tooltip title={item.description} placement="right" key={item.id}>
