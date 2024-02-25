@@ -112,7 +112,7 @@ export default function TeamDetails() {
                         }>
                             {HomepageLeaderBoardData && HomepageLeaderBoardData.map((user, index) => (
                                 <ListItem key={index}>
-                                    <Checkbox sx={{color:'white'}}/>
+                                    {/* <Checkbox sx={{color:'white'}}/> */}
                                     <ListItemText primary={`${user.firstName} ${user.lastName}`}/>
                                 </ListItem>
                             ))}
