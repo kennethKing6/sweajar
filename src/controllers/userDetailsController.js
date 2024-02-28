@@ -58,14 +58,12 @@ export class UserDetailsController {
           date: new Date(dateEntry),
           [name]: 1,
         };
-
-        series.push({
-          name: name,
-          dataKey: name,
-        });
       }
+      series.push({
+        name: name,
+        dataKey: name,
+      });
     });
-    console.log(lineOutput);
     const data = Object.values(lineOutput);
     return { data: data, series: series };
   }

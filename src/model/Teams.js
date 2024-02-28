@@ -60,7 +60,7 @@ export class Teams {
 
     const team = await this.getTeam(teamID);
     if (!team) throw new Error("Unauthorized");
-    if (!team.admin !== SignedInUser.user.userID)
+    if (team.admin !== SignedInUser.user.userID)
       throw new Error("Unauthorized");
 
     const user = await User.getUserByEmail(email);

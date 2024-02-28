@@ -109,35 +109,6 @@ export default function ViolationSelectList({
             </ListSubheader>
           }
         >
-          {DefaultViolations.map((violation) => {
-            return (
-              <>
-                {" "}
-                <Tooltip title={violation.description} placement="right">
-                  <ListItem
-                    onClick={() => {
-                      onToggle(violation.name);
-                      addDefaultViolation({
-                        name: violation.name,
-                        description: violation.description,
-                      });
-                    }}
-                  >
-                    <ListItemIcon>
-                      <Checkbox
-                        checked={selected.includes(violation.name)}
-                        sx={{ color: "white" }}
-                      />
-                    </ListItemIcon>
-                    <ListItemText sx={{ color: "white" }}>
-                      {violation.name}
-                    </ListItemText>
-                  </ListItem>
-                </Tooltip>
-              </>
-            );
-          })}
-
           {items.map((item) => (
             <Tooltip title={item.description} placement="right" key={item.id}>
               <ListItem
@@ -161,6 +132,38 @@ export default function ViolationSelectList({
               </ListItem>
             </Tooltip>
           ))}
+          {DefaultViolations.map((violation) => {
+            return (
+              <>
+                {" "}
+                <Tooltip title={violation.description} placement="right">
+                  <ListItem
+                    onClick={() => {
+                      onToggle(violation.name);
+                      addDefaultViolation({
+                        name: violation.name,
+                        description: violation.description,
+                      });
+                    }}
+                  >
+                    <ListItemIcon>
+                      <Checkbox
+                        checked={selected.includes(violation.name)}
+                        sx={{ color: "white" }}
+                      />
+                    </ListItemIcon>
+                    <ListItemText
+                      sx={{ color: "white" }}
+                      primary={violation.name}
+                      secondaryTypographyProps={{ style: { color: "red" } }}
+                      secondary={violation.description}
+                    ></ListItemText>
+                  </ListItem>
+                </Tooltip>
+              </>
+            );
+          })}
+
           <ListItem>
             <Button
               text="Next"
