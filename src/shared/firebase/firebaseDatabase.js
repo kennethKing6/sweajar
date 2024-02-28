@@ -105,7 +105,7 @@ export class FirebaseDatabase {
     return this.getSnapshot(snapshot);
   }
   /**
-   * Read data from the database by checking equality
+   * Read data from the database by checking start time and end time
    * @param {object} userQuery
    * @param {string} userQuery.queryPath
    * @param {string} userQuery.queryKey
@@ -127,6 +127,7 @@ export class FirebaseDatabase {
 
     return this.getSnapshot(snapshot);
   }
+
   /**
    * Read data from the database by checking equality
    * @param {object} userQuery

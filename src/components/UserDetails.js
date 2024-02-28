@@ -10,15 +10,16 @@ import { UserDetailsController } from "../controllers/userDetailsController";
 export default function UserDetails({ onPress = () => {} }) {
   const [user, setUser] = useState(null);
   const [chartData, setChartData] = useState([]);
+  const [lineData, setLineData] = useState([]);
+  const [lineSeries, setLineSeries] = useState([]);
 
-  console.log(user);
   useEffect(() => {
-    if (!AppState.selectUserID) {
-      User.getUserByID(SignedInUser.user.userID)
+    if (AppState.selectUserID) {
+      User.getUserByID(AppState.selectUserID)
         .then((data) => setUser(data))
         .catch();
     } else {
-      User.getUserByID(AppState.selectUserID)
+      User.getUserByID(SignedInUser.user.userID)
         .then((data) => setUser(data))
         .catch();
     }
@@ -31,13 +32,27 @@ export default function UserDetails({ onPress = () => {} }) {
         SignedInUser.user.teamID,
       )
         .then((data) => {
-          console.log(data);
+          // console.log(data);
           setChartData(data);
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
           setChartData([]);
         });
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (user) {
+      UserDetailsController.getMonthLineChartData(
+        user.userID,
+        SignedInUser.user.teamID,
+      )
+        .then(({ data, series }) => {
+          setLineData(data);
+          setLineSeries(series);
+        })
+        .catch();
     }
   }, [user]);
 
@@ -66,7 +81,11 @@ export default function UserDetails({ onPress = () => {} }) {
         ) : (
           <></>
         )}
-        <ViolationsLineChart />
+        {lineData && lineSeries ? (
+          <ViolationsLineChart lineData={lineData} lineSeries={lineSeries} />
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );

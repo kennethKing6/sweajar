@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { LineChart } from "@mui/x-charts/LineChart";
 
 const data = [
@@ -30,30 +30,17 @@ const data = [
 
 const colors = ["#000000", "#2fc6ff", "#ffc658"];
 
-export default function ViolationsLineChart() {
+export default function ViolationsLineChart({ lineData, lineSeries }) {
   return (
     <LineChart
-      dataset={data}
+      dataset={lineData}
       xAxis={[
         {
           dataKey: "date",
           valueFormatter: (date) => new Date(date).toLocaleDateString(),
         },
       ]}
-      series={[
-        {
-          name: "Profanity",
-          dataKey: "profanity",
-        },
-        {
-          name: "Muted Microphone",
-          dataKey: "mutedMicrophone",
-        },
-        {
-          name: "Late Arrival",
-          dataKey: "lateArrival",
-        },
-      ]}
+      series={lineSeries}
       width={500}
       height={400}
       colors={colors}
