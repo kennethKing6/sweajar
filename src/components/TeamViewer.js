@@ -23,6 +23,7 @@ import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import AddTeamMember from "./AddTeamMember";
 import AddIcon from "@mui/icons-material/Add";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
+import { appDimensions } from "../assets/appDimensions";
 
 export default function TeamViewer({ onPress = () => {} }) {
   const [selected, setSelected] = useState();
@@ -58,7 +59,6 @@ export default function TeamViewer({ onPress = () => {} }) {
   }, []);
 
   return (
-    <Grid container spacing={2}>
       <Grid
         item
         xs={12}
@@ -73,8 +73,6 @@ export default function TeamViewer({ onPress = () => {} }) {
       >
         <Box
           sx={{
-            width: "100%",
-            maxWidth: 360,
             bgcolor: "black",
             color: "white",
             padding: 2,
@@ -159,6 +157,5 @@ export default function TeamViewer({ onPress = () => {} }) {
           {showNewTeam && <CreateNewTeam />}
         </Box>
       </Grid>
-    </Grid>
   );
 }

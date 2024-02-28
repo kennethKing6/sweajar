@@ -62,8 +62,6 @@ export default function ViolationSelectList({
   return (
     <Box
       sx={{
-        width: "100%",
-        maxWidth: 360,
         bgcolor: "black",
         color: "white",
         padding: 2,

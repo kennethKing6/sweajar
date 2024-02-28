@@ -63,7 +63,6 @@ export default function TeamDetails({ onAdd = () => {} }) {
   }, []);
 
   return (
-    <Grid container spacing={2}>
       <Grid
         item
         xs={12}
@@ -78,8 +77,6 @@ export default function TeamDetails({ onAdd = () => {} }) {
       >
         <Box
           sx={{
-            width: "100%",
-            maxWidth: 360,
             bgcolor: "black",
             color: "white",
             padding: 2,
@@ -132,21 +129,6 @@ export default function TeamDetails({ onAdd = () => {} }) {
                     <TeamMemberItem userID={member.userID} />
                   </ListItem>
                 ))}
-              {/* {items && Object.entries(items.teamMembers).map(([userID, firstName, lastName]) => (
-                                <ListItem key={userID}>
-                                    <ListItemText primary={firstName} {lastName}/>
-                                </ListItem>
-                            ))} */}
-              {/* {items.map( (item) => (
-                                <ListItem  key={JSON.stringify(item)} onClick={async () => {
-                                    await onToggle(item)
-                                }}>
-                                    <ListItemIcon>
-                                        <Checkbox checked={selected?selected.teamName === item.teamName:null} sx={{color:'white'}}/>
-                                    </ListItemIcon>
-                                    <ListItemText primary={item} sx={{color:'white'}}/>
-                                </ListItem>
-                            ))} */}
             </List>
           )}
           {showAdd && (
@@ -159,7 +141,6 @@ export default function TeamDetails({ onAdd = () => {} }) {
           )}
         </Box>
       </Grid>
-    </Grid>
   );
 }
 function TeamMemberItem({ userID }) {
