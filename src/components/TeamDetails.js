@@ -14,6 +14,7 @@ import {
   Grid,
   Tooltip,
   IconButton,
+  Typography,
 } from "@mui/material";
 import { Teams } from "../model/Teams";
 import { User } from "../model/User";
@@ -171,10 +172,10 @@ function TeamMemberItem({ userID }) {
   return (
     <>
       {user ? (
-        <>
-          <Checkbox sx={{ color: "white" }} />
+        <Grid>
           <ListItemText primary={`${user.firstName} ${user.lastName}`} />
-        </>
+          <Typography>{user.email}</Typography>
+        </Grid>
       ) : (
         <></>
       )}
