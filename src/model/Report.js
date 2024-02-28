@@ -120,6 +120,7 @@ export class Report {
 
   /**
    *
+   * Extracts all the reports that a user has
    * @param {string} userID
    * @returns {{
    *  '[swearTypeID:string]':{

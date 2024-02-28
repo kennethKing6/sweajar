@@ -4,10 +4,14 @@ import { SignedInUser } from "../model/SignedInUser";
 import { User } from "../model/User";
 import UserDetailsChart from "./UserDetailsChart";
 import ViolationsLineChart from "./ViolationsLineChart";
+import { Report } from "../model/Report";
+import { UserDetailsController } from "../controllers/userDetailsController";
 
 export default function UserDetails({ onPress = () => {} }) {
   const [user, setUser] = useState(null);
+  const [chartData, setChartData] = useState([]);
 
+  console.log(user);
   useEffect(() => {
     if (!AppState.selectUserID) {
       User.getUserByID(SignedInUser.user.userID)
@@ -20,14 +24,22 @@ export default function UserDetails({ onPress = () => {} }) {
     }
   }, []);
 
-  // Dummy data
-  const dummyViolationData = [
-    { violationType: "Profanity", countPerViolation: 10 },
-    { violationType: "Spam", countPerViolation: 5 },
-    { violationType: "Disruption", countPerViolation: 8 },
-    { violationType: "Gossip", countPerViolation: 3 },
-    { violationType: "Late", countPerViolation: 6 },
-  ];
+  useEffect(() => {
+    if (user) {
+      UserDetailsController.getMonthBarChartData(
+        user.userID,
+        SignedInUser.user.teamID,
+      )
+        .then((data) => {
+          console.log(data);
+          setChartData(data);
+        })
+        .catch((err) => {
+          console.log(err);
+          setChartData([]);
+        });
+    }
+  }, [user]);
 
   return (
     <div onClick={onPress}>
@@ -49,12 +61,12 @@ export default function UserDetails({ onPress = () => {} }) {
           Name: {user ? user.firstName : ""} {""}
           {user ? user.lastName : ""}
         </p>
-        <UserDetailsChart violationData={dummyViolationData} />
+        {chartData.length > 0 ? (
+          <UserDetailsChart violationData={chartData} />
+        ) : (
+          <></>
+        )}
         <ViolationsLineChart />
-
-        {/* <p>Username: {username}</p> */}
-        {/* <p>Violation Type: {violationType}</p>
-        <p>Count per Violation: {countPerViolation}</p> */}
       </div>
     </div>
   );

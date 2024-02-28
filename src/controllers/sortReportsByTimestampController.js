@@ -2,7 +2,7 @@ import { Report } from "../model/Report";
 import { SignedInUser } from "../model/SignedInUser";
 
 export class SortReportsByTimestampController {
-  static async getLast_ONE_ReportByTeam() {
+  static async getLast_ONE_Month_ReportByTeam() {
     const todaysDate = new Date();
     let lastMonthDate = new Date(todaysDate);
     lastMonthDate = lastMonthDate.setMonth(todaysDate.getMonth() - 1);
@@ -14,7 +14,7 @@ export class SortReportsByTimestampController {
     });
   }
 
-  static async getLast_THREE_MonthReportByTeam() {
+  static async getLast_THREE_Month_ReportByTeam() {
     const todaysDate = new Date();
     let lastMonthDate = new Date(todaysDate);
     lastMonthDate = lastMonthDate.setMonth(todaysDate.getMonth() - 3);
