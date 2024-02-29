@@ -34,11 +34,21 @@ export class User {
    * @param {string} user.email
    */
   constructor(user) {
+    if (!user["teamID"]) throw new Error("teamID required");
     this.teamID = user.teamID || "";
+
+    if (!user["firstName"]) throw new Error("firstName required");
     this.firstName = user.firstName;
+
+    if (!user["lastName"]) throw new Error("lastName required");
     this.lastName = user.lastName;
+
+    if (!user["userID"]) throw new Error("lastName required");
     this.userID = user.userID;
+
+    if (!user["email"]) throw new Error("lastName required");
     this.email = user.email;
+
     try {
       this.profilePicture =
         user.profilePicture ||
@@ -91,7 +101,7 @@ export class User {
       queryPath: `/users/${userCredentials.user.uid}`,
     });
 
-    SignedInUser.user = new User(result);
+    SignedInUser.user = this.createUserInstance(result);
     UserReduxActions.setSignedInUser(SignedInUser.user);
     AppState.selectedProfile = SignedInUser.user;
   }
@@ -104,7 +114,10 @@ export class User {
   }
 
   static async updateCurrentTeam(teamID) {
-    if (!SignedInUser.user) await FirebaseAuth.signOutUser();
+    if (!SignedInUser.user) {
+      await this.signOut();
+      return;
+    }
 
     await FirebaseDatabase.writeDataToDB({
       data: teamID,
@@ -126,35 +139,9 @@ export class User {
       //check if user requesting is saved under that company
       if (!result) throw new Error("Unauthorized");
 
-      const user = new User(result);
+      const user = this.createUserInstance(result);
 
-      if (user.teamID !== teamID) throw new Error("UnAuthorized");
-
-      const users = await FirebaseDatabase.readDataFromDByEquality({
-        equalValue: teamID,
-        queryKey: "teamID",
-        queryPath: "/users",
-      });
-      return Object.values(users);
-    }
-
-    return [];
-  }
-
-  static async getUsersByteamIDByProfanity(userID, teamID) {
-    if (userID && teamID) {
-      var result = await FirebaseDatabase.readDataFromDByEquality({
-        equalValue: userID,
-        queryKey: "/userID",
-        queryPath: "/users",
-      });
-      result = Object.values(result)[0];
-      //check if user requesting is saved under that company
-      if (!result) throw new Error("Unauthorized");
-
-      const user = new User(result);
-
-      if (user.teamID !== teamID) throw new Error("UnAuthorized");
+      if (user.teamID !== teamID) throw new Error("Unauthorized");
 
       const users = await FirebaseDatabase.readDataFromDByEquality({
         equalValue: teamID,
@@ -175,7 +162,8 @@ export class User {
     const user = await FirebaseDatabase.readDataFromDB({
       queryPath: `/users/${userID}`,
     });
-    UserReduxActions.setSignedInUser(new User(user));
+    const createdUser = new User(user);
+    UserReduxActions.setSignedInUser(createdUser);
     return user;
   }
 
@@ -185,17 +173,13 @@ export class User {
    * @returns {User | null}
    */
   static async getUserByEmail(email) {
-    const data = await FirebaseDatabase.readDataFromDByEquality({
-      equalValue: email,
-      queryKey: "email",
-      queryPath: "/users",
-    });
+    const data = await this.readUserFirebaseData("email", email);
     let result;
     for (let key in data) {
       result = data[key];
       if (!result) break;
     }
-    UserReduxActions.setSignedInUser(new User(result));
+    UserReduxActions.setSignedInUser(this.createUserInstance(result));
 
     return result;
   }
@@ -207,9 +191,9 @@ export class User {
           queryPath: `/users/${user.uid}`,
         });
         if (result) {
-          SignedInUser.user = new User(result);
+          SignedInUser.user = this.createUserInstance(result);
           AppState.selectedProfile = SignedInUser.user;
-          UserReduxActions.setSignedInUser(new User(result));
+          UserReduxActions.setSignedInUser(this.createUserInstance(result));
           callback(user);
         } else {
           callback(null);
@@ -219,6 +203,22 @@ export class User {
         callback(null);
         UserReduxActions.setSignedInUser(null);
       }
+    });
+  }
+
+  /**
+   *
+   * @param {object} user
+   */
+  static createUserInstance(user) {
+    return new User(user);
+  }
+
+  static async readUserFirebaseData(queryKey, equalValue) {
+    return await FirebaseDatabase.readDataFromDByEquality({
+      equalValue: equalValue,
+      queryKey: queryKey,
+      queryPath: "/users",
     });
   }
 }
