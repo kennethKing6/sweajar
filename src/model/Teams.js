@@ -21,6 +21,7 @@ export class Teams {
         teamID: teamID,
       },
     });
+    return teamID;
   }
 
   /**
@@ -41,7 +42,7 @@ export class Teams {
     if (!team) throw new Error("Unauthorized");
     if (team.admin !== SignedInUser.user.userID) {
       alert("Only team admin can a new teammate");
-      throw new Error("Unauthorized");
+      throw new Error("Only team admin can a new teammate");
     }
     const user = await User.getUserByEmail(email);
     const newTeamMember = {
@@ -53,6 +54,7 @@ export class Teams {
       data: newTeamMember,
       queryPath: `/${PARTICIPATING_TEAM}/${team.teamID}/${user.userID}`,
     });
+    return newTeamMember;
   }
 
   static async deleteTeamMember(email, teamID) {
@@ -61,12 +63,13 @@ export class Teams {
     const team = await this.getTeam(teamID);
     if (!team) throw new Error("Unauthorized");
     if (team.admin !== SignedInUser.user.userID)
-      throw new Error("Unauthorized");
+      throw new Error("Only team admin can a new teammate");
 
     const user = await User.getUserByEmail(email);
     await FirebaseDatabase.deleteDataFromDB({
       queryPath: `/${PARTICIPATING_TEAM}/${teamID}/${user.userID}`,
     });
+    return user;
   }
 
   /**

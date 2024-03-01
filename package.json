@@ -27,6 +27,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "test:watch": "npx react-scripts test --watch  ",
     "build": "react-scripts build",
     "test": "react-scripts test src --colors --coverage",
     "eject": "react-scripts eject",

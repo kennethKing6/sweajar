@@ -99,8 +99,4 @@ export class SwearType {
       queryPath: `${SWEAR_TYPE_PATH}/${teamID}/${swearTypeID}`,
     });
   }
-
-  static async k() {
-    console.log("l");
-  }
 }
