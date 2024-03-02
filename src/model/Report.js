@@ -90,6 +90,37 @@ export class Report {
     });
   }
 
+  static async trackTeamReportTypeAlternate(teamID, swearType) {
+    //Keeps track of the name of the swearType that each team has
+    let path = `${REPORT_PATH}/${teamID}/${REPORT_SWEAR_TYPE_CATEGORY}`;
+    const savedSwearTypes = await FirebaseDatabase.readDataFromDB({
+      queryPath: path,
+    });
+    var swearTypeSet;
+    if (savedSwearTypes) {
+      swearTypeSet = new Set(savedSwearTypes);
+      swearTypeSet.add(swearType);
+      await FirebaseDatabase.writeDataToDB({
+        data: [...swearTypeSet],
+        queryPath: path,
+      });
+    } else {
+      swearTypeSet = new Set();
+      swearTypeSet.add("All");
+      swearTypeSet.add(swearType);
+      await FirebaseDatabase.writeDataToDB({
+        data: [...swearTypeSet],
+        queryPath: path,
+      });
+    }
+    return swearTypeSet;
+  }
+
+  /**
+   * @private
+   * @param {*} teamID
+   * @param {*} swearType
+   */
   static async trackTeamReportType(teamID, swearType) {
     //Keeps track of the name of the swearType that each team has
     let path = `${REPORT_PATH}/${teamID}/${REPORT_SWEAR_TYPE_CATEGORY}`;
@@ -108,13 +139,12 @@ export class Report {
       swearTypeSet = new Set();
       swearTypeSet.add("All");
       swearTypeSet.add(swearType);
-
       await FirebaseDatabase.writeDataToDB({
         data: [...swearTypeSet],
         queryPath: path,
       });
     }
-    return "yes";
+    return swearTypeSet;
   }
 
   /**
