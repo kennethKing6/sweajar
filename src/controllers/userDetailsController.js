@@ -37,7 +37,7 @@ export class UserDetailsController {
       );
     const lineOutput = {};
     const series = [];
-    reports.map((report) => {
+    reports.forEach((report) => {
       const {
         dateEntry = new Date(),
         swearType: { name = "" },
