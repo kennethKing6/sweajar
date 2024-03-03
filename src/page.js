@@ -1,25 +1,14 @@
 "use client";
-import { Provider } from "react-redux";
-import Button from "./components/Button";
 import UsersList from "./components/UsersList";
 import React, { useEffect, useState } from "react";
 import ViolationSelectList from "./components/ViolationSelectList";
 import Grid from "@mui/material/Grid";
-import ReportButton from "./components/ReportButton";
-import ReportList from "./components/HomepageLeaderBoard";
 import HomepageLeaderBoard from "./components/HomepageLeaderBoard";
-import { FirebaseAuth } from "./shared/firebase/firebaseAuth";
-import { SignedInUser } from "./model/SignedInUser";
 import { User } from "./model/User";
 import Welcome from "./components/Welcome";
 import UserDetails from "./components/UserDetails";
 import NavBar from "./components/NavBar";
 import TeamViewer from "./components/TeamViewer";
-import { reduxStore } from "./shared/redux/reduxStore";
-import { ThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-import { CacheProvider } from "@emotion/react";
-import createCache from "@emotion/cache";
 import { appDimensions } from "./assets/appDimensions";
 import TeamDetails from "./components/TeamDetails";
 
@@ -29,8 +18,6 @@ const HOMEPAGE_LEADERBOARD = "leaderboard";
 const USER_DETAILS_COMPONENT = "userDetails";
 const TEAM_VIEWER_COMPONENT = "teamViewer";
 const TEAM_DETAILS_COMPONENT = "teamDetails";
-
-const cache = createCache({ key: "css", prepend: true });
 
 export default function Page({ Component, pageProps }) {
   return <App {...pageProps} />;

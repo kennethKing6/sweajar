@@ -1,4 +1,4 @@
-import { Grid, List, TextField } from "@mui/material";
+import { Grid } from "@mui/material";
 import React from "react";
 import { User } from "../model/User";
 import LeaderboardIcon from "@mui/icons-material/Leaderboard";

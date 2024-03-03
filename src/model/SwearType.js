@@ -1,5 +1,4 @@
 import { FirebaseDatabase } from "../shared/firebase/firebaseDatabase";
-import { SignedInUser } from "./SignedInUser";
 
 const SWEAR_TYPE_PATH = "/swearType";
 

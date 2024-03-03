@@ -7,10 +7,8 @@ import {
   ListSubheader,
   ListItemIcon,
   ListItemText,
-  TextField,
   Button,
   Checkbox,
-  Divider,
   Grid,
   Tooltip,
   IconButton,
@@ -20,9 +18,7 @@ import { User } from "../model/User";
 import { SignedInUser } from "../model/SignedInUser";
 import CreateNewTeam from "./CreateNewTeam";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
-import AddTeamMember from "./AddTeamMember";
 import AddIcon from "@mui/icons-material/Add";
-import GroupAddIcon from "@mui/icons-material/GroupAdd";
 
 export default function TeamViewer({ onPress = () => {} }) {
   const [selected, setSelected] = useState();

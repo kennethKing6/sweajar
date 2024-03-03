@@ -14,7 +14,6 @@ import {
   update,
   startAt,
   endAt,
-  DataSnapshot,
 } from "firebase/database";
 import { FirebaseConfigs } from "./FirebaseConfig";
 

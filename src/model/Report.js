@@ -23,9 +23,6 @@ export class Report {
   /**@type {EpochTimeStamp} */
   dateEntry;
 
-  /**@type {string} */
-  teamID;
-
   /**@type {object} */
   swearType;
 

@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 import { SwearType } from "../model/SwearType";
 import { SignedInUser } from "../model/SignedInUser";
-import ReportButton from "./ReportButton";
 import AddSwearType from "./AddSwearType";
 import Button from "./Button";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";

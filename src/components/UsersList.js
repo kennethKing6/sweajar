@@ -3,8 +3,6 @@ import {
   Grid,
   Avatar,
   Typography,
-  Divider,
-  Button,
   List,
   ListItem,
   ListItemButton,
@@ -48,9 +46,9 @@ export default function UsersList({ onPress = () => {} }) {
             alert("Successfully added violatons");
             setChecked([]);
           } catch (err) {
-            err = `${err}`;
-            err = err.replace("Error:", "");
-            alert(err);
+            let errMessage = `${err}`;
+            errMessage = errMessage.replace("Error:", "");
+            alert(errMessage);
           }
         }}
         bgColor={Colors.BUTTON_PRIMARY_COLOR}

@@ -5,12 +5,7 @@ import {
   List,
   ListItem,
   ListSubheader,
-  ListItemIcon,
   ListItemText,
-  TextField,
-  Button,
-  Checkbox,
-  Divider,
   Grid,
   Tooltip,
   IconButton,
@@ -22,22 +17,12 @@ import { SignedInUser } from "../model/SignedInUser";
 import AddTeamMember from "./AddTeamMember";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
-import GroupRemoveIcon from "@mui/icons-material/GroupRemove";
 
 export default function TeamDetails({ onAdd = () => {} }) {
-  const [selected, setSelected] = useState();
-  const [items, setItems] = useState(null);
   const [teamMemberEmail, setTeamMemberEmail] = useState("");
   const [showTeamMembers, setShowTeamMembers] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
   const [teamMembers, setTeamMembers] = useState([]);
-  const onToggle = async (item) => {
-    if (selected && selected.teamName === item.teamName) setSelected(null);
-    else {
-      setSelected(item);
-      await User.updateCurrentTeam(item.teamID);
-    }
-  };
 
   const onAddTeamMember = async (teamMemberEmail, teamID) => {
     // Validate the input fields

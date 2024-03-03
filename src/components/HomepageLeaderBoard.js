@@ -4,7 +4,6 @@ import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import { Avatar, Stack, Typography } from "@mui/material";
-import SortButton from "./SortButton";
 import { User } from "../model/User";
 import { SignedInUser } from "../model/SignedInUser";
 import { Report } from "../model/Report";
@@ -17,21 +16,13 @@ import {
 } from "@mui/material";
 import { Colors } from "../assets/colors";
 import { FontSizes } from "../assets/fonts";
-import { Charts } from "react-charts";
 import LeaderboardChart from "./LeaderboardChart";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import { MARGIN_SIZES } from "../assets/sizes";
 import { appDimensions } from "../assets/appDimensions";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import { width_sizes } from "../assets/width";
 import NativeSelect from "@mui/material/NativeSelect";
-import { Teams } from "../model/Teams";
 import { HomePageLeaderBoardController } from "../controllers/homePageLeaderBoardController";
-import { FirebaseDatabase } from "../shared/firebase/firebaseDatabase";
 import { AppState } from "../model/AppState";
 
 export default function HomepageLeaderBoard({
@@ -44,6 +35,7 @@ export default function HomepageLeaderBoard({
   const [selectedUser, setSelectedUser] = useState(null);
   const [profanitySorter, setProfanitySorter] = useState(null);
 
+  console.log(selectedUser);
   useEffect(() => {
     if (!profanitySorter || profanitySorter === "All") {
       HomePageLeaderBoardController.getAllTeamMembers()
@@ -125,8 +117,9 @@ function UserItem({ person, index, pageDetails = () => {} }) {
   const [user, setUser] = useState(null);
   const [highestViolation, setHighestViolation] = useState(null);
   const [highestViolationCount, setHighestViolationCount] = useState("0");
-  const [violationColor, setViolationColor] = useState(Colors.ACCENT_COLOR_2);
   const [chartData, setChartData] = useState([]);
+
+  const violationColor = Colors.ACCENT_COLOR_2;
 
   useEffect(() => {
     User.getUserByID(person.userID)
@@ -135,7 +128,7 @@ function UserItem({ person, index, pageDetails = () => {} }) {
         console.log(err);
         setUser(null);
       });
-  }, []);
+  }, [person]);
   useEffect(() => {
     Report.getTheHighestViolationByUserID(
       person.userID,
@@ -149,7 +142,7 @@ function UserItem({ person, index, pageDetails = () => {} }) {
         setChartData(data.sortedViolations);
       })
       .catch((err) => console.error(err));
-  }, [user]);
+  }, [user, person]);
   return (
     <ListItem
       onClick={() => pageDetails(person.userID)}

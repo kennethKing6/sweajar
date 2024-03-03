@@ -1,10 +1,9 @@
-import React, { useEffect, useState, useEff } from "react";
+import React, { useEffect, useState } from "react";
 import { AppState } from "../model/AppState";
 import { SignedInUser } from "../model/SignedInUser";
 import { User } from "../model/User";
 import UserDetailsChart from "./UserDetailsChart";
 import ViolationsLineChart from "./ViolationsLineChart";
-import { Report } from "../model/Report";
 import { UserDetailsController } from "../controllers/userDetailsController";
 
 export default function UserDetails({ onPress = () => {} }) {

@@ -1,6 +1,6 @@
 import { Report } from "../model/Report";
 import { SignedInUser } from "../model/SignedInUser";
-import { User } from "../model/User";
+// import { User } from "../model/User";
 
 export class ReportViolationsController {
   /**

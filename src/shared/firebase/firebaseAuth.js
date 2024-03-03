@@ -1,13 +1,10 @@
 import { FirebaseConfigs } from "./FirebaseConfig";
 import {
-  GoogleAuthProvider,
-  signInWithRedirect,
   signInAnonymously,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-  User,
 } from "firebase/auth";
 
 const auth = FirebaseConfigs.firebaseAuth;
