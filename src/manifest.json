@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Swearjar",
+  "name": "Swearjar",
   "manifest_version": 3,
   "version": "1.0.0",
   "start_url": ".",
