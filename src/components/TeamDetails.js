@@ -7,6 +7,7 @@ import {
   ListSubheader,
   ListItemIcon,
   ListItemText,
+  ListItemAvatar,
   TextField,
   Button,
   Checkbox,
@@ -15,6 +16,7 @@ import {
   Tooltip,
   IconButton,
   Typography,
+  Avatar,
 } from "@mui/material";
 import { Teams } from "../model/Teams";
 import { User } from "../model/User";
@@ -31,27 +33,20 @@ export default function TeamDetails({ onAdd = () => {} }) {
   const [showTeamMembers, setShowTeamMembers] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
   const [teamMembers, setTeamMembers] = useState([]);
-  const onToggle = async (item) => {
-    if (selected && selected.teamName === item.teamName) setSelected(null);
-    else {
-      setSelected(item);
-      await User.updateCurrentTeam(item.teamID);
-    }
-  };
 
-  const onAddTeamMember = async (teamMemberEmail, teamID) => {
-    // Validate the input fields
-    if (!teamMemberEmail) {
-      alert("Please enter an email for the new team member.");
-      return;
-    }
-    // Add a new team member
-    const newTeamMember = await Teams.addTeamMember(teamMemberEmail, teamID);
-    onAdd(newTeamMember);
-    // Clear the input fields
-    setTeamMemberEmail("");
-    alert("Successfully Added Team Member");
-  };
+  // const onAddTeamMember = async (teamMemberEmail, teamID) => {
+  //   // Validate the input fields
+  //   if (!teamMemberEmail) {
+  //     alert("Please enter an email for the new team member.");
+  //     return;
+  //   }
+  //   // Add a new team member
+  //   const newTeamMember = await Teams.addTeamMember(teamMemberEmail, teamID);
+  //   onAdd(newTeamMember);
+  //   // Clear the input fields
+  //   setTeamMemberEmail("");
+  //   alert("Successfully Added Team Member");
+  // };
 
   useEffect(() => {
     // Fetch the list items from the database
@@ -84,7 +79,7 @@ export default function TeamDetails({ onAdd = () => {} }) {
           }}
         >
           <Box display={"flex"}>
-            <h1>{/* {items.teamName}*/}Team Details</h1>
+            <h1>Team Details</h1>
             <Tooltip title="Show Team Members" placement="top">
               <IconButton
                 onClick={() => {
@@ -132,12 +127,7 @@ export default function TeamDetails({ onAdd = () => {} }) {
             </List>
           )}
           {showAdd && (
-            <AddTeamMember
-              teamMemberEmail={teamMemberEmail}
-              setTeamMemberEmail={setTeamMemberEmail}
-              onAddTeamMember={onAddTeamMember}
-              teamID={SignedInUser.user.teamID}
-            />
+            <AddTeamMember/>
           )}
         </Box>
       </Grid>
@@ -153,9 +143,20 @@ function TeamMemberItem({ userID }) {
   return (
     <>
       {user ? (
-        <Grid>
-          <ListItemText primary={`${user.firstName} ${user.lastName}`} />
-          <Typography>{user.email}</Typography>
+        <Grid container alignItems={"center"}>
+          <Grid item>
+            <ListItemAvatar>
+              {user ? (
+                <Avatar alt={`${user.firstName}`} src={user.profilePicture} />
+              ) : (
+                <></>
+              )}
+            </ListItemAvatar>
+          </Grid>
+          <Grid item>
+            <ListItemText primary={`${user.firstName} ${user.lastName}`} />
+            <Typography>{user.email}</Typography>
+          </Grid>
         </Grid>
       ) : (
         <></>
