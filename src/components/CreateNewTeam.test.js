@@ -1,18 +1,17 @@
 import "../model/__mocks__/SwearType";
 import "../shared/firebase/__mock__/mockFirebase";
 import "../model/__mocks__/User";
-import { render, fireEvent } from "@testing-library/react";
+import { render, fireEvent, act } from "@testing-library/react";
 import React from "react";
 import { User } from "../model/User";
 import { SignedInUser } from "../model/SignedInUser";
 import { Teams } from "../model/Teams";
 import CreateNewTeam from "../components/CreateNewTeam";
 
+window.alert = jest.fn();
+
 jest.mock('../model/Teams');
 
-// SignedInUser.user = {
-//     userID:"userID"
-// }
 jest.mock('../model/AppState', () => ({
     user: { userID: "userID" }
 }));
@@ -41,10 +40,11 @@ describe('CreateNewTeam', () => {
 
         Teams.createTeam.mockResolvedValue({ id: '1', name: teamName });
 
-        fireEvent.change(teamNameInput, { target: { value: teamName }});
-        fireEvent.click(createButton);
+        await act( async () => {
+            fireEvent.change(teamNameInput, { target: { value: teamName }});
+            fireEvent.click(createButton);
+        });
 
-        const teams = await Teams.createTeam("name");
         await expect(Teams.createTeam).toHaveBeenCalledWith(teamName);
     });
 
