@@ -5,13 +5,8 @@ import {
   List,
   ListItem,
   ListSubheader,
-  ListItemIcon,
   ListItemText,
   ListItemAvatar,
-  TextField,
-  Button,
-  Checkbox,
-  Divider,
   Grid,
   Tooltip,
   IconButton,
@@ -24,29 +19,11 @@ import { SignedInUser } from "../model/SignedInUser";
 import AddTeamMember from "./AddTeamMember";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
-import GroupRemoveIcon from "@mui/icons-material/GroupRemove";
 
-export default function TeamDetails({ onAdd = () => {} }) {
-  const [selected, setSelected] = useState();
-  const [items, setItems] = useState(null);
-  const [teamMemberEmail, setTeamMemberEmail] = useState("");
+export default function TeamDetails() {
   const [showTeamMembers, setShowTeamMembers] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
   const [teamMembers, setTeamMembers] = useState([]);
-
-  // const onAddTeamMember = async (teamMemberEmail, teamID) => {
-  //   // Validate the input fields
-  //   if (!teamMemberEmail) {
-  //     alert("Please enter an email for the new team member.");
-  //     return;
-  //   }
-  //   // Add a new team member
-  //   const newTeamMember = await Teams.addTeamMember(teamMemberEmail, teamID);
-  //   onAdd(newTeamMember);
-  //   // Clear the input fields
-  //   setTeamMemberEmail("");
-  //   alert("Successfully Added Team Member");
-  // };
 
   useEffect(() => {
     // Fetch the list items from the database
