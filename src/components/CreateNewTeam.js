@@ -36,7 +36,7 @@ export default function CreateNewTeam({ onAdd = () => {} }) {
           id="newTeam-list-subheader"
           sx={{ color: "white", bgcolor: "black" }}
         >
-          Create a New Team
+          Create a New Team / Delete a Team
         </ListSubheader>
       }
     >
@@ -65,9 +65,23 @@ export default function CreateNewTeam({ onAdd = () => {} }) {
             "&:hover": {
               backgroundColor: "#FFC107",
             },
+            marginRight: "10px",
           }}
         >
           Create
+        </Button>
+        <Button
+          variant="contained"
+          //onClick={}
+          sx={{
+            backgroundColor: "#FFEB3B",
+            color: "black",
+            "&:hover": {
+              backgroundColor: "#FFC107",
+            },
+          }}
+        >
+          Delete
         </Button>
       </ListItem>
     </List>

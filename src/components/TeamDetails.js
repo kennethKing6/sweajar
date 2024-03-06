@@ -69,7 +69,7 @@ export default function TeamDetails() {
                 />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Add Team Member" placement="top">
+            <Tooltip title="Add/Delete Team Member" placement="top">
               <IconButton
                 onClick={() => {
                   setShowTeamMembers(false);
