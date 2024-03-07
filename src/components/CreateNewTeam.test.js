@@ -1,7 +1,7 @@
 import "../model/__mocks__/SwearType";
 import "../shared/firebase/__mock__/mockFirebase";
 import "../model/__mocks__/User";
-import { render, fireEvent, act } from "@testing-library/react";
+import { render, fireEvent, act, waitFor } from "@testing-library/react";
 import React from "react";
 import { User } from "../model/User";
 import { SignedInUser } from "../model/SignedInUser";
@@ -21,19 +21,17 @@ jest.mock('../model/SignedInUser', () => ({
 }));
 
 describe('CreateNewTeam', () => {
-    let mockOnAdd;
 
     beforeEach(() => {
-        mockOnAdd = jest.fn();
         Teams.createTeam.mockClear();
     });
 
     it('renders without crashing', () => {
-        render(<CreateNewTeam onAdd={mockOnAdd} />);
+        render(<CreateNewTeam />);
     });
 
     it('calls Teams.createTeam when form is submitted', async () => {
-        const { getByLabelText, getByText } = render(<CreateNewTeam onAdd={mockOnAdd}/>);
+        const { getByLabelText, getByText } = render(<CreateNewTeam />);
         const teamNameInput = getByLabelText('Team Name');
         const createButton = getByText('Create');
         const teamName = 'Test Team';
@@ -45,15 +43,21 @@ describe('CreateNewTeam', () => {
             fireEvent.click(createButton);
         });
 
-        await expect(Teams.createTeam).toHaveBeenCalledWith(teamName);
+        await waitFor(() => {
+            expect(Teams.createTeam).toHaveBeenCalledWith(teamName);
+            expect(window.alert).toHaveBeenCalledWith('Team Creation Successful');
+        });
     });
 
-    it('does not call Teams.createTeam when team name is empty', () => {
+    it('does not call Teams.createTeam when team name is empty', async () => {
         const { getByText } = render(<CreateNewTeam />);
         const createButton = getByText('Create');
     
         fireEvent.click(createButton);
     
         expect(Teams.createTeam).not.toHaveBeenCalled();
+        await waitFor(() => {
+            expect(window.alert).toHaveBeenCalledWith('Please enter a name for the new team.');
+        });
     });
 });
