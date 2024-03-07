@@ -103,7 +103,6 @@ function App() {
         onProfileClick={() => setSwitcher(USER_DETAILS_COMPONENT)}
         onTeamsClick={() => setSwitcher(TEAM_VIEWER_COMPONENT)}
         onLogout={() => setSwitcher(HOMEPAGE_LEADERBOARD)}
-        style={{ zIndex: 1000 }}
       />
       {user ? (
         <>

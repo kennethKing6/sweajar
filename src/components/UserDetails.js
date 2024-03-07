@@ -6,6 +6,18 @@ import UserDetailsChart from "./UserDetailsChart";
 import ViolationsLineChart from "./ViolationsLineChart";
 import { Report } from "../model/Report";
 import { UserDetailsController } from "../controllers/userDetailsController";
+import { FontSizes } from "../assets/fonts";
+import {
+  Accordion,
+  Divider,
+  ListItem,
+  ListItemText,
+  AccordionSummary,
+  AccordionDetails,
+} from "@mui/material";
+import { ExpandMoreRounded } from "@mui/icons-material";
+import { Colors } from "../assets/colors";
+import { DefaultViolations } from "../model/DefaultViolations";
 
 export default function UserDetails({ onPress = () => {} }) {
   const [user, setUser] = useState(null);
@@ -57,36 +69,130 @@ export default function UserDetails({ onPress = () => {} }) {
   }, [user]);
 
   return (
-    <div onClick={onPress}>
-      <h2>User Details</h2>
-      <div>
+    <div style={{ textAlign: "center", marginTop: "5%" }}>
+      <div onClick={onPress}>
         <img
           src={user ? user.profilePicture : ""}
           alt={`${user ? user.firstName : ""} ${user ? user.lastName : ""}`}
           style={{
-            maxWidth: "20%",
+            maxWidth: 300,
             maxHeight: "auto",
             borderRadius: "50%",
             padding: 2,
+            backgroundColor: Colors.ACCENT_COLOR_3,
           }}
         />
       </div>
       <div>
-        <p>
-          Name: {user ? user.firstName : ""} {""}
+        <p
+          style={{
+            fontWeight: "bolder",
+            fontSize: FontSizes.titleFontSize,
+            fontFamily: '"Noto Sans',
+          }}
+        >
+          {user ? user.firstName : ""} {""}
           {user ? user.lastName : ""}
         </p>
+        <p
+          style={{
+            fontWeight: "bold",
+            fontSize: FontSizes.largeFontSize,
+            fontFamily: '"Noto Sans',
+            color: "#E6B545",
+          }}
+        >
+          Analysis
+        </p>
+
         {chartData.length > 0 ? (
-          <UserDetailsChart violationData={chartData} />
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreRounded />}
+              aria-controls="panel1-content"
+              id="panel1-header"
+            >
+              Violations Overview
+            </AccordionSummary>
+            <AccordionDetails>
+              <UserDetailsChart violationData={chartData} />
+            </AccordionDetails>
+          </Accordion>
         ) : (
-          <></>
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreRounded />}
+              aria-controls="panel1-content"
+              id="panel1-header"
+            >
+              Violations Overview
+            </AccordionSummary>
+            <AccordionDetails>
+              No graph available at the moment
+            </AccordionDetails>
+          </Accordion>
         )}
-        {lineData && lineSeries ? (
-          <ViolationsLineChart lineData={lineData} lineSeries={lineSeries} />
+        {lineData.length > 0 && lineSeries.length > 0 ? (
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreRounded />}
+              aria-controls="panel1-content"
+              id="panel1-header"
+            >
+              Violations Timelines
+            </AccordionSummary>
+            <AccordionDetails>
+              <ViolationsLineChart
+                lineData={lineData}
+                lineSeries={lineSeries}
+              />
+            </AccordionDetails>
+          </Accordion>
+        ) : (
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreRounded />}
+              aria-controls="panel1-content"
+              id="panel1-header"
+            >
+              Violations Timelines
+            </AccordionSummary>
+            <AccordionDetails>
+              No graph available at the moment
+            </AccordionDetails>
+          </Accordion>
+        )}
+
+        {chartData.length > 0 ? (
+          chartData.map((data) => {
+            return <ViolationType data={data} />;
+          })
         ) : (
           <></>
         )}
       </div>
     </div>
+  );
+}
+function ViolationType({ data }) {
+  const [description, setDescription] = useState("");
+  useEffect(() => {
+    DefaultViolations.forEach(({ name, description }) => {
+      if (name === data["violationType"]) setDescription(description);
+    });
+  }, [data]);
+  return (
+    <>
+      <ListItem
+        alignItems="flex-start"
+        secondaryAction={<p>{data["countPerViolation"]}</p>}
+      >
+        <ListItemText
+          primary={data["violationType"]}
+          secondary={<p>{description}</p>}
+        />
+      </ListItem>
+      <Divider variant="inset" component="li" />
+    </>
   );
 }
