@@ -12,14 +12,18 @@ export default function Signup({ onBackButton = () => {} }) {
   const [lastName, setLastName] = useState("");
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    await User.createAccount({
-      email: email,
-      firstName: firstName,
-      lastName: lastName,
-      password: password,
-    });
-    window.alert("Account was successfully created");
+    try {
+      e.preventDefault();
+      await User.createAccount({
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+        password: password,
+      });
+      window.alert("Account was successfully created");
+    } catch (err) {
+      alert(err);
+    }
     // Handle form submission here
   };
 

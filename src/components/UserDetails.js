@@ -26,15 +26,17 @@ export default function UserDetails({ onPress = () => {} }) {
   const [lineSeries, setLineSeries] = useState([]);
 
   useEffect(() => {
-    if (AppState.selectUserID) {
-      User.getUserByID(AppState.selectUserID)
-        .then((data) => setUser(data))
-        .catch();
-    } else {
-      User.getUserByID(SignedInUser.user.userID)
-        .then((data) => setUser(data))
-        .catch();
-    }
+    try {
+      if (AppState.selectUserID) {
+        User.getUserByID(AppState.selectUserID)
+          .then((data) => setUser(data))
+          .catch();
+      } else {
+        User.getUserByID(SignedInUser.user.userID)
+          .then((data) => setUser(data))
+          .catch();
+      }
+    } catch (err) {}
   }, []);
 
   useEffect(() => {

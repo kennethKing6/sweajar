@@ -31,40 +31,44 @@ export class UserDetailsController {
    * @returns {Promise <{data:Array,series:Array}>}
    */
   static async getMonthLineChartData(userID) {
-    const reports =
-      await SortReportsByTimestampController.getLast_ONE_Month_ReportByUserID(
-        userID,
-      );
-    const lineOutput = {};
-    const series = [];
-    reports.map((report) => {
-      const {
-        dateEntry = new Date(),
-        swearType: { name = "" },
-      } = report;
-      //extract the date of the report
-      let day = new Date(dateEntry);
-      day.setMilliseconds(0);
-      day.setSeconds(0);
-      day.setMinutes(0);
-      day.setHours(0);
+    try {
+      const reports =
+        await SortReportsByTimestampController.getLast_ONE_Month_ReportByUserID(
+          userID,
+        );
+      const lineOutput = {};
+      const series = [];
+      reports.map((report) => {
+        const {
+          dateEntry = new Date(),
+          swearType: { name = "" },
+        } = report;
+        //extract the date of the report
+        let day = new Date(dateEntry);
+        day.setMilliseconds(0);
+        day.setSeconds(0);
+        day.setMinutes(0);
+        day.setHours(0);
 
-      if (lineOutput[day]) {
-        lineOutput[day][name] = lineOutput[day][name]
-          ? lineOutput[day][name] + 1
-          : 1;
-      } else {
-        lineOutput[day] = {
-          date: new Date(dateEntry),
-          [name]: 1,
-        };
-      }
-      series.push({
-        name: name,
-        dataKey: name,
+        if (lineOutput[day]) {
+          lineOutput[day][name] = lineOutput[day][name]
+            ? lineOutput[day][name] + 1
+            : 1;
+        } else {
+          lineOutput[day] = {
+            date: new Date(dateEntry),
+            [name]: 1,
+          };
+        }
+        series.push({
+          name: name,
+          dataKey: name,
+        });
       });
-    });
-    const data = Object.values(lineOutput);
-    return { data: data, series: series };
+      const data = Object.values(lineOutput);
+      return { data: data, series: series };
+    } catch (err) {
+      return [];
+    }
   }
 }

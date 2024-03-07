@@ -34,19 +34,18 @@ export class User {
    * @param {string} user.email
    */
   constructor(user) {
-    if (!user["teamID"]) throw new Error("teamID required");
     this.teamID = user.teamID || "";
 
-    if (!user["firstName"]) throw new Error("firstName required");
+    if (!user["firstName"]) throw new Error("First name required");
     this.firstName = user.firstName;
+    console.log("******_user", user);
 
-    if (!user["lastName"]) throw new Error("lastName required");
+    if (!user["lastName"]) throw new Error("Last name required");
     this.lastName = user.lastName;
 
-    if (!user["userID"]) throw new Error("lastName required");
-    this.userID = user.userID;
+    this.userID = user.userID || "";
 
-    if (!user["email"]) throw new Error("lastName required");
+    if (!user["email"]) throw new Error("Email required");
     this.email = user.email;
 
     try {
