@@ -7,10 +7,8 @@ import {
   ListSubheader,
   ListItemIcon,
   ListItemText,
-  TextField,
   Button,
   Checkbox,
-  Divider,
   Grid,
   Tooltip,
   IconButton,
@@ -20,9 +18,8 @@ import { User } from "../model/User";
 import { SignedInUser } from "../model/SignedInUser";
 import CreateNewTeam from "./CreateNewTeam";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
-import AddTeamMember from "./AddTeamMember";
 import AddIcon from "@mui/icons-material/Add";
-import GroupAddIcon from "@mui/icons-material/GroupAdd";
+import { appDimensions } from "../assets/appDimensions";
 
 export default function TeamViewer({ onPress = () => {} }) {
   const [selected, setSelected] = useState();
@@ -58,7 +55,6 @@ export default function TeamViewer({ onPress = () => {} }) {
   }, []);
 
   return (
-    <Grid container spacing={2}>
       <Grid
         item
         xs={12}
@@ -73,8 +69,6 @@ export default function TeamViewer({ onPress = () => {} }) {
       >
         <Box
           sx={{
-            width: "100%",
-            maxWidth: 360,
             bgcolor: "black",
             color: "white",
             padding: 2,
@@ -95,7 +89,7 @@ export default function TeamViewer({ onPress = () => {} }) {
                 />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Create a New Team" placement="top">
+            <Tooltip title="Create a New Team / Delete a Team" placement="top">
               <IconButton
                 onClick={() => {
                   setShowNewTeam(true);
@@ -159,6 +153,5 @@ export default function TeamViewer({ onPress = () => {} }) {
           {showNewTeam && <CreateNewTeam />}
         </Box>
       </Grid>
-    </Grid>
   );
 }

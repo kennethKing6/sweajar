@@ -62,17 +62,17 @@ export default function ViolationSelectList({
   return (
     <Box
       sx={{
-        width: "100%",
-        maxWidth: 360,
         bgcolor: "black",
         color: "white",
         padding: 2,
         border: "2px solid yellow",
+        height: "100%",
+        overflow: 'auto'
       }}
     >
       <Box display={"flex"}>
         <h1>New Report</h1>
-        <Tooltip title="Show Violations" placement="top">
+        {/* <Tooltip title="Show Violations" placement="top">
           <IconButton
             onClick={() => {
               setShowViolations(true);
@@ -95,7 +95,7 @@ export default function ViolationSelectList({
               sx={{ backgroundColor: "yellow", color: "black" }}
             />
           </IconButton>
-        </Tooltip>
+        </Tooltip> */}
       </Box>
       {showViolations && (
         <List
@@ -136,30 +136,28 @@ export default function ViolationSelectList({
             return (
               <>
                 {" "}
-                <Tooltip title={violation.description} placement="right">
-                  <ListItem
-                    onClick={() => {
-                      onToggle(violation.name);
-                      addDefaultViolation({
-                        name: violation.name,
-                        description: violation.description,
-                      });
-                    }}
-                  >
-                    <ListItemIcon>
-                      <Checkbox
-                        checked={selected.includes(violation.name)}
-                        sx={{ color: "white" }}
-                      />
-                    </ListItemIcon>
-                    <ListItemText
+                <ListItem
+                  onClick={() => {
+                    onToggle(violation.name);
+                    addDefaultViolation({
+                      name: violation.name,
+                      description: violation.description,
+                    });
+                  }}
+                >
+                  <ListItemIcon>
+                    <Checkbox
+                      checked={selected.includes(violation.name)}
                       sx={{ color: "white" }}
-                      primary={violation.name}
-                      secondaryTypographyProps={{ style: { color: "red" } }}
-                      secondary={violation.description}
-                    ></ListItemText>
-                  </ListItem>
-                </Tooltip>
+                    />
+                  </ListItemIcon>
+                  <ListItemText
+                    sx={{ color: "white" }}
+                    primary={violation.name}
+                    secondaryTypographyProps={{ style: { color: "red" } }}
+                    secondary={violation.description}
+                  ></ListItemText>
+                </ListItem>
               </>
             );
           })}

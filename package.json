@@ -30,7 +30,7 @@
     "start": "react-scripts start",
     "test:watch": "npx react-scripts test --watch",
     "build": "react-scripts build",
-    "test": "CI=true react-scripts test src --colors --coverage",
+    "test": "react-scripts test src --colors --coverage",
     "eject": "react-scripts eject",
     "prettier": "npx prettier --write ."
   },
