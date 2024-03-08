@@ -5,7 +5,6 @@ import TeamViewer from '../components/TeamViewer';
 import { Teams } from '../model/Teams';
 import { User } from '../model/User';
 import { SignedInUser } from '../model/SignedInUser';
-import { IconButton } from "@mui/material";
 
 jest.mock('../model/Teams');
 
