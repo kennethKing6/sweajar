@@ -80,28 +80,26 @@ export default function TeamViewer({ onPress = () => {} }) {
       >
         <Box display={"flex"}>
           <h1>Team Viewer</h1>
-          <Tooltip title="Show My Teams" placement="top">
-            <IconButton
-              onClick={() => {
-                setShowNewTeam(false);
-                setShowUserTeams(true);
-              }}
-            >
-              <FormatListBulletedIcon
-                sx={{ backgroundColor: "yellow", color: "black" }}
-              />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Create a New Team / Delete a Team" placement="top">
-            <IconButton
-              onClick={() => {
-                setShowNewTeam(true);
-                setShowUserTeams(false);
-              }}
-            >
-              <AddIcon sx={{ backgroundColor: "yellow", color: "black" }} />
-            </IconButton>
-          </Tooltip>
+          <IconButton
+            title="Show My Teams"
+            onClick={() => {
+              setShowNewTeam(false);
+              setShowUserTeams(true);
+            }}
+          >
+            <FormatListBulletedIcon
+              sx={{ backgroundColor: "yellow", color: "black" }}
+            />
+          </IconButton>
+          <IconButton
+            title="Create a New Team / Delete a Team"
+            onClick={() => {
+              setShowNewTeam(true);
+              setShowUserTeams(false);
+            }}
+          >
+            <AddIcon sx={{ backgroundColor: "yellow", color: "black" }} />
+          </IconButton>
         </Box>
         {showUserTeams && (
           <List
