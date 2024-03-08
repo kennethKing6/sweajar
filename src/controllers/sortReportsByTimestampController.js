@@ -71,23 +71,27 @@ export class SortReportsByTimestampController {
   }
 
   static async getLast_YEAR_ReportByTeam(userID) {
-    const todaysDate = new Date();
-    let lastMonthDate = new Date(todaysDate);
-    lastMonthDate = new Date(
-      lastMonthDate.setDate(todaysDate.getDate() - 30 * 12),
-    );
-    const currentUserReports = [];
-    const reports = await Report.getReportsWithinPeriod({
-      teamID: SignedInUser.user.teamID,
-      endTime: todaysDate.getTime(),
-      startTime: lastMonthDate.getTime(),
-    });
-    for (let report in reports) {
-      const current = reports[report];
-      if (current["reportedID"] === userID) {
-        currentUserReports.push(current);
+    try {
+      const todaysDate = new Date();
+      let lastMonthDate = new Date(todaysDate);
+      lastMonthDate = new Date(
+        lastMonthDate.setDate(todaysDate.getDate() - 30 * 12),
+      );
+      const currentUserReports = [];
+      const reports = await Report.getReportsWithinPeriod({
+        teamID: SignedInUser.user.teamID,
+        endTime: todaysDate.getTime(),
+        startTime: lastMonthDate.getTime(),
+      });
+      for (let report in reports) {
+        const current = reports[report];
+        if (current["reportedID"] === userID) {
+          currentUserReports.push(current);
+        }
       }
+      return currentUserReports;
+    } catch (err) {
+      return [];
     }
-    return currentUserReports;
   }
 }
