@@ -18,6 +18,11 @@ import {
 import { ExpandMoreRounded } from "@mui/icons-material";
 import { Colors } from "../assets/colors";
 import { DefaultViolations } from "../model/DefaultViolations";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 export default function UserDetails({ onPress = () => {} }) {
   const [user, setUser] = useState(null);
@@ -53,20 +58,6 @@ export default function UserDetails({ onPress = () => {} }) {
           // console.log(err);
           setChartData([]);
         });
-    }
-  }, [user]);
-
-  useEffect(() => {
-    if (user) {
-      UserDetailsController.getMonthLineChartData(
-        user.userID,
-        SignedInUser.user.teamID,
-      )
-        .then(({ data, series }) => {
-          setLineData(data);
-          setLineSeries(series);
-        })
-        .catch();
     }
   }, [user]);
 
@@ -134,36 +125,7 @@ export default function UserDetails({ onPress = () => {} }) {
             </AccordionDetails>
           </Accordion>
         )}
-        {lineData.length > 0 && lineSeries.length > 0 ? (
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreRounded />}
-              aria-controls="panel1-content"
-              id="panel1-header"
-            >
-              Violations Timelines
-            </AccordionSummary>
-            <AccordionDetails>
-              <ViolationsLineChart
-                lineData={lineData}
-                lineSeries={lineSeries}
-              />
-            </AccordionDetails>
-          </Accordion>
-        ) : (
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreRounded />}
-              aria-controls="panel1-content"
-              id="panel1-header"
-            >
-              Violations Timelines
-            </AccordionSummary>
-            <AccordionDetails>
-              No graph available at the moment
-            </AccordionDetails>
-          </Accordion>
-        )}
+        <ViolationsLineSeries user={user} />
 
         {chartData.length > 0 ? (
           chartData.map((data) => {
@@ -195,6 +157,120 @@ function ViolationType({ data }) {
         />
       </ListItem>
       <Divider variant="inset" component="li" />
+    </>
+  );
+}
+
+function ViolationsLineSeries({ user }) {
+  const Days_30 = 30;
+  const Days_90 = 90;
+  const Days_360 = 360;
+
+  const [lineData, setLineData] = useState([]);
+  const [lineSeries, setLineSeries] = useState([]);
+  const [selectedTimestampData, setSelectedTimestampData] = useState(Days_30);
+
+  useEffect(() => {
+    if (user) {
+      if (selectedTimestampData === Days_30) {
+        UserDetailsController.getMonthLineChartData(
+          user.userID,
+          SignedInUser.user.teamID,
+        )
+          .then(({ data, series }) => {
+            setLineData(data);
+            setLineSeries(series);
+          })
+          .catch();
+      } else if (selectedTimestampData === Days_90) {
+        UserDetailsController.getThreeMothsLineChartData(
+          user.userID,
+          SignedInUser.user.teamID,
+        )
+          .then(({ data, series }) => {
+            setLineData(data);
+            setLineSeries(series);
+          })
+          .catch();
+      } else if (selectedTimestampData === Days_360) {
+        UserDetailsController.getThisYearLineChartData(
+          user.userID,
+          SignedInUser.user.teamID,
+        )
+          .then(({ data, series }) => {
+            setLineData(data);
+            setLineSeries(series);
+          })
+          .catch();
+      }
+    }
+  }, [user, selectedTimestampData]);
+
+  return (
+    <>
+      {lineData.length > 0 && lineSeries.length > 0 ? (
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreRounded />}
+            aria-controls="panel1-content"
+            id="panel1-header"
+          >
+            Violations Timelines
+          </AccordionSummary>
+          <AccordionDetails>
+            <Box sx={{ minWidth: 120 }}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">
+                  Filter Violations
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={selectedTimestampData}
+                  label="Filter Violations"
+                  onChange={(e) => setSelectedTimestampData(e.target.value)}
+                >
+                  <MenuItem value={Days_30}>30 days</MenuItem>
+                  <MenuItem value={Days_90}>90 days</MenuItem>
+                  <MenuItem value={Days_360}>365 days</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
+            <ViolationsLineChart lineData={lineData} lineSeries={lineSeries} />
+          </AccordionDetails>
+        </Accordion>
+      ) : (
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreRounded />}
+            aria-controls="panel1-content"
+            id="panel1-header"
+          >
+            Violations Timelines
+          </AccordionSummary>
+          <AccordionDetails>
+            <Box sx={{ minWidth: 120 }} mb={5}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">
+                  Filter Violations
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={selectedTimestampData}
+                  label="Filter Violations"
+                  onChange={(e) => setSelectedTimestampData(e.target.value)}
+                >
+                  <MenuItem value={Days_30}>30 days</MenuItem>
+                  <MenuItem value={Days_90}>90 days</MenuItem>
+                  <MenuItem value={Days_360}>365 days</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
+            No graph available at the moment
+          </AccordionDetails>
+        </Accordion>
+      )}
     </>
   );
 }

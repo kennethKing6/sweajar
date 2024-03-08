@@ -38,7 +38,6 @@ export class User {
 
     if (!user["firstName"]) throw new Error("First name required");
     this.firstName = user.firstName;
-    console.log("******_user", user);
 
     if (!user["lastName"]) throw new Error("Last name required");
     this.lastName = user.lastName;

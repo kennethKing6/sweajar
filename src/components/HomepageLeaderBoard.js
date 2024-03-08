@@ -159,12 +159,6 @@ function UserItem({ person, index, pageDetails = () => {} }) {
           sx={{ backgroundColor: "white", marginTop: MARGIN_SIZES.MARGIN_4 }}
         >
           <Grid container>
-            {chartData.length > 0 ? (
-              <LeaderboardChart chartData={chartData} />
-            ) : (
-              <></>
-            )}
-
             <ListItemButton>
               <ListItemAvatar>
                 {user ? (
