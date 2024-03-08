@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import { Button } from "@mui/material";
+import { Button, ImageListItem } from "@mui/material";
 import Signup from "./Signup";
 import Signin from "./Signin";
+import SwearJar from "../assets/swearjar.jpg";
+import { Colors } from "../assets/colors";
+import { ButtonStyles } from "../assets/ButtonStyles";
 
 const WELCOME_PAGE = "welcome";
 const SIGN_UP = "signup";
@@ -10,11 +13,28 @@ const Welcome = () => {
   const [welcomeAction, setWelcomeAction] = useState(WELCOME_PAGE);
 
   return (
-    <>
+    <div
+      style={{
+        textAlign: "center",
+        fontFamily: "Noto Sans",
+        height: "100%",
+      }}
+    >
       {welcomeAction === WELCOME_PAGE ? (
         <div>
-          <h1>Welcome to SwearJar! 🎉</h1>
-          <p>
+          <h1 style={{ fontWeight: "bolder" }}>Welcome to SwearJar</h1>
+          <ImageListItem sx={{ height: 10 }}>
+            <img
+              style={{ height: 250, objectFit: "contain" }}
+              src={`${SwearJar}?w=248&fit=crop&auto=format`}
+              loading="lazy"
+              decoding="async"
+              data-nimg="1"
+              alt="Swearjar representation"
+              class="lk21hp11 _1286nb199 _1286nb19x _1286nb16 _1286nb183 _1286nb18b"
+            />
+          </ImageListItem>
+          <p style={{ color: Colors.TEXT_COLOR_TERTIARY }}>
             Are you tired of your foul-mouthed habits? 😡🤬
             <br />
             Well, fear not! SwearJar is here to help you keep those profanities
@@ -23,8 +43,8 @@ const Welcome = () => {
           <Button
             variant="contained"
             color="primary"
+            sx={ButtonStyles.BtnStyle2}
             onClick={() => {
-              alert("eah we clicked");
               setWelcomeAction(SIGN_UP);
             }}
           >
@@ -32,8 +52,8 @@ const Welcome = () => {
           </Button>
           <Button
             variant="contained"
-            color="secondary"
             onClick={() => setWelcomeAction(SIGN_IN)}
+            sx={ButtonStyles.BtnStyle1}
           >
             Sign In
           </Button>
@@ -51,7 +71,7 @@ const Welcome = () => {
       ) : (
         <></>
       )}
-    </>
+    </div>
   );
 };
 

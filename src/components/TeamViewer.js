@@ -7,10 +7,8 @@ import {
   ListSubheader,
   ListItemIcon,
   ListItemText,
-  TextField,
   Button,
   Checkbox,
-  Divider,
   Grid,
   Tooltip,
   IconButton,
@@ -20,9 +18,9 @@ import { User } from "../model/User";
 import { SignedInUser } from "../model/SignedInUser";
 import CreateNewTeam from "./CreateNewTeam";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
-import AddTeamMember from "./AddTeamMember";
 import AddIcon from "@mui/icons-material/Add";
-import GroupAddIcon from "@mui/icons-material/GroupAdd";
+import { appDimensions } from "../assets/appDimensions";
+import { ButtonStyles } from "../assets/ButtonStyles";
 
 export default function TeamViewer({ onPress = () => {} }) {
   const [selected, setSelected] = useState();
@@ -58,107 +56,96 @@ export default function TeamViewer({ onPress = () => {} }) {
   }, []);
 
   return (
-    <Grid container spacing={2}>
-      <Grid
-        item
-        xs={12}
-        md={6}
-        lg={8}
+    <Grid
+      item
+      xs={12}
+      md={6}
+      lg={8}
+      sx={{
+        position: "relative",
+        alignSelf: "flex-start",
+        justifyContent: "flex-end",
+        alignItems: "flex-start",
+        height: "90%",
+      }}
+    >
+      <Box
         sx={{
-          position: "relative",
-          alignSelf: "flex-start",
-          justifyContent: "flex-end",
-          alignItems: "flex-start",
+          bgcolor: "black",
+          color: "white",
+          padding: 2,
+          border: "2px solid yellow",
+          height: "100%",
         }}
       >
-        <Box
-          sx={{
-            width: "100%",
-            maxWidth: 360,
-            bgcolor: "black",
-            color: "white",
-            padding: 2,
-            border: "2px solid yellow",
-          }}
-        >
-          <Box display={"flex"}>
-            <h1>Team Viewer</h1>
-            <Tooltip title="Show My Teams" placement="top">
-              <IconButton
-                onClick={() => {
-                  setShowNewTeam(false);
-                  setShowUserTeams(true);
-                }}
-              >
-                <FormatListBulletedIcon
-                  sx={{ backgroundColor: "yellow", color: "black" }}
-                />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Create a New Team" placement="top">
-              <IconButton
-                onClick={() => {
-                  setShowNewTeam(true);
-                  setShowUserTeams(false);
-                }}
-              >
-                <AddIcon sx={{ backgroundColor: "yellow", color: "black" }} />
-              </IconButton>
-            </Tooltip>
-          </Box>
-          {showUserTeams && (
-            <List
-              subheader={
-                <ListSubheader
-                  component="div"
-                  id="userTeams-list-subheader"
-                  sx={{ color: "white", bgcolor: "black" }}
-                >
-                  Your Teams:
-                </ListSubheader>
-              }
+        <Box display={"flex"}>
+          <h1>Team Viewer</h1>
+          <Tooltip title="Show My Teams" placement="top">
+            <IconButton
+              onClick={() => {
+                setShowNewTeam(false);
+                setShowUserTeams(true);
+              }}
             >
-              {items.map((item) => (
-                <ListItem
-                  key={JSON.stringify(item)}
-                  onClick={async () => {
-                    await onToggle(item);
-                  }}
-                >
-                  <ListItemIcon>
-                    <Checkbox
-                      checked={
-                        selected ? selected.teamName === item.teamName : null
-                      }
-                      sx={{ color: "white" }}
-                    />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={item.teamName}
+              <FormatListBulletedIcon
+                sx={{ backgroundColor: "yellow", color: "black" }}
+              />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Create a New Team / Delete a Team" placement="top">
+            <IconButton
+              onClick={() => {
+                setShowNewTeam(true);
+                setShowUserTeams(false);
+              }}
+            >
+              <AddIcon sx={{ backgroundColor: "yellow", color: "black" }} />
+            </IconButton>
+          </Tooltip>
+        </Box>
+        {showUserTeams && (
+          <List
+            subheader={
+              <ListSubheader
+                component="div"
+                id="userTeams-list-subheader"
+                sx={{ color: "white", bgcolor: "black" }}
+              >
+                Your Teams:
+              </ListSubheader>
+            }
+          >
+            {items.map((item) => (
+              <ListItem
+                key={JSON.stringify(item)}
+                onClick={async () => {
+                  await onToggle(item);
+                }}
+              >
+                <ListItemIcon>
+                  <Checkbox
+                    checked={
+                      selected ? selected.teamName === item.teamName : null
+                    }
                     sx={{ color: "white" }}
                   />
-                </ListItem>
-              ))}
-              <ListItem>
-                <Button
-                  variant="contained"
-                  onClick={onPress}
-                  sx={{
-                    backgroundColor: "#FFEB3B",
-                    color: "black",
-                    "&:hover": {
-                      backgroundColor: "#FFC107",
-                    },
-                  }}
-                >
-                  View Details
-                </Button>
+                </ListItemIcon>
+                <ListItemText primary={item.teamName} sx={{ color: "white" }} />
               </ListItem>
-            </List>
-          )}
-          {showNewTeam && <CreateNewTeam />}
-        </Box>
-      </Grid>
+            ))}
+            <ListItem>
+              <Button
+                variant="contained"
+                onClick={onPress}
+                sx={ButtonStyles.BtnStyle2}
+              >
+                View Details
+              </Button>
+            </ListItem>
+          </List>
+        )}
+        {showNewTeam && <CreateNewTeam />}
+      </Box>
     </Grid>
   );
 }

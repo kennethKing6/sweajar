@@ -151,59 +151,65 @@ function UserItem({ person, index, pageDetails = () => {} }) {
       .catch((err) => console.error(err));
   }, [user]);
   return (
-    <ListItem
-      onClick={() => pageDetails(person.userID)}
-      key={index}
-      sx={{ backgroundColor: "white", marginTop: MARGIN_SIZES.MARGIN_4 }}
-    >
-      <Grid container>
-        {chartData.length > 0 ? (
-          <LeaderboardChart chartData={chartData} />
-        ) : (
-          <></>
-        )}
-
-        <ListItemButton>
-          <ListItemAvatar>
-            {user ? (
-              <Avatar alt={`${user.firstName}`} src={user.profilePicture} />
+    <>
+      {user ? (
+        <ListItem
+          onClick={() => pageDetails(person.userID)}
+          key={index}
+          sx={{ backgroundColor: "white", marginTop: MARGIN_SIZES.MARGIN_4 }}
+        >
+          <Grid container>
+            {chartData.length > 0 ? (
+              <LeaderboardChart chartData={chartData} />
             ) : (
               <></>
             )}
-          </ListItemAvatar>
-          <ListItemText
-            primary={`${user ? user.firstName : ""} ${user ? user.lastName : ""}`}
-            sx={{ color: Colors.TEXT_COLOR_SECONDARY }}
-            secondary={
-              highestViolation ? (
+
+            <ListItemButton>
+              <ListItemAvatar>
+                {user ? (
+                  <Avatar alt={`${user.firstName}`} src={user.profilePicture} />
+                ) : (
+                  <></>
+                )}
+              </ListItemAvatar>
+              <ListItemText
+                primary={`${user ? user.firstName : ""} ${user ? user.lastName : ""}`}
+                sx={{ color: Colors.TEXT_COLOR_SECONDARY }}
+                secondary={
+                  highestViolation ? (
+                    <Chip
+                      label={`${highestViolation}`}
+                      sx={{
+                        backgroundColor: violationColor,
+                        color: Colors.TEXT_COLOR_SECONDARY,
+                        fontSize: FontSizes.captionFontSize,
+                      }}
+                    />
+                  ) : (
+                    <></>
+                  )
+                }
+              />
+
+              <ListItemSecondaryAction>
                 <Chip
-                  label={`${highestViolation}`}
+                  label={highestViolationCount}
                   sx={{
                     backgroundColor: violationColor,
-                    color: Colors.TEXT_COLOR_SECONDARY,
+                    color: Colors.TEXT_COLOR,
+                    fontWeight: "bold",
                     fontSize: FontSizes.captionFontSize,
                   }}
                 />
-              ) : (
-                <></>
-              )
-            }
-          />
-
-          <ListItemSecondaryAction>
-            <Chip
-              label={highestViolationCount}
-              sx={{
-                backgroundColor: violationColor,
-                color: Colors.TEXT_COLOR,
-                fontWeight: "bold",
-                fontSize: FontSizes.captionFontSize,
-              }}
-            />
-          </ListItemSecondaryAction>
-        </ListItemButton>
-      </Grid>
-    </ListItem>
+              </ListItemSecondaryAction>
+            </ListItemButton>
+          </Grid>
+        </ListItem>
+      ) : (
+        <></>
+      )}
+    </>
   );
 }
 

@@ -1,23 +1,22 @@
-import { Report } from "../Report";
 export class Report {
-  static getTheHighestViolationByUserID(userID, teamID) {
-    return {
-      "Late Arrival": {
-        sdfjjsldfn: {
-          dateEntry: 1707597529326,
-          reportedID: "khsbfkhsdbbskdhsbdhkcb",
-          reporterID: "skhbdhsdhf",
-          swearTypeID: "Late Arrival",
-          teamUD: "oashdofuhu",
-          sweartype: {
-            description:
-              "Choose this option if the user joined the meeting late",
-            levels: "minor",
-            name: "Late Arrival",
-            swearTypeID: "Late Arrival",
-          },
-        },
-      },
-    };
+  /**
+   *
+   * @param {object} reportType
+   * @param {string} reportType.reporterID
+   * @param {string} reportType.reportedID
+   * @param {string} reportType.teamID
+   * @param {string} reportType.swearTypeID
+   * @param {EpochTimeStamp} reportType.dateEntry
+   * @param {string} reportType.teamID
+   * @param {object} reportType.swearType
+   */
+  constructor(reportType) {
+    this.reportedID = reportType.reportedID;
+    this.reporterID = reportType.reporterID;
+    this.teamID = reportType.teamID;
+    this.dateEntry = reportType.dateEntry;
+    this.swearTypeID = reportType.swearTypeID;
+    this.teamID = reportType.teamID;
+    this.swearType = reportType.swearType;
   }
 }
