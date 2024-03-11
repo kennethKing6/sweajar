@@ -1,6 +1,6 @@
 import "../shared/firebase/__mock__/mockFirebase";
 import "../model/__mocks__/User";
-import { render, fireEvent, waitFor, screen, getByTestId } from '@testing-library/react';
+import { render, fireEvent, act, screen, getByTestId } from '@testing-library/react';
 import { User } from "../model/User";
 import { SignedInUser } from "../model/SignedInUser";
 import { Teams } from "../model/Teams";
@@ -43,7 +43,7 @@ describe('TeamDetails', () => {
         expect(screen.getByText('Add/Delete Team Member')).toBeInTheDocument();
 
         fireEvent.click(screen.getByTitle('Show Team Members'));
-
+        
         expect(screen.getByText('Team Members:')).toBeInTheDocument();
     });
 });
