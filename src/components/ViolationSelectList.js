@@ -67,7 +67,7 @@ export default function ViolationSelectList({
         padding: 2,
         border: "2px solid yellow",
         height: "100%",
-        overflow: 'auto'
+        overflow: "auto",
       }}
     >
       <Box display={"flex"}>

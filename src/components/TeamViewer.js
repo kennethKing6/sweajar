@@ -19,6 +19,7 @@ import CreateNewTeam from "./CreateNewTeam";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import AddIcon from "@mui/icons-material/Add";
 import { appDimensions } from "../assets/appDimensions";
+import { ButtonStyles } from "../assets/ButtonStyles";
 
 export default function TeamViewer({ onPress = () => {} }) {
   const [selected, setSelected] = useState();
@@ -54,49 +55,51 @@ export default function TeamViewer({ onPress = () => {} }) {
   }, []);
 
   return (
-      <Grid
-        item
-        xs={12}
-        md={6}
-        lg={8}
+    <Grid
+      item
+      xs={12}
+      md={6}
+      lg={8}
+      sx={{
+        position: "relative",
+        alignSelf: "flex-start",
+        justifyContent: "flex-end",
+        alignItems: "flex-start",
+        height: "90%",
+      }}
+    >
+      <Box
         sx={{
-          position: "relative",
-          alignSelf: "flex-start",
-          justifyContent: "flex-end",
-          alignItems: "flex-start",
+          bgcolor: "black",
+          color: "white",
+          padding: 2,
+          border: "2px solid yellow",
+          height: "100%",
         }}
       >
-        <Box
-          sx={{
-            bgcolor: "black",
-            color: "white",
-            padding: 2,
-            border: "2px solid yellow",
-          }}
-        >
-          <Box display={"flex"}>
-            <h1>Team Viewer</h1>
-              <IconButton
-                title="Show My Teams"
-                onClick={() => {
-                  setShowNewTeam(false);
-                  setShowUserTeams(true);
-                }}
-              >
-                <FormatListBulletedIcon
-                  sx={{ backgroundColor: "yellow", color: "black" }}
-                />
-              </IconButton>
-              <IconButton
-                title="Create a New Team / Delete a Team"
-                onClick={() => {
-                  setShowNewTeam(true);
-                  setShowUserTeams(false);
-                }}
-              >
-                <AddIcon sx={{ backgroundColor: "yellow", color: "black" }} />
-              </IconButton>
-          </Box>
+        <Box display={"flex"}>
+          <h1>Team Viewer</h1>
+          <IconButton
+            title="Show My Teams"
+            onClick={() => {
+              setShowNewTeam(false);
+              setShowUserTeams(true);
+            }}
+          >
+            <FormatListBulletedIcon
+              sx={{ backgroundColor: "yellow", color: "black" }}
+            />
+          </IconButton>
+          <IconButton
+            title="Create a New Team / Delete a Team"
+            onClick={() => {
+              setShowNewTeam(true);
+              setShowUserTeams(false);
+            }}
+          >
+            <AddIcon sx={{ backgroundColor: "yellow", color: "black" }} />
+          </IconButton>
+        </Box>
           {showUserTeams && (
             <List
               subheader={
@@ -153,8 +156,17 @@ export default function TeamViewer({ onPress = () => {} }) {
               </ListItem>
             </List>
           )}
-          {showNewTeam && <CreateNewTeam />}
-        </Box>
-      </Grid>
-  );
+            <ListItem>
+              <Button
+                variant="contained"
+                onClick={onPress}
+                sx={ButtonStyles.BtnStyle2}
+              >
+                View Details
+              </Button>
+            </ListItem>
+        {showNewTeam && <CreateNewTeam />}
+      </Box>
+    </Grid>
+  )
 }
