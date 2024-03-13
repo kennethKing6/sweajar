@@ -10,7 +10,6 @@ import {
   Button,
   Checkbox,
   Grid,
-  Tooltip,
   IconButton,
 } from "@mui/material";
 import { Teams } from "../model/Teams";
@@ -77,7 +76,6 @@ export default function TeamViewer({ onPress = () => {} }) {
         >
           <Box display={"flex"}>
             <h1>Team Viewer</h1>
-            {/* <Tooltip title="Show My Teams" placement="top"> */}
               <IconButton
                 title="Show My Teams"
                 onClick={() => {
@@ -89,8 +87,6 @@ export default function TeamViewer({ onPress = () => {} }) {
                   sx={{ backgroundColor: "yellow", color: "black" }}
                 />
               </IconButton>
-            {/* </Tooltip> */}
-            {/* <Tooltip title="Create a New Team / Delete a Team" placement="top"> */}
               <IconButton
                 title="Create a New Team / Delete a Team"
                 onClick={() => {
@@ -100,7 +96,6 @@ export default function TeamViewer({ onPress = () => {} }) {
               >
                 <AddIcon sx={{ backgroundColor: "yellow", color: "black" }} />
               </IconButton>
-            {/* </Tooltip> */}
           </Box>
           {showUserTeams && (
             <List
@@ -114,27 +109,33 @@ export default function TeamViewer({ onPress = () => {} }) {
                 </ListSubheader>
               }
             >
-              {items.map((item) => (
-                <ListItem
-                  key={JSON.stringify(item)}
-                  onClick={async () => {
-                    await onToggle(item);
-                  }}
-                >
-                  <ListItemIcon>
-                    <Checkbox
-                      checked={
-                        selected ? selected.teamName === item.teamName : null
-                      }
+              {items.length > 0 ? (
+                items.map((item) => (
+                  <ListItem
+                    key={JSON.stringify(item)}
+                    onClick={async () => {
+                      await onToggle(item);
+                    }}
+                  >
+                    <ListItemIcon>
+                      <Checkbox
+                        checked={
+                          selected ? selected.teamName === item.teamName : null
+                        }
+                        sx={{ color: "white" }}
+                      />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={item.teamName}
                       sx={{ color: "white" }}
                     />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={item.teamName}
-                    sx={{ color: "white" }}
-                  />
+                  </ListItem>
+                ))
+              ) : (
+                <ListItem>
+                  <ListItemText primary="You don't have any teams yet" />
                 </ListItem>
-              ))}
+              )}
               <ListItem>
                 <Button
                   variant="contained"
