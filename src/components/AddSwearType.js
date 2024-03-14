@@ -79,7 +79,7 @@ export default function AddSwearType ({onAdd = () => {}}) {
                         }}
                     />
                 </ListItem>
-                <ListItem>
+                {/* <ListItem>
                     <FormControl fullWidth
                         sx={{
                             selected: { color: 'white' },
@@ -102,7 +102,7 @@ export default function AddSwearType ({onAdd = () => {}}) {
                             <MenuItem value="major">Major</MenuItem>
                         </Select>
                     </FormControl>
-                </ListItem>
+                </ListItem> */}
                 <ListItem>
                     <Button
                         variant="contained"
