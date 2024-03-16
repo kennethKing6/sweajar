@@ -2,15 +2,11 @@ import React from "react";
 import { useState, useEffect } from "react";
 import {
   Box,
-  List,
-  ListItem,
-  ListSubheader,
-  ListItemIcon,
-  ListItemText,
   Button,
-  Checkbox,
   Grid,
   IconButton,
+  Avatar,
+  Typography,
 } from "@mui/material";
 import { Teams } from "../model/Teams";
 import { User } from "../model/User";
@@ -20,6 +16,7 @@ import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import AddIcon from "@mui/icons-material/Add";
 import { appDimensions } from "../assets/appDimensions";
 import { ButtonStyles } from "../assets/ButtonStyles";
+import { Colors } from "../assets/colors";
 
 export default function TeamViewer({ onPress = () => {} }) {
   const [selected, setSelected] = useState();
@@ -101,70 +98,46 @@ export default function TeamViewer({ onPress = () => {} }) {
           </IconButton>
         </Box>
           {showUserTeams && (
-            <List
-              subheader={
-                <ListSubheader
-                  component="div"
-                  id="userTeams-list-subheader"
-                  sx={{ color: "white", bgcolor: "black" }}
-                >
-                  Your Teams:
-                </ListSubheader>
-              }
-            >
+            <Grid container spacing={2}>
               {items.length > 0 ? (
                 items.map((item) => (
-                  <ListItem
-                    key={JSON.stringify(item)}
-                    onClick={async () => {
-                      await onToggle(item);
-                    }}
-                  >
-                    <ListItemIcon>
-                      <Checkbox
-                        checked={
-                          selected ? selected.teamName === item.teamName : null
-                        }
-                        sx={{ color: "white" }}
-                      />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={item.teamName}
-                      sx={{ color: "white" }}
-                    />
-                  </ListItem>
+                  <Grid item xs={4} key={JSON.stringify(item)} onClick={async () => { await onToggle(item); }}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                      <Avatar
+                        sx={{ 
+                          bgcolor: Colors.ACCENT_COLOR_3,
+                          width: '100%',
+                          height: 150,
+                          borderRadius: "10%",
+                          border: selected && selected.teamName === item.teamName ? "2px solid yellow" : "none",
+                        }}
+                      >
+                        {item.teamName.charAt(0)}
+                      </Avatar>
+                      <Typography variant="body1" sx={{ color: "white", mt: 1 }}>
+                        {item.teamName}
+                      </Typography>
+                    </Box>
+                  </Grid>
                 ))
               ) : (
-                <ListItem>
-                  <ListItemText primary="You don't have any teams yet" />
-                </ListItem>
+                <Typography variant="body1" align="center">
+                  You don't have any teams yet
+                </Typography>
               )}
-              <ListItem>
-                <Button
-                  variant="contained"
-                  onClick={onPress}
-                  sx={{
-                    backgroundColor: "#FFEB3B",
-                    color: "black",
-                    "&:hover": {
-                      backgroundColor: "#FFC107",
-                    },
-                  }}
-                >
-                  View Details
-                </Button>
-              </ListItem>
-            </List>
+              {items.length > 0 && (
+                <Box sx={{ mt: 2 }}>
+                  <Button
+                    variant="contained"
+                    onClick={onPress}
+                    sx={ButtonStyles.BtnStyle2}
+                  >
+                    View Details
+                  </Button>
+                </Box>
+              )}
+            </Grid>
           )}
-            <ListItem>
-              <Button
-                variant="contained"
-                onClick={onPress}
-                sx={ButtonStyles.BtnStyle2}
-              >
-                View Details
-              </Button>
-            </ListItem>
         {showNewTeam && <CreateNewTeam />}
       </Box>
     </Grid>
