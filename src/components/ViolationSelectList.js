@@ -72,30 +72,28 @@ export default function ViolationSelectList({
     >
       <Box display={"flex"}>
         <h1>New Report</h1>
-        {/* <Tooltip title="Show Violations" placement="top">
-          <IconButton
-            onClick={() => {
-              setShowViolations(true);
-              setShowAddSwearType(false);
-            }}
-          >
-            <FormatListBulletedIcon
-              sx={{ backgroundColor: "yellow", color: "black" }}
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Add a New Swear Type" placement="top">
-          <IconButton
-            onClick={() => {
-              setShowViolations(false);
-              setShowAddSwearType(true);
-            }}
-          >
-            <PlaylistAddIcon
-              sx={{ backgroundColor: "yellow", color: "black" }}
-            />
-          </IconButton>
-        </Tooltip> */}
+        <IconButton
+          title="Show Violations"
+          onClick={() => {
+            setShowViolations(true);
+            setShowAddSwearType(false);
+          }}
+        >
+          <FormatListBulletedIcon
+            sx={{ backgroundColor: "yellow", color: "black" }}
+          />
+        </IconButton>
+        <IconButton
+          title="Add a New Swear Type"
+          onClick={() => {
+            setShowViolations(false);
+            setShowAddSwearType(true);
+          }}
+        >
+          <PlaylistAddIcon
+            sx={{ backgroundColor: "yellow", color: "black" }}
+          />
+        </IconButton>
       </Box>
       {showViolations && (
         <List
