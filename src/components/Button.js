@@ -9,11 +9,6 @@ export default function Button({
   onPress = () => {},
   style = ButtonStyles.BtnStyle2,
 }) {
-  // return (
-  //   <div style={{ backgroundColor: "yellow" }} onClick={onPress}>
-  //     <h1 style={{ color: "black" }}>{text}</h1>
-  //   </div>
-  // );
   return (
     <ButtonMaterial
       variant="contained"
