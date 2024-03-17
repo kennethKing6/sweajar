@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 import { SwearType } from "../model/SwearType";
 import { SignedInUser } from "../model/SignedInUser";
-import ReportButton from "./ReportButton";
 import AddSwearType from "./AddSwearType";
 import Button from "./Button";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
@@ -68,99 +67,108 @@ export default function ViolationSelectList({
         border: "2px solid yellow",
         height: "100%",
         overflow: "auto",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        position: "relative",
       }}
     >
-      <Box display={"flex"}>
-        <h1>New Report</h1>
-        <IconButton
-          title="Show Violations"
-          onClick={() => {
-            setShowViolations(true);
-            setShowAddSwearType(false);
-          }}
-        >
-          <FormatListBulletedIcon
-            sx={{ backgroundColor: "yellow", color: "black" }}
-          />
-        </IconButton>
-        <IconButton
-          title="Add a New Swear Type"
-          onClick={() => {
-            setShowViolations(false);
-            setShowAddSwearType(true);
-          }}
-        >
-          <PlaylistAddIcon
-            sx={{ backgroundColor: "yellow", color: "black" }}
-          />
-        </IconButton>
+      <Box sx={{ position: "absolute", top: 48, right: 8 }}>
+          <IconButton
+            title="Show Violations"
+            onClick={() => {
+              setShowViolations(true);
+              setShowAddSwearType(false);
+            }}
+          >
+            <FormatListBulletedIcon
+              sx={{ backgroundColor: "yellow", color: "black" }}
+            />
+          </IconButton>
+          <IconButton
+            title="Add a New Violation"
+            onClick={() => {
+              setShowViolations(false);
+              setShowAddSwearType(true);
+            }}
+          >
+            <PlaylistAddIcon
+              sx={{ backgroundColor: "yellow", color: "black" }}
+            />
+          </IconButton>
       </Box>
-      {showViolations && (
-        <List
-          subheader={
-            <ListSubheader
-              component="div"
-              id="list-subheader"
-              sx={{ color: "white", bgcolor: "black" }}
-            >
-              Select the Violation
-            </ListSubheader>
-          }
-        >
-          {items.map((item) => (
-            <Tooltip title={item.description} placement="right" key={item.id}>
-              <ListItem
-                onClick={() => {
-                  onToggle(item.name);
-                  ReportViolationsController.selectSwearType({
-                    description: item.description,
-                    levels: item.levels,
-                    name: item.name,
-                    swearTypeID: item.name,
-                  });
-                }}
+      <Box>
+        <h1>New Report</h1>
+        {showViolations && (
+          <List
+            subheader={
+              <ListSubheader
+                component="div"
+                id="list-subheader"
+                sx={{ color: "white", bgcolor: "black" }}
               >
-                <ListItemIcon>
-                  <Checkbox
-                    checked={selected.includes(item.name)}
-                    sx={{ color: "white" }}
-                  />
-                </ListItemIcon>
-                <ListItemText primary={item.name} sx={{ color: "white" }} />
-              </ListItem>
-            </Tooltip>
-          ))}
-          {DefaultViolations.map((violation) => {
-            return (
-              <>
-                {" "}
+                Select the Violation
+              </ListSubheader>
+            }
+          >
+            {items.map((item) => (
+              <Tooltip title={item.description} placement="right" key={item.id}>
                 <ListItem
                   onClick={() => {
-                    onToggle(violation.name);
-                    addDefaultViolation({
-                      name: violation.name,
-                      description: violation.description,
+                    onToggle(item.name);
+                    ReportViolationsController.selectSwearType({
+                      description: item.description,
+                      levels: item.levels,
+                      name: item.name,
+                      swearTypeID: item.name,
                     });
                   }}
                 >
                   <ListItemIcon>
                     <Checkbox
-                      checked={selected.includes(violation.name)}
+                      checked={selected.includes(item.name)}
                       sx={{ color: "white" }}
                     />
                   </ListItemIcon>
-                  <ListItemText
-                    sx={{ color: "white" }}
-                    primary={violation.name}
-                    secondaryTypographyProps={{ style: { color: "red" } }}
-                    secondary={violation.description}
-                  ></ListItemText>
+                  <ListItemText primary={item.name} sx={{ color: "white" }} />
                 </ListItem>
-              </>
-            );
-          })}
-
-          <ListItem>
+              </Tooltip>
+            ))}
+            {DefaultViolations.map((violation) => {
+              return (
+                <>
+                  {" "}
+                  <ListItem
+                    onClick={() => {
+                      onToggle(violation.name);
+                      addDefaultViolation({
+                        name: violation.name,
+                        description: violation.description,
+                      });
+                    }}
+                  >
+                    <ListItemIcon>
+                      <Checkbox
+                        checked={selected.includes(violation.name)}
+                        sx={{ color: "white" }}
+                      />
+                    </ListItemIcon>
+                    <ListItemText
+                      sx={{ color: "white" }}
+                      primary={violation.name}
+                      secondaryTypographyProps={{ style: { color: "red" } }}
+                      secondary={violation.description}
+                    ></ListItemText>
+                  </ListItem>
+                </>
+              );
+            })}
+          </List>
+        )}
+        {showAddSwearType && <AddSwearType />}
+      </Box>
+      {showViolations && (
+          <Box sx={{ position: "sticky", bottom: 0, padding: 2, display: "flex", justifyContent: "flex-end"  }}>
             <Button
               text="Next"
               onPress={() => {
@@ -180,12 +188,11 @@ export default function ViolationSelectList({
                 "&:hover": {
                   backgroundColor: "#FFC107",
                 },
+                
               }}
             />
-          </ListItem>
-        </List>
+          </Box>
       )}
-      {showAddSwearType && <AddSwearType />}
     </Box>
   );
 }
