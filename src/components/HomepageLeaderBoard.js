@@ -14,6 +14,8 @@ import {
   ListItemText,
   ListItemAvatar,
   ListItemButton,
+  Paper,
+  Grow,
 } from "@mui/material";
 import { Colors } from "../assets/colors";
 import { FontSizes } from "../assets/fonts";
@@ -156,7 +158,13 @@ function UserItem({ person, index, pageDetails = () => {} }) {
         <ListItem
           onClick={() => pageDetails(person.userID)}
           key={index}
-          sx={{ backgroundColor: "white", marginTop: MARGIN_SIZES.MARGIN_4 }}
+          sx={{
+            backgroundColor: "white",
+            marginTop: MARGIN_SIZES.MARGIN_4,
+            "&:hover": {
+              boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+            },
+          }}
         >
           <Grid container>
             <ListItemButton>
@@ -209,6 +217,7 @@ function UserItem({ person, index, pageDetails = () => {} }) {
 
 function FilterDropDown({ onSelectFilter = () => {} }) {
   const [filters, setFilters] = useState([]);
+  const [selectedFilter, setSelectedFilter] = useState("All");
   useEffect(() => {
     HomePageLeaderBoardController.getReportTypesPerTeam()
       .then((data) => setFilters(data))
@@ -218,34 +227,35 @@ function FilterDropDown({ onSelectFilter = () => {} }) {
     <Box
       sx={{
         width: width_sizes.BUTTON_WIDTH_LG,
-        bgcolor: Colors.ACCENT_COLOR_3,
         padding: MARGIN_SIZES.MARGIN_4 / 4,
         borderRadius: MARGIN_SIZES.MARGIN_4,
       }}
     >
       <FormControl fullWidth>
-        <NativeSelect
-          defaultValue={30}
+        <Select
           labelId="demo-controlled-open-select-label"
           id="demo-controlled-open-select"
+          value={selectedFilter}
           onChange={(e) => {
             onSelectFilter(e.target.value);
+            setSelectedFilter(e.target.value);
           }}
           inputProps={{
             id: "uncontrolled-native",
             sx: {
-              color: Colors.TEXT_COLOR,
+              color: "white",
               borderWidth: 0,
               borderColor: "brown",
+              backgroundColor: "brown",
             },
           }}
         >
           {filters.map((v) => (
-            <option key={v} value={v}>
+            <MenuItem key={v} value={v} sx={{ color: "black" }}>
               {v}
-            </option>
+            </MenuItem>
           ))}
-        </NativeSelect>
+        </Select>
       </FormControl>
     </Box>
   );
