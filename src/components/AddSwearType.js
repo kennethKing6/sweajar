@@ -45,15 +45,16 @@ export default function AddSwearType ({onAdd = () => {}}) {
     };
 
     return (
-        <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'black'}}>
+        <Box sx={{ width: '100%', bgcolor: 'black'}}>
             <List subheader={
                 <ListSubheader component="div" id="newType-list-subheader" sx={{color: "white", bgcolor: "black"}}>
-                    Add new Swear Type
+                    Add new Violation
                 </ListSubheader>
             }>
                 <ListItem>
                     <TextField
-                        label="Name"
+                        fullWidth
+                        label="Enter Violation Name"
                         value={name}
                         onChange={ (e) => setName(e.target.value)}
                         sx={{
@@ -67,7 +68,8 @@ export default function AddSwearType ({onAdd = () => {}}) {
                 </ListItem>
                 <ListItem>
                     <TextField
-                        label="Description"
+                        fullWidth
+                        label="Enter Violation Description"
                         value={description}
                         onChange={ (e) => setDescription(e.target.value)}
                         sx={{
