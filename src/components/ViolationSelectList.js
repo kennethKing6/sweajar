@@ -70,8 +70,8 @@ export default function ViolationSelectList({
 
   function ViolationByCategoryList({ currentCategory = "" }) {
     return (
-      <Grid container sx={{ flexDirection: "column", display: "flex" }}>
-        <Grid item sx={{ flex: 10 }}>
+      <Grid container>
+        <Grid item>
           {showViolations && (
             <List
               subheader={
@@ -251,11 +251,7 @@ export default function ViolationSelectList({
             </List>
           )}
         </Grid>
-        {ReportViolationsController.getSelectedSwearTypeCount() > 0 ? (
-          <ActionsButtons />
-        ) : (
-          <></>
-        )}
+        <ActionsButtons />
       </Grid>
     );
   }
@@ -264,27 +260,31 @@ export default function ViolationSelectList({
     return (
       <>
         <Grid sx={{}} item>
-          <Button
-            text="Next"
-            onPress={() => {
-              if (!ReportViolationsController.hasSwearTypes()) {
-                alert("Please select a violation");
-                return;
-              }
-              if (!ReportViolationsController.hasSelectedTeam()) {
-                alert("Please select a team");
-                return;
-              }
-              onNavigateToUserToReport();
-            }}
-            sx={{
-              backgroundColor: "#FFEB3B",
-              color: "black",
-              "&:hover": {
-                backgroundColor: "#FFC107",
-              },
-            }}
-          />
+          {ReportViolationsController.getSelectedSwearTypeCount() > 0 ? (
+            <Button
+              text="Next"
+              onPress={() => {
+                if (!ReportViolationsController.hasSwearTypes()) {
+                  alert("Please select a violation");
+                  return;
+                }
+                if (!ReportViolationsController.hasSelectedTeam()) {
+                  alert("Please select a team");
+                  return;
+                }
+                onNavigateToUserToReport();
+              }}
+              sx={{
+                backgroundColor: "#FFEB3B",
+                color: "black",
+                "&:hover": {
+                  backgroundColor: "#FFC107",
+                },
+              }}
+            />
+          ) : (
+            <></>
+          )}
           <Button
             text="Back"
             onPress={() => {
@@ -304,7 +304,6 @@ export default function ViolationSelectList({
         color: "white",
         padding: 2,
         border: "2px solid yellow",
-        height: "100%",
         overflow: "auto",
         display: "flex",
         flexDirection: "column",
@@ -333,7 +332,7 @@ export default function ViolationSelectList({
       {openBadge ? (
         <SelectedViolations />
       ) : (
-        <>
+        <Grid container sx={{ height: "80vh" }}>
           {" "}
           {!selectedCategory && (
             <NewReportCategory
@@ -343,7 +342,7 @@ export default function ViolationSelectList({
           {selectedCategory && (
             <ViolationByCategoryList currentCategory={selectedCategory} />
           )}
-        </>
+        </Grid>
       )}
     </Box>
   );
