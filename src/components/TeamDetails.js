@@ -57,8 +57,9 @@ export default function TeamDetails() {
         >
           <Box display={"flex"}>
             <h1>Team Details</h1>
-            <Tooltip title="Show Team Members" placement="top">
+            {/* <Tooltip title="Show Team Members" placement="top"> */}
               <IconButton
+                title="Show Team Members"
                 onClick={() => {
                   setShowTeamMembers(true);
                   setShowAdd(false);
@@ -68,9 +69,10 @@ export default function TeamDetails() {
                   sx={{ backgroundColor: "yellow", color: "black" }}
                 />
               </IconButton>
-            </Tooltip>
-            <Tooltip title="Add/Delete Team Member" placement="top">
+            {/* </Tooltip> */}
+            {/* <Tooltip title="Add/Delete Team Member" placement="top"> */}
               <IconButton
+                title="Add/Delete Team Member"
                 onClick={() => {
                   setShowTeamMembers(false);
                   setShowAdd(true);
@@ -80,7 +82,7 @@ export default function TeamDetails() {
                   sx={{ backgroundColor: "yellow", color: "black" }}
                 />
               </IconButton>
-            </Tooltip>
+            {/* </Tooltip> */}
           </Box>
 
           {showTeamMembers && (
@@ -110,7 +112,7 @@ export default function TeamDetails() {
       </Grid>
   );
 }
-function TeamMemberItem({ userID }) {
+export function TeamMemberItem({ userID }) {
   const [user, setUser] = useState(null);
   useEffect(() => {
     User.getUserByID(userID)

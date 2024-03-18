@@ -17,7 +17,6 @@ import {
 } from "@mui/material";
 import { SwearType } from "../model/SwearType";
 import { SignedInUser } from "../model/SignedInUser";
-import ReportButton from "./ReportButton";
 import AddSwearType from "./AddSwearType";
 import Button from "./Button";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
@@ -307,6 +306,10 @@ export default function ViolationSelectList({
         border: "2px solid yellow",
         height: "100%",
         overflow: "auto",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        position: "relative",
       }}
     >
       <Box mb={5}>
@@ -342,7 +345,6 @@ export default function ViolationSelectList({
           )}
         </>
       )}
-      {showAddSwearType && <AddSwearType />}
     </Box>
   );
 }
