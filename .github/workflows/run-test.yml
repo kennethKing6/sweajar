@@ -2,7 +2,7 @@ name: Run all test and evaluate code coverage
 run-name: branch testers
 on: [push]
 jobs:
-   Example:
+   Functionalities:
      runs-on: ubuntu-latest
      steps:
         - name: Checkout repository

@@ -32,6 +32,15 @@ export class ReportViolationsController {
     }
   }
 
+  static getSelectedSwearTypeCount() {
+    if (!this.tempSelectedReports) return 0;
+    const count = Object.keys(this.tempSelectedReports).length;
+    return count;
+  }
+
+  static getSelectedSweartypes() {
+    return Object.values(this.tempSelectedReports);
+  }
   /**
    *
    * @param {User} user
