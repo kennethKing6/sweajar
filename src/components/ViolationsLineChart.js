@@ -33,6 +33,7 @@ const colors = ["#000000", "#2fc6ff", "#ffc658"];
 export default function ViolationsLineChart({ lineData, lineSeries }) {
   return (
     <LineChart
+      data-testid="line-chart"
       dataset={lineData}
       xAxis={[
         {

@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import { SwearType } from "../model/SwearType";
 import { Teams } from "../model/Teams";
+import { SignedInUser } from "../model/SignedInUser";
 
 export default function AddSwearType ({onAdd = () => {}}) {
     const [name, setName] = useState("");
@@ -29,12 +30,15 @@ export default function AddSwearType ({onAdd = () => {}}) {
 
     const onSubmit = async () => {
         // Validate the input fields
-        if (!name || !description || !level) {
-            alert ("Please enter a name, a description and level for the new swear type.");
+        if (!name || !description) {
+            alert ("Please enter name and description for the new swear type.");
             return;
         }
         // Create a new swear type object
-        const query = {name, description, level,teamID};
+        setLevel('');
+        const tID = SignedInUser.user.teamID;
+        setTeamID(tID);
+        const query = {name, description, level, teamID};
         const newSwearType = await SwearType.createNewSwearType(query);
         onAdd(newSwearType);
         // Clear the input fields
