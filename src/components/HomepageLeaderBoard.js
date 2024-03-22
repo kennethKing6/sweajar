@@ -71,6 +71,7 @@ export default function HomepageLeaderBoard({
       sx={{
         width: appDimensions.EXTENSION_WIDTH,
         bgcolor: Colors.BACKGROUND_COLOR,
+        height: "90vh",
       }}
       spacing={2}
     >
@@ -83,10 +84,16 @@ export default function HomepageLeaderBoard({
             }}
           >
             <>
-              <h1 style={{ fontWeight: "900" }}>Leaderboard </h1>
-              <FilterDropDown
-                onSelectFilter={(filter) => setProfanitySorter(filter)}
-              />
+              <Grid container>
+                <Grid item xs={7.5}>
+                  <h1 style={{ fontWeight: "900" }}>Leaderboard </h1>
+                </Grid>
+                <Grid item xs={4} mt={2}>
+                  <FilterDropDown
+                    onSelectFilter={(filter) => setProfanitySorter(filter)}
+                  />
+                </Grid>
+              </Grid>
               <nav aria-label="main reported folder">
                 <List>
                   {sortedData.map((person, index) => (

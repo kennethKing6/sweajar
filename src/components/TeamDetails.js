@@ -13,6 +13,8 @@ import {
   Typography,
   Avatar,
   Chip,
+  Card,
+  CardContent,
 } from "@mui/material";
 import { Teams } from "../model/Teams";
 import { User } from "../model/User";
@@ -23,6 +25,9 @@ import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import { Colors } from "../assets/colors";
 import { FontSizes } from "../assets/fonts";
 import { MARGIN_SIZES } from "../assets/sizes";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { FontFamilies } from "../assets/fontFamilies";
+import { TeamManagementManagerController } from "../controllers/teamManagementController";
 
 export default function TeamDetails() {
   const [showTeamMembers, setShowTeamMembers] = useState(true);
@@ -60,7 +65,7 @@ export default function TeamDetails() {
         }}
       >
         <Box display={"flex"}>
-          <h1>Team Details</h1>
+          <h1 style={{ fontFamily: FontFamilies.title }}>Team Details</h1>
           {/* <Tooltip title="Show Team Members" placement="top"> */}
           <IconButton
             title="Show Team Members"
@@ -101,9 +106,7 @@ export default function TeamDetails() {
           >
             {teamMembers &&
               teamMembers.map((member, index) => (
-                <ListItem key={index}>
-                  <TeamMemberItem userID={member.userID} admin={member.admin} />
-                </ListItem>
+                <TeamMemberItem userID={member.userID} admin={member.admin} />
               ))}
           </List>
         )}
@@ -122,38 +125,87 @@ export function TeamMemberItem({ userID, admin }) {
   return (
     <>
       {user ? (
-        <Grid container alignItems={"center"}>
-          <Grid item>
-            <ListItemAvatar>
-              {user ? (
-                <Avatar alt={`${user.firstName}`} src={user.profilePicture} />
-              ) : (
-                <></>
-              )}
-            </ListItemAvatar>
-          </Grid>
-          <Grid item>
-            <ListItemText primary={`${user.firstName} ${user.lastName}`} />
-            <Typography>{user.email}</Typography>
-            <Chip
-              label={
-                admin === userID
-                  ? "Admin"
-                  : userID === SignedInUser.user.userID
-                    ? "You"
-                    : "Member"
-              }
-              sx={{
-                backgroundColor:
+        <>
+          <Grid container>
+            <Grid item xs={10} />
+            <Grid item xs={2}>
+              <Chip
+                label={
                   admin === userID
-                    ? Colors.BACKGROUND_COLOR
-                    : Colors.ERROR_COLOR,
-                color: Colors.TEXT_COLOR,
-                fontSize: FontSizes.captionFontSize,
-              }}
-            />
+                    ? "Admin"
+                    : userID === SignedInUser.user.userID
+                      ? "You"
+                      : "Member"
+                }
+                sx={{
+                  backgroundColor:
+                    admin === userID ? Colors.ERROR_COLOR : Colors.ERROR_COLOR,
+                  color: Colors.TEXT_COLOR,
+                  fontSize: FontSizes.captionFontSize,
+                  width: 100,
+                }}
+              />
+            </Grid>
           </Grid>
-        </Grid>
+          <Card
+            key={JSON.stringify(user)}
+            sx={{
+              mb: 2,
+              bgcolor: Colors.TEAM_COLOR_DARK_BLUE,
+              color: Colors.TEXT_COLOR,
+            }}
+          >
+            <CardContent>
+              <Grid container alignItems={"center"}>
+                <Grid item>
+                  <ListItemAvatar>
+                    {user ? (
+                      <Avatar
+                        alt={`${user.firstName}`}
+                        src={user.profilePicture}
+                      />
+                    ) : (
+                      <></>
+                    )}
+                  </ListItemAvatar>
+                </Grid>
+                <Grid item>
+                  <ListItemText
+                    primary={`${user.firstName} ${user.lastName}`}
+                    secondary={
+                      admin !== userID ? (
+                        <DeleteIcon
+                          sx={{
+                            position: "absolute",
+                            left: "90%",
+                            color: Colors.TEXT_COLOR,
+                            cursor: "pointer",
+                          }}
+                          onClick={async () => {
+                            const { email, teamID } = user;
+                            if (
+                              window.confirm(
+                                `Are you sure you want to delete ${user.firstName} ${user.lastName} from the team?`,
+                              )
+                            ) {
+                              TeamManagementManagerController.deleteTeamMember(
+                                email,
+                                teamID,
+                              );
+                            }
+                          }}
+                        />
+                      ) : (
+                        <></>
+                      )
+                    }
+                  />
+                  <Typography>{user.email}</Typography>
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+        </>
       ) : (
         <></>
       )}

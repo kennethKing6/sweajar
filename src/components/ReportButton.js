@@ -7,7 +7,7 @@ import { Colors } from "../assets/colors";
 export default function ReportButton({
   onPress = () => {},
   bgColor = Colors.ACCENT_COLOR_4,
-  color = Colors.TEXT_COLOR,
+  color = Colors.TEXT_COLOR_SECONDARY,
 }) {
   return (
     <Button

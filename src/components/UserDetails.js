@@ -68,7 +68,7 @@ export default function UserDetails({ onPress = () => {} }) {
           src={user ? user.profilePicture : ""}
           alt={`${user ? user.firstName : ""} ${user ? user.lastName : ""}`}
           style={{
-            width: 300,
+            width: 200,
             maxHeight: "auto",
             borderRadius: "50%",
             padding: 2,
