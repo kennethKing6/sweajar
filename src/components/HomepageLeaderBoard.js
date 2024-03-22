@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import { Avatar, Stack, Typography } from "@mui/material";
-import SortButton from "./SortButton";
+// import SortButton from "./SortButton";
 import { User } from "../model/User";
 import { SignedInUser } from "../model/SignedInUser";
 import { Report } from "../model/Report";
@@ -19,7 +19,7 @@ import {
 } from "@mui/material";
 import { Colors } from "../assets/colors";
 import { FontSizes } from "../assets/fonts";
-import { Charts } from "react-charts";
+// import { Charts } from "react-charts";
 import LeaderboardChart from "./LeaderboardChart";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
