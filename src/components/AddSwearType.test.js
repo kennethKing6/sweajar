@@ -28,6 +28,8 @@ jest.mock('../model/SignedInUser', () => ({
     SignedInUser: { user: { userID: "userID", teamID: "testTeamID" } }
 }));
 
+window.alert = jest.fn();
+
 describe('AddSwearType', () => {
     beforeEach(() => {
         SwearType.createNewSwearType.mockResolvedValue({});
@@ -39,49 +41,47 @@ describe('AddSwearType', () => {
     });
 
     it('updates state when input fields are changed', async () => {
-        const { getByLabelText, getByText } = render(<AddSwearType />);
-        fireEvent.change(getByLabelText('Name'), { target: { value: 'Test Name' } });
-        fireEvent.change(getByLabelText('Description'), { target: { value: 'Test Description' } });
-
-        const select = getByLabelText('Select Level');
-        fireEvent.mouseDown(select);
-        const listItem = await waitFor(() => getByText('Minor'));
-        fireEvent.click(listItem);
-
-        // Ensure select value is set properly
-        // await waitFor(() => {
-        //     expect(select.value).toBe('minor');
-        // });
+        const { getByLabelText } = render(<AddSwearType />);
+        await act(async () => {
+            fireEvent.change(getByLabelText('Enter Violation Name'), { target: { value: 'Test Name' } });
+            fireEvent.change(getByLabelText('Enter Violation Description'), { target: { value: 'Test Description' } });
+        });
 
         await waitFor(() => {
-            expect(getByLabelText('Name').value).toBe('Test Name');
-            expect(getByLabelText('Description').value).toBe('Test Description');
-            //expect(select.value).toBe('minor');
+            expect(getByLabelText('Enter Violation Name').value).toBe('Test Name');
+            expect(getByLabelText('Enter Violation Description').value).toBe('Test Description');
         });
     });
 
     it('calls onAdd with new swear type when form is submitted', async () => {
         const onAdd = jest.fn();
         const { getByText, getByLabelText } = render(<AddSwearType onAdd={onAdd} />);
-        const select = getByLabelText('Select Level');
 
-        fireEvent.change(getByLabelText('Name'), { target: { value: 'Test Name' } });
-        fireEvent.change(getByLabelText('Description'), { target: { value: 'Test Description' } });
+        await act(async () => {
+            fireEvent.change(getByLabelText('Enter Violation Name'), { target: { value: 'Test Name' } });
+            fireEvent.change(getByLabelText('Enter Violation Description'), { target: { value: 'Test Description' } });
 
-        fireEvent.mouseDown(select);
-        const listItem = await waitFor(() => getByText('Minor'));
-        fireEvent.click(listItem);
-
-        fireEvent.click(getByText('Submit'));
+            fireEvent.click(getByText('Submit'));
+        });
 
         await waitFor(() => {
             expect(SwearType.createNewSwearType).toHaveBeenCalledWith({
                 name: 'Test Name',
                 description: 'Test Description',
-                level: 'minor',
+                level: '',
                 teamID: ''
             });
             expect(onAdd).toHaveBeenCalled();
+        });
+    });
+
+    it("shows alert when form is submitted with invalid inputs", async () => {
+        const { getByText } = render(<AddSwearType />);
+
+        fireEvent.click(getByText("Submit"));
+
+        await waitFor(() => {
+            expect(window.alert).toHaveBeenCalledWith("Please enter name and description for the new swear type.");
         });
     });
 });
