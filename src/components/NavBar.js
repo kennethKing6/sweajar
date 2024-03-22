@@ -1,5 +1,5 @@
-import { Grid, List, TextField } from "@mui/material";
-import React from "react";
+import { Grid } from "@mui/material";
+import React, { useState } from "react";
 import { User } from "../model/User";
 import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 import { Colors } from "../assets/colors";
@@ -11,6 +11,7 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { Border_Sizes } from "../assets/sizes";
 import { AppState } from "../model/AppState";
 import { SignedInUser } from "../model/SignedInUser";
+
 export default function NavBar({
   onLeaderboardClick,
   onTeamsClick,
@@ -18,27 +19,43 @@ export default function NavBar({
   onProfileClick,
   onLogout,
 }) {
+  const [selectedItem, setSelectedItem] = useState(null);
+
+  const handleItemClick = (itemName, onClickFunction) => {
+    setSelectedItem(itemName);
+    onClickFunction();
+  };
+
+  const handleLogout = async () => {
+    await User.signOut();
+    setSelectedItem(null);
+    onLogout();
+  };
+
   return (
     <Grid
       container
       style={{
         backgroundColor: Colors.NAVBAR_PRIMARY_BACKGROUND,
-        borderBottomRightRadius: Border_Sizes.BORDER_LG,
+        //borderRadius: Border_Sizes.BORDER_SM,
         padding: Padding_Sizes.PADDING_16,
       }}
     >
       <Grid
         item
+        container
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
         style={{
           cursor: "pointer",
-          border: "1px solid transparent",
-          transition: "border 0.3s",
+          backgroundColor: selectedItem === "Leaderboard" ? "blue" : "transparent",
+          borderRadius: Border_Sizes.BORDER_SM,
+          transition: "background-color 0.2s",
           flex: 1,
           color: Colors.TEXT_COLOR,
         }}
-        onClick={onLeaderboardClick}
-        onMouseOver={(e) => (e.target.style.border = "1px solid blue")}
-        onMouseOut={(e) => (e.target.style.border = "1px solid transparent")}
+        onClick={() => handleItemClick("Leaderboard", onLeaderboardClick)}
       >
         <LeaderboardIcon />
         <Grid item sx={styles.text}>
@@ -48,16 +65,19 @@ export default function NavBar({
 
       <Grid
         item
+        container
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
         style={{
           cursor: "pointer",
-          border: "1px solid transparent",
-          transition: "border 0.3s",
+          backgroundColor: selectedItem === "Teams" ? "blue" : "transparent",
+          borderRadius: Border_Sizes.BORDER_SM,
+          transition: "background-color 0.2s",
           flex: 1,
           color: Colors.TEXT_COLOR,
         }}
-        onClick={onTeamsClick}
-        onMouseOver={(e) => (e.target.style.border = "1px solid blue")}
-        onMouseOut={(e) => (e.target.style.border = "1px solid transparent")}
+        onClick={() => handleItemClick("Teams", onTeamsClick)}
       >
         <GroupsIcon />
         <Grid item sx={styles.text}>
@@ -67,16 +87,19 @@ export default function NavBar({
 
       <Grid
         item
+        container
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
         style={{
           cursor: "pointer",
-          border: "1px solid transparent",
-          transition: "border 0.3s",
+          backgroundColor: selectedItem === "New Report" ? "blue" : "transparent",
+          borderRadius: Border_Sizes.BORDER_SM,
+          transition: "background-color 0.2s",
           flex: 1,
           color: Colors.TEXT_COLOR,
         }}
-        onClick={onNewReportClick}
-        onMouseOver={(e) => (e.target.style.border = "1px solid blue")}
-        onMouseOut={(e) => (e.target.style.border = "1px solid transparent")}
+        onClick={() => handleItemClick("New Report", onNewReportClick)}
       >
         <AssessmentIcon />
         <Grid item sx={styles.text}>
@@ -85,17 +108,20 @@ export default function NavBar({
       </Grid>
 
       <Grid
+        container
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
         style={{
           cursor: "pointer",
-          border: "1px solid transparent",
-          transition: "border 0.3s",
+          backgroundColor: selectedItem === "Profile" ? "blue" : "transparent",
+          borderRadius: Border_Sizes.BORDER_SM,
+          transition: "background-color 0.2s",
           color: Colors.TEXT_COLOR,
           flex: 1,
         }}
         item
-        onClick={onProfileClick}
-        onMouseOver={(e) => (e.target.style.border = "1px solid blue")}
-        onMouseOut={(e) => (e.target.style.border = "1px solid transparent")}
+        onClick={() => handleItemClick("Profile", onProfileClick)}
       >
         <AccountCircleIcon />
         <Grid
@@ -109,19 +135,19 @@ export default function NavBar({
 
       <Grid
         item
+        container
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
         style={{
           cursor: "pointer",
-          border: "1px solid transparent",
-          transition: "border 0.3s",
+          backgroundColor: selectedItem === "Logout" ? "blue" : "transparent",
+          borderRadius: Border_Sizes.BORDER_SM,
+          transition: "background-color 0.2s",
           color: Colors.TEXT_COLOR,
           flex: 1,
         }}
-        onClick={async () => {
-          await User.signOut();
-          onLogout();
-        }}
-        onMouseOver={(e) => (e.target.style.border = "1px solid blue")}
-        onMouseOut={(e) => (e.target.style.border = "1px solid transparent")}
+        onClick={handleLogout}
       >
         <ExitToAppIcon />
         <Grid item sx={styles.text}>
