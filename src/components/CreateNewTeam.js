@@ -72,7 +72,14 @@ export default function CreateNewTeam({ onAdd = () => {} }) {
         </Button>
         <Button
           variant="contained"
-          //onClick={}
+          onClick={async () => {
+            try {
+              await Teams.deleteTeamByName(teamName);
+              alert("Team was successfully deleted");
+            } catch (err) {
+              alert("Could not delete team");
+            }
+          }}
           sx={{
             backgroundColor: "#FFEB3B",
             color: "black",

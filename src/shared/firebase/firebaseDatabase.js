@@ -183,9 +183,9 @@ export class FirebaseDatabase {
     const newPostKey = this.getPushKey(
       push(child(ref(db), userQuery.queryPath)),
     );
-    await this.updateDataOnDB({
-      newData: userQuery.newData,
+    await this.writeDataToDB({
       queryPath: `${userQuery.queryPath}/${newPostKey}`,
+      data: userQuery.newData,
     });
   }
 
