@@ -4,7 +4,6 @@ import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import { Avatar, Stack, Typography } from "@mui/material";
-// import SortButton from "./SortButton";
 import { User } from "../model/User";
 import { SignedInUser } from "../model/SignedInUser";
 import { Report } from "../model/Report";

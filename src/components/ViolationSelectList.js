@@ -155,7 +155,9 @@ export default function ViolationSelectList({
                         <ListItemText
                           sx={{ color: "white" }}
                           primary={violation.name}
-                          secondaryTypographyProps={{ style: { color: "red" } }}
+                          secondaryTypographyProps={{
+                            style: { color: "white" },
+                          }}
                           secondary={violation.description}
                         ></ListItemText>
                       </ListItem>
