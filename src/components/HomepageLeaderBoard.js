@@ -145,19 +145,22 @@ function UserItem({ person, index, pageDetails = () => {} }) {
       });
   }, []);
   useEffect(() => {
-    Report.getTheHighestViolationByUserID(
-      person.userID,
-      SignedInUser.user.teamID,
-    )
-      .then((data) => {
-        setHighestViolationCount(
-          data.highestViolationsMetrics.highestViolationCount,
-        );
-        setHighestViolation(data.highestViolationsMetrics.swearType.name);
-        setChartData(data.sortedViolations);
-      })
-      .catch((err) => console.error(err));
-  }, [user]);
+    if (person) {
+      Report.getTheHighestViolationByUserID(
+        person.userID,
+        SignedInUser.user.teamID,
+        person.swearTypeID,
+      )
+        .then((data) => {
+          setHighestViolationCount(
+            data.highestViolationsMetrics.highestViolationCount,
+          );
+          setHighestViolation(data.highestViolationsMetrics.swearType.name);
+          setChartData(data.sortedViolations);
+        })
+        .catch((err) => console.error(err));
+    }
+  }, [person]);
   return (
     <>
       {user ? (
