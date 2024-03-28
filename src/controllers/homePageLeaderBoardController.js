@@ -7,8 +7,12 @@ export class HomePageLeaderBoardController {
   static teamMembers = [];
 
   static async getAllTeamMembers() {
-    this.teamMembers = await Teams.getTeamMembers(SignedInUser.user.teamID);
-    return this.teamMembers;
+    try {
+      this.teamMembers = await Teams.getTeamMembers(SignedInUser.user.teamID);
+      return this.teamMembers;
+    } catch (err) {
+      return [];
+    }
   }
 
   /**
