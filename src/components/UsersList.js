@@ -97,7 +97,7 @@ export default function UsersList({ onPress = () => {} }) {
     </Grid>
   );
 }
-function TeamMemberItem({ value, checked, setChecked }) {
+export function TeamMemberItem({ value, checked, setChecked }) {
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
