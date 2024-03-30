@@ -70,7 +70,7 @@ export default function HomepageLeaderBoard({
       sx={{
         width: appDimensions.EXTENSION_WIDTH,
         bgcolor: Colors.BACKGROUND_COLOR,
-        height: "90vh",
+        height: "100%",
       }}
       spacing={2}
     >
