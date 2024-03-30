@@ -64,9 +64,8 @@ export default function TeamDetails() {
           border: "2px solid yellow",
         }}
       >
-        <Box display={"flex"}>
-          <h1 style={{ fontFamily: FontFamilies.title }}>Team Details</h1>
-          {/* <Tooltip title="Show Team Members" placement="top"> */}
+        <h1 style={{ fontFamily: FontFamilies.title }}>Team Details</h1>
+        <Box sx={{ position: "absolute", top: 48, right: 8 }}>
           <IconButton
             title="Show Team Members"
             onClick={() => {
@@ -78,8 +77,6 @@ export default function TeamDetails() {
               sx={{ backgroundColor: "yellow", color: "black" }}
             />
           </IconButton>
-          {/* </Tooltip> */}
-          {/* <Tooltip title="Add/Delete Team Member" placement="top"> */}
           <IconButton
             title="Add/Delete Team Member"
             onClick={() => {
@@ -89,7 +86,6 @@ export default function TeamDetails() {
           >
             <GroupAddIcon sx={{ backgroundColor: "yellow", color: "black" }} />
           </IconButton>
-          {/* </Tooltip> */}
         </Box>
 
         {showTeamMembers && (
