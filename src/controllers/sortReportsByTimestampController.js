@@ -28,17 +28,22 @@ export class SortReportsByTimestampController {
       );
 
       const currentUserReports = [];
+
       const reports = await Report.getReportsWithinPeriod({
         teamID: SignedInUser.user.teamID,
         endTime: todaysDate.getTime(),
         startTime: lastMonthDate.getTime(),
       });
+
       for (let report in reports) {
-        const current = reports[report];
-        if (current["reportedID"] === userID) {
-          currentUserReports.push(current);
-        }
+        try {
+          const current = reports[report];
+          if (current["reportedID"] === userID) {
+            currentUserReports.push(current);
+          }
+        } catch (err) {}
       }
+
       return currentUserReports;
     } catch (err) {
       return [];

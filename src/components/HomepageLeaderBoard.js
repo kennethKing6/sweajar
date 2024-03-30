@@ -4,7 +4,6 @@ import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import { Avatar, Stack, Typography } from "@mui/material";
-// import SortButton from "./SortButton";
 import { User } from "../model/User";
 import { SignedInUser } from "../model/SignedInUser";
 import { Report } from "../model/Report";
@@ -146,19 +145,22 @@ function UserItem({ person, index, pageDetails = () => {} }) {
       });
   }, []);
   useEffect(() => {
-    Report.getTheHighestViolationByUserID(
-      person.userID,
-      SignedInUser.user.teamID,
-    )
-      .then((data) => {
-        setHighestViolationCount(
-          data.highestViolationsMetrics.highestViolationCount,
-        );
-        setHighestViolation(data.highestViolationsMetrics.swearType.name);
-        setChartData(data.sortedViolations);
-      })
-      .catch((err) => console.error(err));
-  }, [user]);
+    if (person) {
+      Report.getTheHighestViolationByUserID(
+        person.userID,
+        SignedInUser.user.teamID,
+        person.swearTypeID,
+      )
+        .then((data) => {
+          setHighestViolationCount(
+            data.highestViolationsMetrics.highestViolationCount,
+          );
+          setHighestViolation(data.highestViolationsMetrics.swearType.name);
+          setChartData(data.sortedViolations);
+        })
+        .catch((err) => console.error(err));
+    }
+  }, [person]);
   return (
     <>
       {user ? (

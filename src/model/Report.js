@@ -171,11 +171,23 @@ export class Report {
     return Object.values(result);
   }
 
-  static async getTheHighestViolationByUserID(userID, teamID) {
+  static async getTheHighestViolationByUserID(userID, teamID, swearTypeID) {
     const swearTypes = await this.getReportedUserByUserID(userID, teamID);
     const sortedViolations = this.sortUserViolationsByHighest(swearTypes);
-    const highestViolationsMetrics =
-      this.getHighestViolationMetrics(swearTypes);
+
+    if (!swearTypeID) {
+      const highestViolationsMetrics =
+        this.getHighestViolationMetrics(swearTypes);
+      return {
+        sortedViolations: sortedViolations,
+        highestViolationsMetrics: highestViolationsMetrics,
+      };
+    }
+
+    const highestViolationsMetrics = this.getViolationCount(
+      swearTypes,
+      swearTypeID,
+    );
     return {
       sortedViolations: sortedViolations,
       highestViolationsMetrics: highestViolationsMetrics,
@@ -213,6 +225,17 @@ export class Report {
     return {
       highestViolationCount: count,
       swearType: swearType,
+    };
+  }
+
+  /**
+   * @private
+   */
+  static getViolationCount(swearTypes, swearTypeID) {
+    let count = Object.values(swearTypes[swearTypeID]).length;
+    return {
+      highestViolationCount: count,
+      swearType: swearTypeID,
     };
   }
 

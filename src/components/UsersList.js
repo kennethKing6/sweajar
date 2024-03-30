@@ -47,7 +47,7 @@ export default function UsersList({ onPress = () => {} }) {
         flex: 1,
         flexDirection: "column",
         bgcolor: Colors.BACKGROUND_COLOR,
-        height: "90vh",
+        height: "95%",
       }}
     >
       <Grid container sx={{ mt: 2, mb: 2 }}>
@@ -150,7 +150,7 @@ export function TeamMemberItem({ value, checked, setChecked }) {
           }
           disablePadding
         >
-          <ListItemButton>
+          <Grid container>
             <ListItemAvatar>
               <Avatar
                 alt={`Avatar n°${value + 1}`}
@@ -160,8 +160,15 @@ export function TeamMemberItem({ value, checked, setChecked }) {
             <ListItemText
               id={labelId}
               primary={`${currentUser ? currentUser.firstName : ""} ${currentUser ? currentUser.lastName : ""}`}
+              secondary={` ${currentUser ? currentUser.email : ""}`}
+              secondaryTypographyProps={{
+                color:
+                  checked.indexOf(value) !== -1
+                    ? Colors.TEXT_COLOR
+                    : Colors.TEXT_COLOR_SECONDARY,
+              }}
             />
-          </ListItemButton>
+          </Grid>
         </ListItem>
       </CardContent>
     </Card>

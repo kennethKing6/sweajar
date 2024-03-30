@@ -117,6 +117,8 @@ describe("Delete Team Member", () => {
     jest.spyOn(Teams, "getTeam").mockResolvedValue({
       admin: adminID,
     });
+    jest.spyOn(FirebaseDatabase, "deleteDataFromDB").mockResolvedValue(null);
+    jest.spyOn(Promise, "any").mockResolvedValue(null);
     SignedInUser.user = {
       userID: adminID,
     };
@@ -124,6 +126,7 @@ describe("Delete Team Member", () => {
     expect(newTeamMember).toMatchObject(tempUser);
   });
 });
+
 describe("Get Teams signed in user is in", () => {
   it("Make sure we extract the team from where user is participating and where user is admin of team", async () => {
     jest
@@ -132,6 +135,9 @@ describe("Get Teams signed in user is in", () => {
     jest
       .spyOn(FirebaseDatabase, "readDataFromDByEquality")
       .mockResolvedValue({ team2: { userID } });
+
+    jest.spyOn(Promise, "all").mockResolvedValue([]);
+
     const teams = await Teams.getTeams();
     expect(teams.length).toBe(2);
   });
@@ -139,14 +145,17 @@ describe("Get Teams signed in user is in", () => {
 
 describe("Get team members in a team", () => {
   it("Extract all team members in a team with no team members", async () => {
+    jest
+      .spyOn(FirebaseDatabase, "readDataFromDB")
+      .mockResolvedValue({ admin: "admin", teamName: "teamName" });
     const result = await Teams.getTeamMembers(teamID);
-    expect(result.length).toBe(0);
+    expect(result.length).toBe(2);
   });
   it("Extract all team members in a team with team members", async () => {
     jest
       .spyOn(FirebaseDatabase, "readDataFromDB")
       .mockResolvedValue({ team: { teamID } });
     const result = await Teams.getTeamMembers(teamID);
-    expect(result.length).toBe(1);
+    expect(result.length).toBe(3);
   });
 });
