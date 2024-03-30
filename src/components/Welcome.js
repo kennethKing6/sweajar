@@ -31,7 +31,7 @@ const Welcome = () => {
               decoding="async"
               data-nimg="1"
               alt="Swearjar representation"
-              class="lk21hp11 _1286nb199 _1286nb19x _1286nb16 _1286nb183 _1286nb18b"
+              className="lk21hp11 _1286nb199 _1286nb19x _1286nb16 _1286nb183 _1286nb18b"
             />
           </ImageListItem>
           <p style={{ color: Colors.TEXT_COLOR_TERTIARY }}>

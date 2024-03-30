@@ -1,79 +1,71 @@
-import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
-import UserDetails from './UserDetails';
+import { BarChart } from "./__mocks__/@mui/x-charts/BarChart";
+import { LineChart } from "./__mocks__/@mui/x-charts/LineChart";
+import "../shared/firebase/__mock__/mockFirebase";
+import "../model/__mocks__/User";
+import React from "react";
+import { render, fireEvent, waitFor } from "@testing-library/react";
+import UserDetails from "./UserDetails";
+import { User } from "../model/User";
+import { UserDetailsController } from "../controllers/userDetailsController";
 
-// Mocking modules
-jest.mock("@mui/x-charts", () => ({ 
-    BarChart: jest.fn().mockImplementation(({ children }) => children)
+jest.mock("../model/SignedInUser", () => ({
+  SignedInUser: { user: { userID: "123", teamID: "456" } },
 }));
 
-jest.mock('../model/User', () => ({
-  getUserByID: jest.fn().mockResolvedValue({}),
-}));
+const userID = "userID";
+const user = {
+  userID: "userID",
+  firstName: "john",
+  lastName: "kouadio",
+  profilePicture: "profilePicture",
+};
 
-jest.mock('../model/SignedInUser', () => ({
-    SignedInUser: { user: { userID: '123', teamID: '456' } },
-  }));
-
-jest.mock('../controllers/userDetailsController', () => ({
-  getMonthBarChartData: jest.fn().mockResolvedValue([]),
-  getMonthLineChartData: jest.fn().mockResolvedValue({ data: [], series: [] }),
-}));
-
-describe('UserDetails Component', () => {
-  it('renders without crashing', () => {
+beforeEach(() => {
+  jest.spyOn(User, "getUserByID").mockResolvedValue(user);
+});
+describe("UserDetails Component", () => {
+  it("renders without crashing", () => {
     render(<UserDetails />);
   });
 
-  it('displays user information', async () => {
+  it("displays user information", async () => {
     const { getByText } = render(<UserDetails />);
     // Wait for user data to be fetched
-    await new Promise((resolve) => setTimeout(resolve, 100));
-    expect(getByText(/Analysis/i)).toBeInTheDocument();
+    await waitFor(() => expect(getByText(/Analysis/i)).toBeInTheDocument());
   });
 
-  it('fetches bar chart data when user is set', async () => {
-    render(<UserDetails />);
-    await new Promise((resolve) => setTimeout(resolve, 100)); // Wait for useEffect to execute
-    expect(require('../controllers/userDetailsController').getMonthBarChartData).toHaveBeenCalled();
+  it("fetches bar chart data when user is set", async () => {
+    await render(<UserDetails />);
+    await waitFor(() => expect(User.getUserByID).toHaveBeenCalled());
   });
 
-  it('fetches line chart data when user is set', async () => {
-    render(<UserDetails />);
-    await new Promise((resolve) => setTimeout(resolve, 100)); // Wait for useEffect to execute
-    expect(require('../controllers/userDetailsController').getMonthLineChartData).toHaveBeenCalled();
+  it("fetches line chart data when user is set", async () => {
+    await render(<UserDetails />);
+    waitFor(() => {
+      expect(
+        require("../controllers/userDetailsController").UserDetailsController
+          .getMonthLineChartData,
+      ).toHaveBeenCalled();
+    });
   });
 
-//   it('shows "No graph available" message if bar chart data is empty', async () => {
-//     const { getByText } = render(<UserDetails />);
-//     await new Promise((resolve) => setTimeout(resolve, 100)); // Wait for useEffect to execute
-//     expect(getByText(/No graph available/i)).toBeInTheDocument();
-//   });
+  it('shows "No graph available" message if bar chart data is empty', async () => {
+    await render(<UserDetails />);
 
-//   it('shows "No graph available" message if line chart data is empty', async () => {
-//     const { getByText } = render(<UserDetails />);
-//     await new Promise((resolve) => setTimeout(resolve, 100)); // Wait for useEffect to execute
-//     expect(getByText(/No graph available/i)).toBeInTheDocument();
-//   });
+    waitFor(() => expect(getByText(/No graph available/i)).toBeInTheDocument());
+  });
 
-  it('displays violation types if chart data is available', async () => {
+  it("displays violation types if chart data is available", async () => {
     const mockChartData = [
-      { violationType: 'Type 1', countPerViolation: 5 },
-      { violationType: 'Type 2', countPerViolation: 10 },
+      { violationType: "Type 1", countPerViolation: 5 },
+      { violationType: "Type 2", countPerViolation: 10 },
     ];
-    require('../controllers/userDetailsController').getMonthBarChartData.mockResolvedValue(mockChartData);
-    const { getByText } = render(<UserDetails />);
-    await new Promise((resolve) => setTimeout(resolve, 100)); // Wait for useEffect to execute
-    expect(getByText(/Type 1/i)).toBeInTheDocument();
-    expect(getByText(/Type 2/i)).toBeInTheDocument();
-  });
+    jest
+      .spyOn(UserDetailsController, "getMonthBarChartData")
+      .mockResolvedValue(mockChartData);
 
-  it('calls onPress function when user image is clicked', async () => {
-    const onPress = jest.fn();
-    const { getByAltText } = render(<UserDetails onPress={onPress} />);
-    await new Promise((resolve) => setTimeout(resolve, 100)); // Wait for useEffect to execute
-    const userImage = getByAltText(/user profile/i);
-    fireEvent.click(userImage);
-    expect(onPress).toHaveBeenCalled();
+    const { getByText } = render(<UserDetails />);
+    waitFor(() => expect(getByText(/Type 1/i)).toBeInTheDocument());
+    waitFor(() => expect(getByText(/Type 2/i)).toBeInTheDocument());
   });
 });

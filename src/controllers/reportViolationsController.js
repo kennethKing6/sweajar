@@ -24,12 +24,15 @@ export class ReportViolationsController {
    * @param {"minor"|"major"|"medium"} query.levels
    */
   static selectSwearType(query) {
-    console.log(query);
     if (!this.tempSelectedReports[query.name]) {
       this.tempSelectedReports[query.name] = query;
     } else {
       delete this.tempSelectedReports[query.name];
     }
+  }
+
+  static getSelectedReports() {
+    return this.tempSelectedReports;
   }
 
   static getSelectedSwearTypeCount() {

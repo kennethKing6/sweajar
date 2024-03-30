@@ -5,6 +5,7 @@ module.exports = {
   },
   transform: {
     "^.+\\.(js|jsx|ts|tsx)$": "babel-jest",
+    "^@mui/x-charts(.*)$": "<rootDir>/node_modules/@mui/x-charts/index.js",
   },
   collectCoverage: true,
   collectCoverageFrom: [

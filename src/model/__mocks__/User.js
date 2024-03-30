@@ -3,7 +3,7 @@ export class User {
     if (!user["teamID"]) throw new Error("teamID required");
     this.teamID = user.teamID || "";
 
-    if (!user["firstName"]) throw new Error("firstName required");
+    if (!user["firstName"]) throw new Error("First name required");
     this.firstName = user.firstName;
 
     if (!user["lastName"]) throw new Error("lastName required");
