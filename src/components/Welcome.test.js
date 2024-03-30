@@ -1,8 +1,6 @@
-jest.mock('firebase/auth', () => ({
-    getAuth: jest.fn(),
-}));
+import "../shared/firebase/__mock__/mockFirebase";
 
-import 'text-encoding';
+import "text-encoding";
 import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import Welcome from "./Welcome";
