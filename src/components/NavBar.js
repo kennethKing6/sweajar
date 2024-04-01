@@ -7,6 +7,7 @@ import { Padding_Sizes } from "../assets/paddingSizes";
 import GroupsIcon from "@mui/icons-material/Groups";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import HelpIcon from "@mui/icons-material/HelpOutlineRounded";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { Border_Sizes } from "../assets/sizes";
 import { AppState } from "../model/AppState";
@@ -130,6 +131,32 @@ export default function NavBar({
           onClick={() => (AppState.selectUserID = SignedInUser.user.userID)}
         >
           Profile
+        </Grid>
+      </Grid>
+
+      <Grid
+        container
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
+        style={{
+          cursor: "pointer",
+          backgroundColor: selectedItem === "Tutorial" ? "blue" : "transparent",
+          borderRadius: Border_Sizes.BORDER_SM,
+          transition: "background-color 0.2s",
+          color: Colors.TEXT_COLOR,
+          flex: 1,
+        }}
+        item
+        onClick={() => handleItemClick("Tutorial", onTutorialClick)}
+      >
+        <HelpIcon />
+        <Grid
+          item
+          sx={styles.text}
+          onClick={() => (AppState.selectUserID = SignedInUser.user.userID)}
+        >
+          Turotial
         </Grid>
       </Grid>
 
