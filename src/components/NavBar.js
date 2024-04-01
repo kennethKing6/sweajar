@@ -18,6 +18,7 @@ export default function NavBar({
   onTeamsClick,
   onNewReportClick,
   onProfileClick,
+  onTutorialClick,
   onLogout,
 }) {
   const [selectedItem, setSelectedItem] = useState(null);
@@ -156,7 +157,7 @@ export default function NavBar({
           sx={styles.text}
           onClick={() => (AppState.selectUserID = SignedInUser.user.userID)}
         >
-          Turotial
+          Tutorial
         </Grid>
       </Grid>
 
@@ -187,6 +188,6 @@ export default function NavBar({
 
 const styles = {
   text: {
-    fontWeight: "900",
-  },
+    fontWeight: "bold"
+  }
 };
