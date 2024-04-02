@@ -86,11 +86,6 @@ export default function TeamViewer({ onPress = () => {} }) {
             {showUserTeams && (
               <Grid container
                 spacing={2}
-                // sx={{
-                //   display: "flex",
-                //   justifyContent: "center",
-                //   alignItems: "center",
-                // }}
               >
                 {items.length > 0 ? (
                   items.map((item) => (

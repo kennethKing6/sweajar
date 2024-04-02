@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   List,
   ListItem,
   ListSubheader,
   TextField,
   Button,
-  Alert,
 } from "@mui/material";
 import { Teams } from "../model/Teams";
 

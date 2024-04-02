@@ -2,7 +2,6 @@ import "../shared/firebase/__mock__/mockFirebase";
 import "../model/__mocks__/User";
 import { render, fireEvent, screen, waitFor, act } from '@testing-library/react';
 import { User } from "../model/User";
-import { SignedInUser } from "../model/SignedInUser";
 import { Teams } from "../model/Teams";
 import { ReportViolationsController } from '../controllers/reportViolationsController';
 import UsersList, { TeamMemberItem } from "./UsersList";

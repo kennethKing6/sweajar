@@ -9,12 +9,6 @@ describe('LeaderboardListItem', () => {
         render(<LeaderboardListItem />);
     });
 
-    // it('renders list items correctly', () => {
-    //     const { getAllByRole } = render(<LeaderboardListItem />);
-    //     const listItems = getAllByRole('listitem');
-    //     expect(listItems.length).toBeGreaterThan(0);
-    // });
-
     it('renders profile pictures', () => {
         const { getAllByRole } = render(<LeaderboardListItem />);
         const profilePictures = getAllByRole('img');

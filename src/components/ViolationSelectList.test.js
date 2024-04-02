@@ -1,9 +1,8 @@
 import "../shared/firebase/__mock__/mockFirebase"
 import "../model/__mocks__/User";
 import React from 'react';
-import { render, fireEvent, waitFor, getByTestId } from '@testing-library/react';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 import { ReportViolationsController } from "../controllers/reportViolationsController";
-import { DefaultViolations } from "../model/DefaultViolations";
 import ViolationSelectList from './ViolationSelectList';
 
 // Mock DefaultViolations

@@ -45,20 +45,4 @@ describe('ViolationsLineChart', () => {
     it("renders without crashing", () => {
         render(<ViolationsLineChart lineData={lineData} lineSeries={lineSeries} />);
     });
-
-    // it("renders line chart with correct data", () => {
-    //     const { getByTestId } = render(
-    //         <ViolationsLineChart lineData={lineData} lineSeries={lineSeries} />
-    //     );
-
-    //     // expect(getByText("Profanity")).toBeInTheDocument();
-    //     // expect(getByText("Muted Microphone")).toBeInTheDocument();
-    //     // expect(getByText("Late Arrival")).toBeInTheDocument();
-
-    //     expect(getByTestId("line-chart")).toBeInTheDocument();
-
-    //     // expect(getByTestId("line-chart")).toHaveTextContent(/Profanity/);
-    //     // expect(getByTestId("line-chart")).toHaveTextContent(/Muted Microphone/);
-    //     // expect(getByTestId("line-chart")).toHaveTextContent(/Late Arrival/);
-    // });
 });
