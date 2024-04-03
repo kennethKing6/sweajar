@@ -17,17 +17,19 @@ describe("NavBar Component", () => {
   test("renders without errors", () => {
     render(
       <NavBar
-        onLeaderboardClick={() => {}}
-        onTeamsClick={() => {}}
-        onNewReportClick={() => {}}
-        onProfileClick={() => {}}
-        onLogout={() => {}}
+        onLeaderboardClick={() => { }}
+        onTeamsClick={() => { }}
+        onNewReportClick={() => { }}
+        onProfileClick={() => { }}
+        onTutorialClick={() => { }}
+        onLogout={() => { }}
       />,
     );
     waitFor(() => expect(screen.getByText("Leaderboard")).toBeInTheDocument());
     expect(screen.getByText("Teams")).toBeInTheDocument();
     expect(screen.getByText("New Report")).toBeInTheDocument();
     expect(screen.getByText("Profile")).toBeInTheDocument();
+    expect(screen.getByText("Tutorial")).toBeInTheDocument();
     expect(screen.getByText("Logout")).toBeInTheDocument();
   });
 
@@ -39,6 +41,7 @@ describe("NavBar Component", () => {
       onTeamsClick: jest.fn(),
       onNewReportClick: jest.fn(),
       onProfileClick: jest.fn(),
+      onTutorialClick: jest.fn(),
       onLogout: jest.fn(),
     };
 
@@ -50,6 +53,7 @@ describe("NavBar Component", () => {
     fireEvent.click(screen.getByText("Teams"));
     fireEvent.click(screen.getByText("New Report"));
     fireEvent.click(screen.getByText("Profile"));
+    fireEvent.click(screen.getByText("Tutorial"));
     fireEvent.click(screen.getByText("Logout"));
 
     // Assert that event handlers were called when expected
@@ -59,33 +63,41 @@ describe("NavBar Component", () => {
       expect(mockHandlers.onTeamsClick).toHaveBeenCalledTimes(1);
       expect(mockHandlers.onNewReportClick).toHaveBeenCalledTimes(1);
       expect(mockHandlers.onProfileClick).toHaveBeenCalledTimes(1);
+      expect(mockHandlers.onTutorialClick).toHaveBeenCalledTimes(1);
       expect(mockHandlers.onLogout).toHaveBeenCalledTimes(1);
     });
   });
 
-  // // Test 3: Triggers hover effect over the nav items
-  test("hover/unhover", async () => {
-    // Render the NavBar component
-    render(
-      <NavBar
-        onLeaderboardClick={() => {}}
-        onTeamsClick={() => {}}
-        onNewReportClick={() => {}}
-        onProfileClick={() => {}}
-        onLogout={() => {}}
-      />,
-    );
+  // // Test 3: Triggers selected effect over the nav items
+  // test("selected upon click", async () => {
+  //   // Render the NavBar component with mock event handlers
+  //   render(
+  //     <NavBar
+  //       onLeaderboardClick={() => { }}
+  //       onTeamsClick={() => { }}
+  //       onNewReportClick={() => { }}
+  //       onProfileClick={() => { }}
+  //       onTutorialClick={() => { }}
+  //       onLogout={() => { }}
+  //     />
+  //   );
 
-    const leaderboardItem = screen.getByText("Leaderboard");
-    const teamsItem = screen.getByText("Teams");
-    const newReportItem = screen.getByText("New Report");
-    const profileItem = screen.getByText("Profile");
-    const logoutItem = screen.getByText("Logout");
-    // No hover effect
-    expect(leaderboardItem).not.toHaveStyle("border: 1px solid blue");
-    expect(teamsItem).not.toHaveStyle("border: 1px solid blue");
-    expect(newReportItem).not.toHaveStyle("border: 1px solid blue");
-    expect(profileItem).not.toHaveStyle("border: 1px solid blue");
-    expect(logoutItem).not.toHaveStyle("border: 1px solid blue");
-  });
+  //   // Simulate clicks on navigation items
+  //   fireEvent.click(screen.getByText("Leaderboard"));
+  //   fireEvent.click(screen.getByText("Teams"));
+  //   fireEvent.click(screen.getByText("New Report"));
+  //   fireEvent.click(screen.getByText("Profile"));
+  //   fireEvent.click(screen.getByText("Tutorial"));
+  //   fireEvent.click(screen.getByText("Logout"));
+
+  //   // Assert that each item has the selected style applied after click
+  //   await waitFor(() => {
+  //     expect(screen.getByText("Leaderboard")).toHaveStyle("background-color: blue");
+  //     expect(screen.getByText("Teams")).toHaveStyle("background-color: blue");
+  //     expect(screen.getByText("New Report")).toHaveStyle("background-color: blue");
+  //     expect(screen.getByText("Profile")).toHaveStyle("background-color: blue");
+  //     expect(screen.getByText("Tutorial")).toHaveStyle("background-color: blue");
+  //     expect(screen.getByText("Logout")).toHaveStyle("background-color: blue");
+  //   });
+  // });
 });

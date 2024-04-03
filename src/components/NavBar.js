@@ -7,6 +7,7 @@ import { Padding_Sizes } from "../assets/paddingSizes";
 import GroupsIcon from "@mui/icons-material/Groups";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import HelpIcon from "@mui/icons-material/HelpOutlineRounded";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { Border_Sizes } from "../assets/sizes";
 import { AppState } from "../model/AppState";
@@ -17,6 +18,7 @@ export default function NavBar({
   onTeamsClick,
   onNewReportClick,
   onProfileClick,
+  onTutorialClick,
   onLogout,
 }) {
   const [selectedItem, setSelectedItem] = useState(null);
@@ -134,6 +136,32 @@ export default function NavBar({
       </Grid>
 
       <Grid
+        container
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
+        style={{
+          cursor: "pointer",
+          backgroundColor: selectedItem === "Tutorial" ? "blue" : "transparent",
+          borderRadius: Border_Sizes.BORDER_SM,
+          transition: "background-color 0.2s",
+          color: Colors.TEXT_COLOR,
+          flex: 1,
+        }}
+        item
+        onClick={() => handleItemClick("Tutorial", onTutorialClick)}
+      >
+        <HelpIcon />
+        <Grid
+          item
+          sx={styles.text}
+          onClick={() => (AppState.selectUserID = SignedInUser.user.userID)}
+        >
+          Tutorial
+        </Grid>
+      </Grid>
+
+      <Grid
         item
         container
         direction="column"
@@ -160,6 +188,6 @@ export default function NavBar({
 
 const styles = {
   text: {
-    fontWeight: "900",
-  },
+    fontWeight: "bold"
+  }
 };

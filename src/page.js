@@ -15,6 +15,7 @@ import Welcome from "./components/Welcome";
 import UserDetails from "./components/UserDetails";
 import NavBar from "./components/NavBar";
 import TeamViewer from "./components/TeamViewer";
+import Tutorial from "./components/Tutorial"
 import { reduxStore } from "./shared/redux/reduxStore";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -29,6 +30,7 @@ const HOMEPAGE_LEADERBOARD = "leaderboard";
 const USER_DETAILS_COMPONENT = "userDetails";
 const TEAM_VIEWER_COMPONENT = "teamViewer";
 const TEAM_DETAILS_COMPONENT = "teamDetails";
+const TUTORIAL_COMPONENT = "tutorial";
 
 const cache = createCache({ key: "css", prepend: true });
 
@@ -101,6 +103,7 @@ function App() {
         onLeaderboardClick={() => setSwitcher(HOMEPAGE_LEADERBOARD)}
         onNewReportClick={() => setSwitcher(VIOLATION_LIST_COMPONENT)}
         onProfileClick={() => setSwitcher(USER_DETAILS_COMPONENT)}
+        onTutorialClick={() => setSwitcher(TUTORIAL_COMPONENT)}
         onTeamsClick={() => setSwitcher(TEAM_VIEWER_COMPONENT)}
         onLogout={() => setSwitcher(HOMEPAGE_LEADERBOARD)}
       />
@@ -139,6 +142,16 @@ function App() {
               user={HomepageLeaderBoardData[0]}
               onPress={() => {
                 setSwitcher(HOMEPAGE_LEADERBOARD);
+              }}
+            />
+          ) : (
+            <></>
+          )}
+          {switcher === TUTORIAL_COMPONENT ? (
+            <Tutorial
+              //user={HomepageLeaderBoardData[0]}
+              onPress={() => {
+                setSwitcher(TUTORIAL_COMPONENT);
               }}
             />
           ) : (
