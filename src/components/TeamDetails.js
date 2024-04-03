@@ -25,10 +25,9 @@ import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import { Colors } from "../assets/colors";
 import { FontSizes } from "../assets/fonts";
 import { MARGIN_SIZES } from "../assets/sizes";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { FontFamilies } from "../assets/fontFamilies";
 import { TeamManagementManagerController } from "../controllers/teamManagementController";
-
+import { DeleteIcon } from "../assets/icons";
 export default function TeamDetails() {
   const [showTeamMembers, setShowTeamMembers] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
@@ -171,11 +170,10 @@ export function TeamMemberItem({ userID, admin }) {
                     secondary={
                       admin !== userID ? (
                         <DeleteIcon
-                          sx={{
+                          style={{
                             position: "absolute",
                             left: "90%",
                             color: Colors.TEXT_COLOR,
-                            cursor: "pointer",
                           }}
                           onClick={async () => {
                             const { email, teamID } = user;
