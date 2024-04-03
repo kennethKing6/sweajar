@@ -41,6 +41,7 @@ export default function ViolationsLineChart({ lineData, lineSeries }) {
           valueFormatter: (date) => new Date(date).toLocaleDateString(),
         },
       ]}
+      yAxis={[{ tickInterval: 1, label: "Time ( days )", min: 1 }]}
       series={lineSeries}
       width={500}
       height={400}

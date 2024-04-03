@@ -17,16 +17,20 @@ export default function AddTeamMember({
   const [teamMemberEmail, setTeamMemberEmail] = useState("");
 
   const onAddTeamMember = async (teamMemberEmail, teamID) => {
-    // Validate the input fields
-    if (!teamMemberEmail) {
-      alert("Please enter an email for the new team member.");
-      return;
+    try {
+      // Validate the input fields
+      if (!teamMemberEmail) {
+        alert("Please enter an email for the new team member.");
+        return;
+      }
+      // Add a new team member
+      const newTeamMember = await Teams.addTeamMember(teamMemberEmail, teamID);
+      onAdd(newTeamMember);
+      // Clear the input fields
+      setTeamMemberEmail("");
+    } catch (err) {
+      alert("We could not find this user to add to the team");
     }
-    // Add a new team member
-    const newTeamMember = await Teams.addTeamMember(teamMemberEmail, teamID);
-    onAdd(newTeamMember);
-    // Clear the input fields
-    setTeamMemberEmail("");
   };
 
   const onDeleteTeamMember = async (teamMemberEmail, teamID) => {

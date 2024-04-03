@@ -25,6 +25,14 @@ export default function UserDetailsChart({ violationData }) {
           color: "#FFC107",
         },
       ]}
+      yAxis={[
+        {
+          min: 1,
+          scaleType: "linear",
+          tickInterval: 1,
+          tickMinStep: 1,
+        },
+      ]}
       {...chartSetting}
     />
   );
