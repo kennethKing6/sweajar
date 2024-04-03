@@ -37,9 +37,9 @@ import { AppState } from "../model/AppState";
 
 export default function HomepageLeaderBoard({
   data,
-  onExit = () => {},
-  onPress = () => {},
-  onNavigateToTeams = () => {},
+  onExit = () => { },
+  onPress = () => { },
+  onNavigateToTeams = () => { },
 }) {
   const [sortedData, setSortedData] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -70,9 +70,9 @@ export default function HomepageLeaderBoard({
       sx={{
         width: appDimensions.EXTENSION_WIDTH,
         bgcolor: Colors.BACKGROUND_COLOR,
-        height: "100%",
+        height: "110vh",
       }}
-      spacing={2}
+      spacing={1}
     >
       {sortedData.length > 0 ? (
         <Grid item alignSelf="flex-start">
@@ -129,7 +129,7 @@ export default function HomepageLeaderBoard({
   );
 }
 
-function UserItem({ person, index, pageDetails = () => {} }) {
+function UserItem({ person, index, pageDetails = () => { } }) {
   const [user, setUser] = useState(null);
   const [highestViolation, setHighestViolation] = useState(null);
   const [highestViolationCount, setHighestViolationCount] = useState("0");
@@ -224,7 +224,7 @@ function UserItem({ person, index, pageDetails = () => {} }) {
   );
 }
 
-function FilterDropDown({ onSelectFilter = () => {} }) {
+function FilterDropDown({ onSelectFilter = () => { } }) {
   const [filters, setFilters] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState("All");
   useEffect(() => {

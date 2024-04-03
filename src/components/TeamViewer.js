@@ -14,12 +14,13 @@ import { SignedInUser } from "../model/SignedInUser";
 import CreateNewTeam from "./CreateNewTeam";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import AddIcon from "@mui/icons-material/Add";
-import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
+import PeopleOutlineIcon from '@mui/icons-material/PeopleAlt';
 import BrowserNotSupportedIcon from '@mui/icons-material/BrowserNotSupported';
 import { ButtonStyles } from "../assets/ButtonStyles";
 import { Colors } from "../assets/colors";
+import { Margin } from "@mui/icons-material";
 
-export default function TeamViewer({ onPress = () => {} }) {
+export default function TeamViewer({ onPress = () => { } }) {
   const [selected, setSelected] = useState();
   const [items, setItems] = useState([]);
   const [showUserTeams, setShowUserTeams] = useState(true);
@@ -72,7 +73,6 @@ export default function TeamViewer({ onPress = () => {} }) {
           bgcolor: "black",
           color: "white",
           padding: 2,
-          border: "2px solid yellow",
           height: "100%",
           display: "flex",
           flexDirection: "column",
@@ -84,32 +84,38 @@ export default function TeamViewer({ onPress = () => {} }) {
           <h1>Team Viewer</h1>
           <Grid container>
             {showUserTeams && (
-              <Grid container
-                spacing={2}
-                // sx={{
-                //   display: "flex",
-                //   justifyContent: "center",
-                //   alignItems: "center",
-                // }}
-              >
+              <Grid container spacing={1}>
                 {items.length > 0 ? (
                   items.map((item) => (
                     <Grid item xs={3} key={JSON.stringify(item)} onClick={async () => { await onToggle(item); }}>
-                      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', }}>
                         <Avatar
-                          sx={{ 
-                            bgcolor: Colors.ACCENT_COLOR_3,
-                            width: '100%',
-                            height: 125,
+                          sx={{
+                            bgcolor: Colors.BACKGROUND_COLOR_EERIE,
+                            width: '80%',
+                            height: '100px',
                             borderRadius: "10%",
-                            border: selected && selected.teamName === item.teamName ? "2px solid yellow" : "none",
+                            border: selected && selected.teamName === item.teamName ? "2px solid blue" : "none",
+                            padding: '8px'
                           }}
                         >
-                          <PeopleOutlineIcon sx={{ fontSize: 70 }}/>
+                          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', }}>
+                            <PeopleOutlineIcon sx={{ fontSize: 45 }} />
+                            <Typography
+                              sx={{
+                                color: "white",
+                                maxLines: 3,
+                                textWrap: "wrap",
+                                fontSize: "14px",
+                                overflow: "hidden",
+                                wordWrap: "break-word",
+                                width: "100%",
+                                textAlign: "center"
+                              }}>
+                              {item.teamName}
+                            </Typography>
+                          </div>
                         </Avatar>
-                        <Typography variant="h5" sx={{ color: "white", mt: 1,  }}>
-                          {item.teamName}
-                        </Typography>
                       </Box>
                     </Grid>
                   ))
@@ -127,7 +133,7 @@ export default function TeamViewer({ onPress = () => {} }) {
                       textAlign: "center",
                     }}
                   >
-                    <BrowserNotSupportedIcon sx={{ fontSize: 100 }}/>
+                    <BrowserNotSupportedIcon sx={{ fontSize: 100 }} />
                     <Typography variant="body1" align="center">
                       You don't have any teams yet. Click on a "Plus" icon to create a team.
                     </Typography>
@@ -139,7 +145,7 @@ export default function TeamViewer({ onPress = () => {} }) {
           {showNewTeam && <CreateNewTeam />}
         </Box>
         {showUserTeams && (
-          <Box sx={{ position: "relative", left: "65%",  }}>
+          <Box sx={{ position: "relative", left: "65%", }}>
             {items.length > 0 && (
               <Button
                 variant="contained"
@@ -160,7 +166,7 @@ export default function TeamViewer({ onPress = () => {} }) {
             }}
           >
             <FormatListBulletedIcon
-              sx={{ backgroundColor: "yellow", color: "black" }}
+              sx={{ backgroundColor: Colors.NAVBAR_SELECT_COLOR, color: "white" }}
             />
           </IconButton>
           <IconButton
@@ -170,7 +176,7 @@ export default function TeamViewer({ onPress = () => {} }) {
               setShowUserTeams(false);
             }}
           >
-            <AddIcon sx={{ backgroundColor: "yellow", color: "black" }} />
+            <AddIcon sx={{ backgroundColor: Colors.NAVBAR_SELECT_COLOR, color: "white" }} />
           </IconButton>
         </Box>
       </Box>

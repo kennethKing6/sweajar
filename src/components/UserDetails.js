@@ -24,7 +24,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
-export default function UserDetails({ onPress = () => {} }) {
+export default function UserDetails({ onPress = () => { } }) {
   const [user, setUser] = useState(null);
   const [chartData, setChartData] = useState([]);
   const [lineData, setLineData] = useState([]);
@@ -41,7 +41,7 @@ export default function UserDetails({ onPress = () => {} }) {
           .then((data) => setUser(data))
           .catch();
       }
-    } catch (err) {}
+    } catch (err) { }
   }, []);
 
   useEffect(() => {
@@ -62,13 +62,14 @@ export default function UserDetails({ onPress = () => {} }) {
   }, [user]);
 
   return (
-    <div style={{ textAlign: "center", marginTop: "5%" }}>
+    <div style={{ textAlign: "center", padding: "10px" }}>
+      <div style={{textAlign: "left", marginLeft:"5%", display: "flex", alignItems:"center"}}>
       <div onClick={onPress}>
         <img
           src={user ? user.profilePicture : ""}
           alt={`${user ? user.firstName : ""} ${user ? user.lastName : ""}`}
           style={{
-            width: 200,
+            width: 125,
             maxHeight: "auto",
             borderRadius: "50%",
             padding: 2,
@@ -76,65 +77,75 @@ export default function UserDetails({ onPress = () => {} }) {
           }}
         />
       </div>
-      <div>
+      <div style={{ marginLeft: "30px", lineHeight:"8px" }}>
         <p
           style={{
             fontWeight: "bolder",
             fontSize: FontSizes.titleFontSize,
             fontFamily: '"Noto Sans',
           }}
-        >
+        >Name: {""}
           {user ? user.firstName : ""} {""}
           {user ? user.lastName : ""}
         </p>
         <p
           style={{
-            fontWeight: "bold",
+            fontWeight: "bolder",
             fontSize: FontSizes.largeFontSize,
             fontFamily: '"Noto Sans',
-            color: "#E6B545",
           }}
-        >
-          Analysis
+        >Email: {""}
+          {user ? user.email : ""}
         </p>
-
-        {chartData.length > 0 ? (
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreRounded />}
-              aria-controls="panel1-content"
-              id="panel1-header"
-            >
-              Violations Overview
-            </AccordionSummary>
-            <AccordionDetails>
-              <UserDetailsChart violationData={chartData} />
-            </AccordionDetails>
-          </Accordion>
-        ) : (
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreRounded />}
-              aria-controls="panel1-content"
-              id="panel1-header"
-            >
-              Violations Overview
-            </AccordionSummary>
-            <AccordionDetails>
-              No graph available at the moment
-            </AccordionDetails>
-          </Accordion>
-        )}
-        <ViolationsLineSeries user={user} />
-
-        {chartData.length > 0 ? (
-          chartData.map((data) => {
-            return <ViolationType data={data} />;
-          })
-        ) : (
-          <></>
-        )}
       </div>
+    </div>
+      <p
+        style={{
+          fontWeight: "bold",
+          fontSize: FontSizes.largeFontSize,
+          fontFamily: '"Noto Sans',
+          color: "#E6B545",
+        }}
+      >
+        Analysis
+      </p>
+
+      {chartData.length > 0 ? (
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreRounded />}
+            aria-controls="panel1-content"
+            id="panel1-header"
+          >
+            Violations Overview
+          </AccordionSummary>
+          <AccordionDetails>
+            <UserDetailsChart violationData={chartData} />
+          </AccordionDetails>
+        </Accordion>
+      ) : (
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreRounded />}
+            aria-controls="panel1-content"
+            id="panel1-header"
+          >
+            Violations Overview
+          </AccordionSummary>
+          <AccordionDetails>
+            No graph available at the moment
+          </AccordionDetails>
+        </Accordion>
+      )}
+      <ViolationsLineSeries user={user} />
+
+      {chartData.length > 0 ? (
+        chartData.map((data) => {
+          return <ViolationType data={data} />;
+        })
+      ) : (
+        <></>
+      )}
     </div>
   );
 }
