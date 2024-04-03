@@ -149,7 +149,6 @@ function App() {
           )}
           {switcher === TUTORIAL_COMPONENT ? (
             <Tutorial
-              //user={HomepageLeaderBoardData[0]}
               onPress={() => {
                 setSwitcher(TUTORIAL_COMPONENT);
               }}

@@ -6,17 +6,21 @@ import CreateTeamSS from "../assets/createTeamSS.PNG";
 import CreateTeamSS_input from "../assets/createTeamSS_input.PNG"
 import CreateTeamSS_alert from "../assets/createTeamSS_alert.PNG"
 import CreateTeamSS_confirm from "../assets/createTeamSS_confirm.PNG"
-import Colors from "../assets/colors"
+import { ExpandMoreRounded } from "@mui/icons-material";
+import { Colors } from "../assets/colors"
 
 export default function Tutorial({ onPress = () => { } }) {
     const listItemStyle = { height: 10, marginBottom: '20px', border: '1px solid yellow' }; // Adjust the margin as needed
     const imageSize = { maxWidth: 'auto', maxHeight: '70%' }; // Adjust the size as needed
 
     return (
-        <div sx={{fontSize: '12px'}}>
-            <Accordion sx={{ border: "1px solid yellow", color: "white", backgroundColor: "black" }}>
-                <AccordionSummary><h2>Creating/Deleting a Team</h2></AccordionSummary>
-                <AccordionDetails>
+        <div sx={{ fontSize: '12px', backgroundColor: "red" }}>
+            <Accordion sx={{ color: Colors.TEXT_COLOR, backgroundColor: Colors.BACKGROUND_COLOR_EERIE, margin: "4px" }}>
+                <AccordionSummary expandIcon={<ExpandMoreRounded />}
+                    aria-controls="panel1-content"
+                    id="panel1-header"
+                ><h2>Creating/Deleting a Team</h2></AccordionSummary>
+                <AccordionDetails sx={{ backgroundColor: Colors.BACKGROUND_COLOR }}>
                     <Typography>Steps to CREATE a new team or DELETE an old one...</Typography>
                     <Typography>1. Click on 'Teams' on the Nav Bar.</Typography>
                     <Typography>2. Click on the <AddIcon sx={{ backgroundColor: "yellow", color: "black" }} /> icon on the right side, which will open up an input field...</Typography>
@@ -73,9 +77,12 @@ export default function Tutorial({ onPress = () => { } }) {
                     </ImageListItem>
                 </AccordionDetails>
             </Accordion>
-            
-            <Accordion sx={{ border: "1px solid yellow", color: "white", backgroundColor: "black" }}>
-                <AccordionSummary><h2>Viewing Teams</h2></AccordionSummary>
+
+            <Accordion sx={{ color: Colors.TEXT_COLOR, backgroundColor: Colors.BACKGROUND_COLOR_EERIE, margin: "4px" }}>
+                <AccordionSummary expandIcon={<ExpandMoreRounded />}
+                    aria-controls="panel1-content"
+                    id="panel1-header"
+                ><h2>Viewing Teams</h2></AccordionSummary>
                 <AccordionDetails>
                     <Typography>
                         Steps to view your teams...
@@ -108,16 +115,22 @@ export default function Tutorial({ onPress = () => { } }) {
                     </ImageListItem>
                 </AccordionDetails>
             </Accordion>
-            <Accordion sx={{ border: "1px solid yellow", color: "white", backgroundColor: "black" }}>
-                <AccordionSummary><h2>Adding a Team Member to a Team</h2></AccordionSummary>
+            <Accordion sx={{ color: Colors.TEXT_COLOR, backgroundColor: Colors.BACKGROUND_COLOR_EERIE, margin: "4px" }}>
+                <AccordionSummary expandIcon={<ExpandMoreRounded />}
+                    aria-controls="panel1-content"
+                    id="panel1-header"
+                ><h2>Adding a Team Member to a Team</h2></AccordionSummary>
                 <AccordionDetails>
                     <Typography>
                         Steps to add a team member go here...
                     </Typography>
                 </AccordionDetails>
             </Accordion>
-            <Accordion sx={{ border: "1px solid yellow", color: "white", backgroundColor: "black" }}>
-                <AccordionSummary><h2>Reporting a User Violation</h2></AccordionSummary>
+            <Accordion sx={{ color: Colors.TEXT_COLOR, backgroundColor: Colors.BACKGROUND_COLOR_EERIE, margin: "4px" }}>
+                <AccordionSummary expandIcon={<ExpandMoreRounded />}
+                    aria-controls="panel1-content"
+                    id="panel1-header"
+                ><h2>Reporting a User Violation</h2></AccordionSummary>
                 <AccordionDetails>
                     <Typography>
                         Steps to report a user violation go here...

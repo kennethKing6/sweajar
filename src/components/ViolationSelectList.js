@@ -365,13 +365,12 @@ export default function ViolationSelectList({
         bgcolor: "black",
         color: "white",
         padding: 2,
-        border: "2px solid yellow",
         overflow: "auto",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
         position: "relative",
-        height: "100%",
+        height: "95vh",
       }}
     >
       <SwearJarMenu />
