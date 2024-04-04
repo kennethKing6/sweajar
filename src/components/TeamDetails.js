@@ -20,7 +20,8 @@ import { Teams } from "../model/Teams";
 import { User } from "../model/User";
 import { SignedInUser } from "../model/SignedInUser";
 import AddTeamMember from "./AddTeamMember";
-import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import UserListIcon from "@mui/icons-material/RecentActors";
+import BackIcon from "@mui/icons-material/ArrowBack";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import { Colors } from "../assets/colors";
 import { FontSizes } from "../assets/fonts";
@@ -31,6 +32,7 @@ import { DeleteIcon } from "../assets/icons";
 export default function TeamDetails() {
   const [showTeamMembers, setShowTeamMembers] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
+  const [showUserTeams, setShowUserTeams] = useState(true);
   const [teamMembers, setTeamMembers] = useState([]);
 
   useEffect(() => {
@@ -60,10 +62,22 @@ export default function TeamDetails() {
           bgcolor: "black",
           color: "white",
           padding: 2,
+          height: '110vh',
         }}
       >
+        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems:"center" }}>
         <h1 style={{ fontFamily: FontFamilies.title }}>Team Details</h1>
-        <Box sx={{ position: "absolute", top: 48, right: 8 }}>
+        <Box >
+        {/* <IconButton
+            title="Go back to Teams"
+            onClick={() => {
+              // This button should take you back to the Team Viewer
+            }}
+          >
+            <BackIcon
+               sx={{ backgroundColor: Colors.NAVBAR_SELECT_COLOR, color: Colors.TEXT_COLOR, fontSize: "30px", borderRadius: "10%", padding: '5px' }}
+            />
+          </IconButton> */}
           <IconButton
             title="Show Team Members"
             onClick={() => {
@@ -71,8 +85,8 @@ export default function TeamDetails() {
               setShowAdd(false);
             }}
           >
-            <FormatListBulletedIcon
-               sx={{ backgroundColor: Colors.NAVBAR_SELECT_COLOR, color: "white", fontSize: "30px", borderRadius: "10%" }}
+            <UserListIcon
+               sx={{ backgroundColor: Colors.NAVBAR_SELECT_COLOR, color: Colors.TEXT_COLOR, fontSize: "30px", borderRadius: "10%", padding: '5px' }}
             />
           </IconButton>
           <IconButton
@@ -82,9 +96,11 @@ export default function TeamDetails() {
               setShowAdd(true);
             }}
           >
-            <GroupAddIcon  sx={{ backgroundColor: Colors.NAVBAR_SELECT_COLOR, color: "white", fontSize: "30px", borderRadius: "10%" }} />
+            <GroupAddIcon  sx={{ backgroundColor: Colors.NAVBAR_SELECT_COLOR, color: Colors.TEXT_COLOR, fontSize: "30px", borderRadius: "10%", padding: '5px' }} />
           </IconButton>
         </Box>
+        </Box>
+        
 
         {showTeamMembers && (
           <List
@@ -92,7 +108,7 @@ export default function TeamDetails() {
               <ListSubheader
                 component="div"
                 id="teamMembers-list-subheader"
-                sx={{ color: "white", bgcolor: "black" }}
+                sx={{ color: Colors.TEXT_COLOR, bgcolor: Colors.BACKGROUND_COLOR, fontSize: FontSizes.bodyFontSize }}
               >
                 Team Members:
               </ListSubheader>

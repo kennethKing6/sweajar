@@ -18,7 +18,8 @@ import PeopleOutlineIcon from '@mui/icons-material/PeopleAlt';
 import BrowserNotSupportedIcon from '@mui/icons-material/BrowserNotSupported';
 import { ButtonStyles } from "../assets/ButtonStyles";
 import { Colors } from "../assets/colors";
-import { Margin } from "@mui/icons-material";
+import {FontFamilies} from "../assets/fontFamilies";
+import { MARGIN_SIZES } from "../assets/sizes";
 
 export default function TeamViewer({ onPress = () => { } }) {
   const [selected, setSelected] = useState();
@@ -81,14 +82,39 @@ export default function TeamViewer({ onPress = () => { } }) {
         }}
       >
         <Box>
-          <h1>Team Viewer</h1>
+          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems:"center" }}>
+            <h1 style={{ fontFamily: FontFamilies.title }}>Team Viewer</h1>
+            <Box >
+              <IconButton
+                title="Show My Teams"
+                onClick={() => {
+                  setShowNewTeam(false);
+                  setShowUserTeams(true);
+                }}
+              >
+                <FormatListBulletedIcon
+                  sx={{ backgroundColor: Colors.NAVBAR_SELECT_COLOR, color: Colors.TEXT_COLOR, fontSize: "30px", borderRadius: "10%", padding: '5px' }}
+                />
+              </IconButton>
+              <IconButton
+                title="Create a New Team / Delete a Team"
+                onClick={() => {
+                  setShowNewTeam(true);
+                  setShowUserTeams(false);
+                }}
+              >
+                <AddIcon sx={{ backgroundColor: Colors.NAVBAR_SELECT_COLOR, color: Colors.TEXT_COLOR, fontSize: "30px", borderRadius: "10%", padding: '5px' }} />
+              </IconButton>
+            </Box>
+          </Box>
+
           <Grid container>
             {showUserTeams && (
-              <Grid container spacing={1}>
+              <Grid container spacing={1} sx={{ padding: "20px", gridGap: 50, marginTop: MARGIN_SIZES.MARGIN_1 }}>
                 {items.length > 0 ? (
                   items.map((item) => (
                     <Grid item xs={3} key={JSON.stringify(item)} onClick={async () => { await onToggle(item); }}>
-                      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', }}>
+                      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <Avatar
                           sx={{
                             bgcolor: Colors.BACKGROUND_COLOR_EERIE,
@@ -116,6 +142,15 @@ export default function TeamViewer({ onPress = () => { } }) {
                             </Typography>
                           </div>
                         </Avatar>
+                        {selected && selected.teamName === item.teamName && (
+                          <Button
+                            variant="contained"
+                            onClick={onPress}
+                            sx={ButtonStyles.BtnStyle3}
+                          >
+                            Details
+                          </Button>
+                        )}
                       </Box>
                     </Grid>
                   ))
@@ -144,41 +179,8 @@ export default function TeamViewer({ onPress = () => { } }) {
           </Grid>
           {showNewTeam && <CreateNewTeam />}
         </Box>
-        {showUserTeams && (
-          <Box sx={{ position: "relative", left: "65%", }}>
-            {items.length > 0 && (
-              <Button
-                variant="contained"
-                onClick={onPress}
-                sx={ButtonStyles.BtnStyle2}
-              >
-                View Details
-              </Button>
-            )}
-          </Box>
-        )}
-        <Box sx={{ position: "absolute", top: 48, right: 8 }}>
-          <IconButton
-            title="Show My Teams"
-            onClick={() => {
-              setShowNewTeam(false);
-              setShowUserTeams(true);
-            }}
-          >
-            <FormatListBulletedIcon
-              sx={{ backgroundColor: Colors.NAVBAR_SELECT_COLOR, color: "white", fontSize: "30px", borderRadius: "10%" }}
-            />
-          </IconButton>
-          <IconButton
-            title="Create a New Team / Delete a Team"
-            onClick={() => {
-              setShowNewTeam(true);
-              setShowUserTeams(false);
-            }}
-          >
-            <AddIcon sx={{ backgroundColor: Colors.NAVBAR_SELECT_COLOR, color: "white", fontSize: "30px", borderRadius: "10%" }} />
-          </IconButton>
-        </Box>
+
+
       </Box>
     </Grid>
   );

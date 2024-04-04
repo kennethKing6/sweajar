@@ -78,7 +78,7 @@ export default function HomepageLeaderBoard({
         <Grid item alignSelf="flex-start">
           <Box
             sx={{
-              color: "white",
+              color: Colors.TEXT_COLOR,
               padding: 2,
             }}
           >
@@ -168,10 +168,11 @@ function UserItem({ person, index, pageDetails = () => { } }) {
           onClick={() => pageDetails(person.userID)}
           key={index}
           sx={{
-            backgroundColor: "white",
-            marginTop: MARGIN_SIZES.MARGIN_4,
+            backgroundColor: Colors.BACKGROUND_COLOR_EERIE,
+            marginTop: MARGIN_SIZES.MARGIN_3,
+            border: `1px solid ${Colors.BORDER_BLUE}`,
             "&:hover": {
-              boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+              boxShadow: "0px 0px 10px 5px rgba(0, 150, 255, 0.5)",
             },
           }}
         >
@@ -185,32 +186,34 @@ function UserItem({ person, index, pageDetails = () => { } }) {
                 )}
               </ListItemAvatar>
               <ListItemText
+                sx={{ color: Colors.TEXT_COLOR }}
                 primary={`${user ? user.firstName : ""} ${user ? user.lastName : ""}`}
-                sx={{ color: Colors.TEXT_COLOR_SECONDARY }}
                 secondary={
                   highestViolation ? (
                     <Chip
                       label={`${highestViolation}`}
                       sx={{
-                        backgroundColor: violationColor,
-                        color: Colors.TEXT_COLOR_SECONDARY,
-                        fontSize: FontSizes.captionFontSize,
+                        backgroundColor: Colors.TEAM_COLOR_BLUE,
+                        color: Colors.TEXT_COLOR,
+                        fontSize: FontSizes.bodyFontSize,
                       }}
                     />
                   ) : (
                     <></>
                   )
-                }
+                } primaryTypographyProps={{ variant: 'h5', paddingBottom: '5px' }}
               />
 
               <ListItemSecondaryAction>
                 <Chip
                   label={highestViolationCount}
                   sx={{
-                    backgroundColor: violationColor,
+                    backgroundColor: Colors.TEAM_COLOR_BLUE,
                     color: Colors.TEXT_COLOR,
                     fontWeight: "bold",
-                    fontSize: FontSizes.captionFontSize,
+                    fontSize: FontSizes.bodyFontSize,
+                    width: 35, 
+                    height: 35,
                   }}
                 />
               </ListItemSecondaryAction>
