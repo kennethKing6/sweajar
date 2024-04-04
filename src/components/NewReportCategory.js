@@ -26,7 +26,7 @@ const NewReportCategory = ({ onSelectedViolations = () => {} }) => {
             sx={{ textAlign: "center" }}
             onClick={() => onSelectedViolations({ name: key, icon: value })}
           >
-            <Paper elevation={10} sx={{ height: 180 }}>
+            <Paper elevation={10} sx={{ height: 140 }}>
               <Typography
                 sx={{
                   fontSize: FontSizes.largeFontSize * 3,

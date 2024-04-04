@@ -166,7 +166,7 @@ export default function TeamViewer({ onPress = () => { } }) {
             }}
           >
             <FormatListBulletedIcon
-              sx={{ backgroundColor: Colors.NAVBAR_SELECT_COLOR, color: "white" }}
+              sx={{ backgroundColor: Colors.NAVBAR_SELECT_COLOR, color: "white", fontSize: "30px", borderRadius: "10%" }}
             />
           </IconButton>
           <IconButton
@@ -176,7 +176,7 @@ export default function TeamViewer({ onPress = () => { } }) {
               setShowUserTeams(false);
             }}
           >
-            <AddIcon sx={{ backgroundColor: Colors.NAVBAR_SELECT_COLOR, color: "white" }} />
+            <AddIcon sx={{ backgroundColor: Colors.NAVBAR_SELECT_COLOR, color: "white", fontSize: "30px", borderRadius: "10%" }} />
           </IconButton>
         </Box>
       </Box>

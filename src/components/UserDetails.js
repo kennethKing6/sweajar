@@ -4,7 +4,6 @@ import { SignedInUser } from "../model/SignedInUser";
 import { User } from "../model/User";
 import UserDetailsChart from "./UserDetailsChart";
 import ViolationsLineChart from "./ViolationsLineChart";
-import { Report } from "../model/Report";
 import { UserDetailsController } from "../controllers/userDetailsController";
 import { FontSizes } from "../assets/fonts";
 import {
@@ -14,6 +13,7 @@ import {
   ListItemText,
   AccordionSummary,
   AccordionDetails,
+  colors,
 } from "@mui/material";
 import { ExpandMoreRounded } from "@mui/icons-material";
 import { Colors } from "../assets/colors";
@@ -62,7 +62,7 @@ export default function UserDetails({ onPress = () => { } }) {
   }, [user]);
 
   return (
-    <div style={{ textAlign: "center", padding: "10px" }}>
+    <div style={{ height: "110vh", textAlign: "center", padding: "10px", color: Colors.TEXT_COLOR, backgroundColor: Colors.BACKGROUND_COLOR }}>
       <div style={{textAlign: "left", marginLeft:"5%", display: "flex", alignItems:"center"}}>
       <div onClick={onPress}>
         <img
@@ -116,6 +116,7 @@ export default function UserDetails({ onPress = () => { } }) {
             expandIcon={<ExpandMoreRounded />}
             aria-controls="panel1-content"
             id="panel1-header"
+            sx={{color: Colors.TEXT_COLOR, backgroundColor: Colors.BACKGROUND_COLOR, border:"1px solid blue"}}
           >
             Violations Overview
           </AccordionSummary>
@@ -129,6 +130,7 @@ export default function UserDetails({ onPress = () => { } }) {
             expandIcon={<ExpandMoreRounded />}
             aria-controls="panel1-content"
             id="panel1-header"
+            sx={{color: Colors.TEXT_COLOR, backgroundColor: Colors.BACKGROUND_COLOR, border:"1px solid blue"}}
           >
             Violations Overview
           </AccordionSummary>
@@ -158,13 +160,13 @@ function ViolationType({ data }) {
   }, [data]);
   return (
     <>
-      <ListItem
+      <ListItem sx={{ backgroundColor: Colors.BACKGROUND_COLOR}}
         alignItems="flex-start"
         secondaryAction={<p>{data["countPerViolation"]}</p>}
       >
         <ListItemText
           primary={data["violationType"]}
-          secondary={<p>{description}</p>}
+          secondary={<p style={{color: Colors.TEXT_COLOR}}>{description}</p>}
         />
       </ListItem>
       <Divider variant="inset" component="li" />
@@ -225,6 +227,7 @@ function ViolationsLineSeries({ user }) {
             expandIcon={<ExpandMoreRounded />}
             aria-controls="panel1-content"
             id="panel1-header"
+            sx={{color: Colors.TEXT_COLOR, backgroundColor: Colors.BACKGROUND_COLOR, border:"1px solid blue", marginTop:"5px"}}
           >
             Violations Timelines
           </AccordionSummary>
@@ -256,6 +259,7 @@ function ViolationsLineSeries({ user }) {
             expandIcon={<ExpandMoreRounded />}
             aria-controls="panel1-content"
             id="panel1-header"
+            sx={{color: Colors.TEXT_COLOR, backgroundColor: Colors.BACKGROUND_COLOR, border:"1px solid blue", marginTop:"5px"}}
           >
             Violations Timelines
           </AccordionSummary>

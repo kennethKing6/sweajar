@@ -50,7 +50,7 @@ export default function NavBar({
         justifyContent="center"
         style={{
           cursor: "pointer",
-          padding: Padding_Sizes.PADDING_8,
+          padding:Padding_Sizes.PADDING_8,
           backgroundColor: selectedItem === "Leaderboard" ? Colors.NAVBAR_SELECT_COLOR : "transparent",
           borderRadius: Border_Sizes.BORDER_SM,
           transition: "background-color 0.2s",

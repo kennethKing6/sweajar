@@ -1,18 +1,13 @@
 import React from "react";
 import { useState } from "react";
-import {
-  List,
-  ListItem,
-  TextField,
-  Button,
-  ListSubheader,
-} from "@mui/material";
+import { List, ListItem, TextField, Button, ListSubheader } from "@mui/material";
 import { Teams } from "../model/Teams";
 import { SignedInUser } from "../model/SignedInUser";
+import { Colors } from "../assets/colors";
 
 export default function AddTeamMember({
-  onAdd = () => {},
-  onDelete = () => {},
+  onAdd = () => { },
+  onDelete = () => { },
 }) {
   const [teamMemberEmail, setTeamMemberEmail] = useState("");
 
@@ -51,7 +46,7 @@ export default function AddTeamMember({
         <ListSubheader
           component="div"
           id="newTeamMember-list-subheader"
-          sx={{ color: "white", bgcolor: "black" }}
+          sx={{ color: Colors.TEXT_COLOR, bgcolor: Colors.BACKGROUND_COLOR }}
         >
           Add/Delete Team Member
         </ListSubheader>
@@ -63,12 +58,12 @@ export default function AddTeamMember({
           value={teamMemberEmail}
           onChange={(e) => setTeamMemberEmail(e.target.value)}
           sx={{
-            input: { color: "white" },
-            label: { color: "white" },
-            "& .MuiOutlinedInput-notchedOutline": { borderColor: "white" },
+            input: { color: Colors.TEXT_COLOR },
+            label: { color: Colors.TEXT_COLOR },
+            "& .MuiOutlinedInput-notchedOutline": { borderColor: Colors.BORDER_WHITE },
             "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-              { borderColor: "yellow" },
-            "& .MuiFormLabel-root.Mui-focused": { color: "yellow" },
+              { borderColor: Colors.BORDER_YELLOW },
+            "& .MuiFormLabel-root.Mui-focused": { color: Colors.TEXT_COLOR_TERTIARY },
           }}
         />
       </ListItem>

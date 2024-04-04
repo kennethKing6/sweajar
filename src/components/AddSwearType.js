@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
     List,
     ListItem,
@@ -6,39 +6,36 @@ import {
     Box,
     TextField,
     Button,
-    FormControl,
-    InputLabel,
-    MenuItem,
-    Select,
 } from "@mui/material";
 import { SwearType } from "../model/SwearType";
 import { Teams } from "../model/Teams";
 import { SignedInUser } from "../model/SignedInUser";
+import {Colors} from "../assets/colors";
 
-export default function AddSwearType ({onAdd = () => {}}) {
+export default function AddSwearType({ onAdd = () => { } }) {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [level, setLevel] = useState("");
-    const [teamID,setTeamID] = useState("");
-    const [teams,setTeams] = useState([]);
+    const [teamID, setTeamID] = useState("");
+    const [teams, setTeams] = useState([]);
 
-    useEffect(()=>{
-        Teams.getTeams().then((teams)=>{
+    useEffect(() => {
+        Teams.getTeams().then((teams) => {
             setTeams(teams)
         }).catch()
-    },[])
+    }, [])
 
     const onSubmit = async () => {
         // Validate the input fields
         if (!name || !description) {
-            alert ("Please enter name and description for the new swear type.");
+            alert("Please enter name and description for the new swear type.");
             return;
         }
         // Create a new swear type object
         setLevel('');
         const tID = SignedInUser.user.teamID;
         setTeamID(tID);
-        const query = {name, description, level, teamID};
+        const query = { name, description, level, teamID };
         const newSwearType = await SwearType.createNewSwearType(query);
         onAdd(newSwearType);
         // Clear the input fields
@@ -49,9 +46,9 @@ export default function AddSwearType ({onAdd = () => {}}) {
     };
 
     return (
-        <Box sx={{ width: '100%', bgcolor: 'black'}}>
+        <Box sx={{ width: '100%', bgcolor: Colors.BACKGROUND_COLOR }}>
             <List subheader={
-                <ListSubheader component="div" id="newType-list-subheader" sx={{color: "white", bgcolor: "black"}}>
+                <ListSubheader component="div" id="newType-list-subheader" sx={{ color: Colors.SECONDARY_COLOR, bgcolor: Colors.BACKGROUND_COLOR }}>
                     Add new Violation
                 </ListSubheader>
             }>
@@ -60,13 +57,13 @@ export default function AddSwearType ({onAdd = () => {}}) {
                         fullWidth
                         label="Enter Violation Name"
                         value={name}
-                        onChange={ (e) => setName(e.target.value)}
+                        onChange={(e) => setName(e.target.value)}
                         sx={{
-                            input: { color: 'white' },
-                            label: { color: 'white' },
-                            "& .MuiOutlinedInput-notchedOutline": { borderColor: 'white' },
-                            "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: 'yellow' },
-                            "& .MuiFormLabel-root.Mui-focused": { color: 'yellow' },
+                            input: { color: Colors.SECONDARY_COLOR },
+                            label: { color: Colors.SECONDARY_COLOR },
+                            "& .MuiOutlinedInput-notchedOutline": { borderColor: Colors.BORDER_WHITE },
+                            "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: Colors.BORDER_WHITE },
+                            "& .MuiFormLabel-root.Mui-focused": { color: Colors.BACKGROUND_COLOR_YELLOW },
                         }}
                     />
                 </ListItem>
@@ -75,13 +72,13 @@ export default function AddSwearType ({onAdd = () => {}}) {
                         fullWidth
                         label="Enter Violation Description"
                         value={description}
-                        onChange={ (e) => setDescription(e.target.value)}
+                        onChange={(e) => setDescription(e.target.value)}
                         sx={{
-                            input: { color: 'white' },
-                            label: { color: 'white' },
-                            "& .MuiOutlinedInput-notchedOutline": { borderColor: 'white' },
-                            "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: 'yellow' },
-                            "& .MuiFormLabel-root.Mui-focused": { color: 'yellow' },
+                            input: { color: Colors.SECONDARY_COLOR },
+                            label: { color: Colors.SECONDARY_COLOR },
+                            "& .MuiOutlinedInput-notchedOutline": { borderColor: Colors.BORDER_WHITE },
+                            "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: Colors.BORDER_YELLOW },
+                            "& .MuiFormLabel-root.Mui-focused": { color: Colors.TERTIARY_COLOR },
                         }}
                     />
                 </ListItem>
@@ -113,11 +110,11 @@ export default function AddSwearType ({onAdd = () => {}}) {
                     <Button
                         variant="contained"
                         onClick={onSubmit}
-                        sx={{ 
-                            backgroundColor: '#FFEB3B', 
-                            color: 'black', 
-                            '&:hover':{
-                                backgroundColor: '#FFC107',
+                        sx={{
+                            backgroundColor: Colors.BACKGROUND_COLOR_GOLD,
+                            color: Colors.TEXT_COLOR_SECONDARY,
+                            '&:hover': {
+                                backgroundColor: Colors.BUTTON_GOLD,
                             }
                         }}
                     >
