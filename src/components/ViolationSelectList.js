@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   List,
@@ -16,6 +16,8 @@ import {
   Badge,
   Card,
   Chip,
+  Tabs,
+  Tab,
 } from "@mui/material";
 import { SwearType } from "../model/SwearType";
 import { SignedInUser } from "../model/SignedInUser";
@@ -100,7 +102,7 @@ export default function ViolationSelectList({
                 sx={{
                   backgroundColor: "transparent",
                   textAlign: "center",
-                  fontSize: FontSizes.largeFontSize * 4,
+                  fontSize: FontSizes.largeFontSize * 5,
                 }}
               >
                 {currentCategory.icon}
@@ -359,6 +361,69 @@ export default function ViolationSelectList({
   //     )}
   //   </Box>
   // );
+
+  function CategorySwears() {
+    return (
+      <div>
+        <Grid container>
+          <Grid item xs={9}>
+            <Typography variant="h3" gutterBottom>
+              Category
+            </Typography>
+            <Chip
+              label="Add each swear to your team jar"
+              sx={{
+                bgcolor: Colors.ACCENT_COLOR_1,
+                color: Colors.TEXT_COLOR,
+                fontSize: FontSizes.bodyFontSize,
+              }}
+            />
+          </Grid>
+          <Grid xs={3}>
+            <AddIcon
+              style={{
+                color: Colors.CHART_TEXT,
+                fontSize: 30,
+                padding: 1,
+              }}
+            />
+            <FavoriteIcon
+              style={{
+                color: Colors.TEAM_COLOR_ORANGE,
+                fontSize: 32,
+                padding: 1,
+              }}
+            />
+            <MenuIcon
+              style={{
+                color: Colors.ERROR_COLOR,
+                fontSize: 30,
+                padding: 1,
+              }}
+            />
+          </Grid>
+        </Grid>
+        <Grid sx={{ mt: MARGIN_SIZES.MARGIN_4 / 2 }}></Grid>
+        {openBadge ? (
+          <SelectedViolations />
+        ) : (
+          <Grid container sx={{ height: "80vh" }}>
+            {" "}
+            {!selectedCategory && (
+              <NewReportCategory
+                onSelectedViolations={(category) =>
+                  setSelectedCategory(category)
+                }
+              />
+            )}
+            {selectedCategory && (
+              <ViolationByCategoryList currentCategory={selectedCategory} />
+            )}
+          </Grid>
+        )}
+      </div>
+    );
+  }
   return (
     <Box
       sx={{
@@ -370,10 +435,13 @@ export default function ViolationSelectList({
         flexDirection: "column",
         justifyContent: "space-between",
         position: "relative",
-        height: "95vh",
+        height: "100%",
       }}
     >
-      <SwearJarMenu />
+      {/* <SwearJarMenu /> */}
+
+      <CategorySwears />
+      {/* <CustomTeamViolation /> */}
     </Box>
   );
 }
@@ -468,5 +536,71 @@ function SwearJarMenu() {
         </ListItem>
       </Card>
     </div>
+  );
+}
+
+function CustomTeamViolation() {
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  return (
+    <Grid container>
+      <Grid item xs={9}>
+        <Typography variant="h3" gutterBottom>
+          Customizer
+        </Typography>
+        <Chip
+          label="Create swears that best match your team"
+          sx={{
+            bgcolor: Colors.ACCENT_COLOR_1,
+            color: Colors.TEXT_COLOR,
+            fontSize: FontSizes.bodyFontSize,
+          }}
+        />
+      </Grid>
+      <Grid xs={3}>
+        <AddIcon
+          style={{
+            color: Colors.CHART_TEXT,
+            fontSize: 30,
+            padding: 1,
+          }}
+        />
+        <FavoriteIcon
+          style={{
+            color: Colors.TEAM_COLOR_ORANGE,
+            fontSize: 32,
+            padding: 1,
+          }}
+        />
+        <MenuIcon
+          style={{
+            color: Colors.ERROR_COLOR,
+            fontSize: 30,
+            padding: 1,
+          }}
+        />
+      </Grid>
+      <Grid mt={4} sx={{ width: "100%" }}>
+        <Paper sx={{ flexGrow: 1 }}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            indicatorColor="primary"
+            textColor="primary"
+            centered
+            sx={{
+              bgcolor: Colors.BACKGROUND_COLOR_EERIE,
+            }}
+          >
+            <Tab label="Category" sx={{ color: Colors.TEXT_COLOR }} />
+            <Tab label="New item" sx={{ color: Colors.TEXT_COLOR }} />
+          </Tabs>
+        </Paper>
+      </Grid>
+    </Grid>
   );
 }
