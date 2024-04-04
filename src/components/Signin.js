@@ -26,12 +26,12 @@ export default function Signin({ onBackButton = () => {} }) {
       onSubmit={async (e) => await handleSubmit(e)}
       style={{ height: "100%" }}
     >
-      <h1 style={{ fontWeight: "bolder", fontSize: FontSizes.titleFontSize }}>
+      <h1 style={{ fontWeight: "bolder", fontSize: FontSizes.titleFontSize, color: Colors.TEXT_COLOR, marginTop: 0 }}>
         Sign In
       </h1>
       <p
         style={{
-          color: Colors.TEXT_COLOR_TERTIARY,
+          color: Colors.TEXT_COLOR_SECONDARY,
           fontSize: FontSizes.mediumFontSize,
         }}
       >

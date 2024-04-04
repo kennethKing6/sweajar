@@ -60,7 +60,6 @@ export default function TeamDetails() {
           bgcolor: "black",
           color: "white",
           padding: 2,
-          border: "2px solid yellow",
         }}
       >
         <h1 style={{ fontFamily: FontFamilies.title }}>Team Details</h1>
@@ -73,7 +72,7 @@ export default function TeamDetails() {
             }}
           >
             <FormatListBulletedIcon
-              sx={{ backgroundColor: "yellow", color: "black" }}
+               sx={{ backgroundColor: Colors.NAVBAR_SELECT_COLOR, color: "white", fontSize: "30px", borderRadius: "10%" }}
             />
           </IconButton>
           <IconButton
@@ -83,7 +82,7 @@ export default function TeamDetails() {
               setShowAdd(true);
             }}
           >
-            <GroupAddIcon sx={{ backgroundColor: "yellow", color: "black" }} />
+            <GroupAddIcon  sx={{ backgroundColor: Colors.NAVBAR_SELECT_COLOR, color: "white", fontSize: "30px", borderRadius: "10%" }} />
           </IconButton>
         </Box>
 

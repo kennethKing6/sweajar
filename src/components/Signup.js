@@ -4,6 +4,7 @@ import { User } from "../model/User";
 import { ButtonStyles } from "../assets/ButtonStyles";
 import { FontSizes } from "../assets/fonts";
 import { TextFieldStyles } from "../assets/TextFieldStyles";
+import { Colors } from "../assets/colors";
 
 export default function Signup({ onBackButton = () => {} }) {
   const [email, setEmail] = useState("");
@@ -29,7 +30,7 @@ export default function Signup({ onBackButton = () => {} }) {
 
   return (
     <form onSubmit={async () => await handleSubmit()}>
-      <h1 style={{ fontWeight: "bolder", fontSize: FontSizes.titleFontSize }}>
+      <h1 style={{ fontWeight: "bolder", fontSize: FontSizes.titleFontSize, color: Colors.TEXT_COLOR,  marginTop: 0 }}>
         Sign Up
       </h1>
 

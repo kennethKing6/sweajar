@@ -254,8 +254,15 @@ function FilterDropDown({ onSelectFilter = () => { } }) {
             sx: {
               color: "white",
               borderWidth: 0,
-              borderColor: "brown",
-              backgroundColor: "brown",
+              borderColor: Colors.BUTTON_PRIMARY_COLOR,
+              backgroundColor: Colors.BUTTON_SECONDARY_COLOR,
+            },
+          }}
+          MenuProps={{
+            PaperProps: {
+              sx: {
+                backgroundColor: Colors.ACCENT_COLOR_4,
+              },
             },
           }}
         >
