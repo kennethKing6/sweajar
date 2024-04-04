@@ -22,8 +22,9 @@ import { Colors } from "../assets/colors";
 import { ReportViolationsController } from "../controllers/reportViolationsController";
 import { Teams } from "../model/Teams";
 import { FontFamilies } from "../assets/fontFamilies";
+import { FontSizes } from "../assets/fonts"
 
-export default function UsersList({ onPress = () => {} }) {
+export default function UsersList({ onPress = () => { } }) {
   /**@param {[User]} */
   const [users, setUsers] = useState([]);
   const [checked, setChecked] = React.useState([1]);
@@ -56,7 +57,7 @@ export default function UsersList({ onPress = () => {} }) {
             variant="h4"
             gutterBottom
             sx={{
-              color: Colors.TEAM_COLOR_BEIGE,
+              color: Colors.TEXT_COLOR,
               fontFamily: FontFamilies.title,
               textAlign: "center",
               fontWeight: "bold",
@@ -78,7 +79,8 @@ export default function UsersList({ onPress = () => {} }) {
                 alert(err);
               }
             }}
-            bgColor={Colors.BUTTON_PRIMARY_COLOR}
+            bgColor={Colors.BUTTON_SECONDARY_COLOR}
+            color={Colors.TEXT_COLOR}
           />
         </Grid>
       </Grid>
@@ -127,12 +129,13 @@ export function TeamMemberItem({ value, checked, setChecked }) {
       key={JSON.stringify(value)}
       sx={{
         mb: 2,
+        border: `1px solid ${Colors.BORDER_BLUE}`,
         bgcolor:
-          checked.indexOf(value) !== -1 ? Colors.TEAM_COLOR_DARK_BLUE : "white",
+          checked.indexOf(value) !== -1 ? Colors.NAVBAR_SELECT_COLOR : Colors.BACKGROUND_COLOR_EERIE,
         color:
           checked.indexOf(value) !== -1
             ? Colors.TEXT_COLOR
-            : Colors.TEXT_COLOR_SECONDARY,
+            : Colors.TEXT_COLOR,
       }}
     >
       <CardContent onClick={() => handleToggle(value, currentUser)}>
@@ -145,12 +148,16 @@ export function TeamMemberItem({ value, checked, setChecked }) {
               color="success"
               checked={checked.indexOf(value) !== -1}
               inputProps={{ "aria-labelledby": labelId }}
-              sx={{ bgcolor: "white", borderWidth: 2 }}
+              sx={{
+                bgcolor: Colors.SECONDARY_COLOR, borderWidth: 2, "&:hover": {
+                  bgcolor: Colors.BACKGROUND_COLOR_GOLD,
+                },
+              }}
             />
           }
           disablePadding
         >
-          <Grid container>
+          <Grid container >
             <ListItemAvatar>
               <Avatar
                 alt={`Avatar n°${value + 1}`}
@@ -165,7 +172,7 @@ export function TeamMemberItem({ value, checked, setChecked }) {
                 color:
                   checked.indexOf(value) !== -1
                     ? Colors.TEXT_COLOR
-                    : Colors.TEXT_COLOR_SECONDARY,
+                    : Colors.TEXT_COLOR,
               }}
             />
           </Grid>

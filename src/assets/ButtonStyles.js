@@ -26,4 +26,15 @@ export const ButtonStyles = {
       backgroundColor: Colors.BUTTON_SECONDARY_COLOR,
     },
   },
+  BtnStyle3: {
+    marginTop: MARGIN_SIZES.MARGIN_2,
+    backgroundColor: Colors.BUTTON_PRIMARY_COLOR,
+    color: Colors.TEXT_COLOR,
+    width: "auto",
+    padding: Padding_Sizes.PADDING_1 / 3,
+    ":hover": {
+      color: Colors.TEXT_COLOR,
+      backgroundColor: Colors.BUTTON_SECONDARY_COLOR,
+    },
+  },
 };

@@ -4,6 +4,7 @@ import { List, ListItem, TextField, Button, ListSubheader } from "@mui/material"
 import { Teams } from "../model/Teams";
 import { SignedInUser } from "../model/SignedInUser";
 import { Colors } from "../assets/colors";
+import { FontSizes } from "../assets/fonts";
 
 export default function AddTeamMember({
   onAdd = () => { },
@@ -46,7 +47,7 @@ export default function AddTeamMember({
         <ListSubheader
           component="div"
           id="newTeamMember-list-subheader"
-          sx={{ color: Colors.TEXT_COLOR, bgcolor: Colors.BACKGROUND_COLOR }}
+          sx={{ color: Colors.TEXT_COLOR, bgcolor: Colors.BACKGROUND_COLOR, fontSize: FontSizes.bodyFontSize }}
         >
           Add/Delete Team Member
         </ListSubheader>
@@ -58,16 +59,18 @@ export default function AddTeamMember({
           value={teamMemberEmail}
           onChange={(e) => setTeamMemberEmail(e.target.value)}
           sx={{
+            width: "100%",
             input: { color: Colors.TEXT_COLOR },
             label: { color: Colors.TEXT_COLOR },
             "& .MuiOutlinedInput-notchedOutline": { borderColor: Colors.BORDER_WHITE },
+            "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: Colors.BORDER_BLUE },
             "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-              { borderColor: Colors.BORDER_YELLOW },
-            "& .MuiFormLabel-root.Mui-focused": { color: Colors.TEXT_COLOR_TERTIARY },
+              { borderColor: Colors.BORDER_BLUE },
+            "& .MuiFormLabel-root.Mui-focused": { color: Colors.TEXT_COLOR },
           }}
         />
       </ListItem>
-      <ListItem>
+      <ListItem sx={{display: "flex", justifyContent:"space-between"}}>
         <Button
           variant="contained"
           onClick={async () => {
@@ -75,12 +78,12 @@ export default function AddTeamMember({
             //alert("Team member was successfully added")
           }}
           sx={{
-            backgroundColor: "#FFEB3B",
-            color: "black",
+            backgroundColor: Colors.BUTTON_PRIMARY_COLOR,
+            color: Colors.TEXT_COLOR,
             "&:hover": {
-              backgroundColor: "#FFC107",
+              backgroundColor: Colors.BUTTON_SECONDARY_COLOR,
             },
-            marginRight: "10px",
+            marginRight: "20px",
           }}
         >
           Add
@@ -91,10 +94,10 @@ export default function AddTeamMember({
             await onDeleteTeamMember(teamMemberEmail, SignedInUser.user.teamID);
           }}
           sx={{
-            backgroundColor: "#FFEB3B",
-            color: "black",
+            backgroundColor: Colors.BUTTON_PRIMARY_COLOR,
+            color: Colors.TEXT_COLOR,
             "&:hover": {
-              backgroundColor: "#FFC107",
+              backgroundColor: Colors.BUTTON_SECONDARY_COLOR,
             },
           }}
         >
