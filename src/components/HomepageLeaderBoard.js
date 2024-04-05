@@ -70,7 +70,7 @@ export default function HomepageLeaderBoard({
       sx={{
         width: appDimensions.EXTENSION_WIDTH,
         bgcolor: Colors.BACKGROUND_COLOR,
-        height: "110vh",
+        height: "auto",
       }}
       spacing={1}
     >
@@ -170,14 +170,14 @@ function UserItem({ person, index, pageDetails = () => { } }) {
           key={index}
           sx={{
             backgroundColor: Colors.BACKGROUND_COLOR_EERIE,
-            marginTop: MARGIN_SIZES.MARGIN_3,
+            marginTop: MARGIN_SIZES.MARGIN_1,
             border: `1px solid ${Colors.BORDER_BLUE}`,
             "&:hover": {
               boxShadow: "0px 0px 10px 5px rgba(0, 150, 255, 0.5)",
             },
           }}
         >
-          <Grid container>
+          <Grid container >
             <ListItemButton>
               <ListItemAvatar>
                 {user ? (
@@ -202,7 +202,7 @@ function UserItem({ person, index, pageDetails = () => { } }) {
                   ) : (
                     <></>
                   )
-                } primaryTypographyProps={{ variant: 'h5', paddingBottom: '5px' }}
+                } primaryTypographyProps={{ variant: 'h5', paddingBottom: '1px' }}
               />
 
               <ListItemSecondaryAction>

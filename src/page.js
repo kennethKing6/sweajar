@@ -5,6 +5,7 @@ import UsersList from "./components/UsersList";
 import React, { useEffect, useState } from "react";
 import ViolationSelectList from "./components/ViolationSelectList";
 import Grid from "@mui/material/Grid";
+import { Colors } from "./assets/colors";
 import ReportButton from "./components/ReportButton";
 import ReportList from "./components/HomepageLeaderBoard";
 import HomepageLeaderBoard from "./components/HomepageLeaderBoard";
@@ -97,6 +98,7 @@ function App() {
       style={{
         height: appDimensions.EXTENSION_HEIGHT,
         width: appDimensions.EXTENSION_WIDTH,
+        backgroundColor: Colors.BACKGROUND_COLOR,
       }}
     >
       <NavBar

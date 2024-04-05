@@ -14,8 +14,8 @@ export default function Tutorial({ onPress = () => { } }) {
     const imageSize = { maxWidth: 'auto', maxHeight: '70%' }; // Adjust the size as needed
 
     return (
-        <div sx={{ fontSize: '12px', backgroundColor: "red" }}>
-            <Accordion sx={{ color: Colors.TEXT_COLOR, backgroundColor: Colors.BACKGROUND_COLOR_EERIE, margin: "4px" }}>
+        <div sx={{ height:"auto", fontSize: '12px', backgroundColor: "red"}}>
+            <Accordion sx={{ height:"auto", color: Colors.TEXT_COLOR, backgroundColor: Colors.BACKGROUND_COLOR_EERIE, margin: "4px" }}>
                 <AccordionSummary expandIcon={<ExpandMoreRounded />}
                     aria-controls="panel1-content"
                     id="panel1-header"
@@ -77,7 +77,6 @@ export default function Tutorial({ onPress = () => { } }) {
                     </ImageListItem>
                 </AccordionDetails>
             </Accordion>
-
             <Accordion sx={{ color: Colors.TEXT_COLOR, backgroundColor: Colors.BACKGROUND_COLOR_EERIE, margin: "4px" }}>
                 <AccordionSummary expandIcon={<ExpandMoreRounded />}
                     aria-controls="panel1-content"

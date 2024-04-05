@@ -15,7 +15,7 @@ import {
   AccordionDetails,
   colors,
 } from "@mui/material";
-import { ExpandMoreRounded } from "@mui/icons-material";
+import { Circle, ExpandMoreRounded } from "@mui/icons-material";
 import { Colors } from "../assets/colors";
 import { DefaultViolations } from "../model/DefaultViolations";
 import Box from "@mui/material/Box";
@@ -62,43 +62,43 @@ export default function UserDetails({ onPress = () => { } }) {
   }, [user]);
 
   return (
-    <div style={{ height: "110vh", textAlign: "center", padding: "10px", color: Colors.TEXT_COLOR, backgroundColor: Colors.BACKGROUND_COLOR }}>
-      <div style={{textAlign: "left", marginLeft:"5%", display: "flex", alignItems:"center"}}>
-      <div onClick={onPress}>
-        <img
-          src={user ? user.profilePicture : ""}
-          alt={`${user ? user.firstName : ""} ${user ? user.lastName : ""}`}
-          style={{
-            width: 125,
-            maxHeight: "auto",
-            borderRadius: "50%",
-            padding: 2,
-            backgroundColor: Colors.ACCENT_COLOR_3,
-          }}
-        />
+    <div style={{ height: "auto", textAlign: "center", padding: "10px", color: Colors.TEXT_COLOR, backgroundColor: Colors.BACKGROUND_COLOR }}>
+      <div style={{ textAlign: "left", marginLeft: "5%", display: "flex", alignItems: "center" }}>
+        <div onClick={onPress}>
+          <img
+            src={user ? user.profilePicture : ""}
+            alt={`${user ? user.firstName : ""} ${user ? user.lastName : ""}`}
+            style={{
+              width: 125,
+              maxHeight: "auto",
+              borderRadius: "50%",
+              padding: 2,
+              backgroundColor: Colors.ACCENT_COLOR_3,
+            }}
+          />
+        </div>
+        <div style={{ marginLeft: "30px", lineHeight: "8px", backgroundColor: Colors.BACKGROUND_COLOR }}>
+          <p
+            style={{
+              fontWeight: "bolder",
+              fontSize: FontSizes.titleFontSize,
+              fontFamily: '"Noto Sans',
+            }}
+          >Name: {""}
+            {user ? user.firstName : ""} {""}
+            {user ? user.lastName : ""}
+          </p>
+          <p
+            style={{
+              fontWeight: "bolder",
+              fontSize: FontSizes.largeFontSize,
+              fontFamily: '"Noto Sans',
+            }}
+          >Email: {""}
+            {user ? user.email : ""}
+          </p>
+        </div>
       </div>
-      <div style={{ marginLeft: "30px", lineHeight:"8px", backgroundColor: Colors.BACKGROUND_COLOR }}>
-        <p
-          style={{
-            fontWeight: "bolder",
-            fontSize: FontSizes.titleFontSize,
-            fontFamily: '"Noto Sans',
-          }}
-        >Name: {""}
-          {user ? user.firstName : ""} {""}
-          {user ? user.lastName : ""}
-        </p>
-        <p
-          style={{
-            fontWeight: "bolder",
-            fontSize: FontSizes.largeFontSize,
-            fontFamily: '"Noto Sans',
-          }}
-        >Email: {""}
-          {user ? user.email : ""}
-        </p>
-      </div>
-    </div>
       <p
         style={{
           fontWeight: "bold",
@@ -116,7 +116,7 @@ export default function UserDetails({ onPress = () => { } }) {
             expandIcon={<ExpandMoreRounded />}
             aria-controls="panel1-content"
             id="panel1-header"
-            sx={{color: Colors.TEXT_COLOR, backgroundColor: Colors.BACKGROUND_COLOR, border:"1px solid blue"}}
+            sx={{ color: Colors.TEXT_COLOR, backgroundColor: Colors.BACKGROUND_COLOR, border: "1px solid blue" }}
           >
             Violations Overview
           </AccordionSummary>
@@ -130,7 +130,7 @@ export default function UserDetails({ onPress = () => { } }) {
             expandIcon={<ExpandMoreRounded />}
             aria-controls="panel1-content"
             id="panel1-header"
-            sx={{color: Colors.TEXT_COLOR, backgroundColor: Colors.BACKGROUND_COLOR, border:"1px solid blue"}}
+            sx={{ color: Colors.TEXT_COLOR, backgroundColor: Colors.BACKGROUND_COLOR, border: "1px solid blue" }}
           >
             Violations Overview
           </AccordionSummary>
@@ -159,18 +159,29 @@ function ViolationType({ data }) {
     });
   }, [data]);
   return (
-    <>
-      <ListItem sx={{ backgroundColor: Colors.BACKGROUND_COLOR}}
+    <Box sx={{ backgroundColor: Colors.BACKGROUND_COLOR }}>
+      <ListItem sx={{ backgroundColor: Colors.BACKGROUND_COLOR_EERIE }}
         alignItems="flex-start"
-        secondaryAction={<p>{data["countPerViolation"]}</p>}
+        secondaryAction={<p style={{
+          backgroundColor: Colors.BACKGROUND_COLOR_YELLOW,
+          color: Colors.TEXT_COLOR_SECONDARY,
+          fontSize: 16,
+          fontWeight: "bold",
+          width: "25px",
+          height: "25px",
+          borderRadius: "50%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}>{data["countPerViolation"]}</p>}
       >
         <ListItemText
           primary={data["violationType"]}
-          secondary={<p style={{color: Colors.TEXT_COLOR}}>{description}</p>}
+          secondary={<p style={{ color: Colors.TEXT_COLOR }}>{description}</p>}
         />
       </ListItem>
-      <Divider variant="inset" component="li" />
-    </>
+      <Divider variant="middle" sx={{ height: 2, backgroundColor: Colors.BACKGROUND_COLOR, padding: 1 }} />
+    </Box>
   );
 }
 
@@ -227,7 +238,7 @@ function ViolationsLineSeries({ user }) {
             expandIcon={<ExpandMoreRounded />}
             aria-controls="panel1-content"
             id="panel1-header"
-            sx={{color: Colors.TEXT_COLOR, backgroundColor: Colors.BACKGROUND_COLOR, border:"1px solid blue", marginTop:"5px"}}
+            sx={{ color: Colors.TEXT_COLOR, backgroundColor: Colors.BACKGROUND_COLOR, border: "1px solid blue", marginTop: "5px" }}
           >
             Violations Timelines
           </AccordionSummary>
@@ -259,12 +270,12 @@ function ViolationsLineSeries({ user }) {
             expandIcon={<ExpandMoreRounded />}
             aria-controls="panel1-content"
             id="panel1-header"
-            sx={{color: Colors.TEXT_COLOR, backgroundColor: Colors.BACKGROUND_COLOR, border:"1px solid blue", marginTop:"5px"}}
+            sx={{ color: Colors.TEXT_COLOR, backgroundColor: Colors.BACKGROUND_COLOR, border: "1px solid blue", marginTop: "5px" }}
           >
             Violations Timelines
           </AccordionSummary>
           <AccordionDetails>
-            <Box sx={{ minWidth: 120 , backgroundColor: Colors.BACKGROUND_COLOR}} mb={5}>
+            <Box sx={{ minWidth: 120 }} mb={5}>
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">
                   Filter Violations
