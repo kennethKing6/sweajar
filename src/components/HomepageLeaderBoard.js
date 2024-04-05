@@ -86,6 +86,7 @@ export default function HomepageLeaderBoard({
               <Grid container>
                 <Grid item xs={7.5}>
                   <h1 style={{ fontWeight: "900" }}>Leaderboard </h1>
+                  <h2>Team Selected: {} </h2>
                 </Grid>
                 <Grid item xs={4} mt={2}>
                   <FilterDropDown

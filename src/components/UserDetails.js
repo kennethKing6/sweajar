@@ -77,7 +77,7 @@ export default function UserDetails({ onPress = () => { } }) {
           }}
         />
       </div>
-      <div style={{ marginLeft: "30px", lineHeight:"8px" }}>
+      <div style={{ marginLeft: "30px", lineHeight:"8px", backgroundColor: Colors.BACKGROUND_COLOR }}>
         <p
           style={{
             fontWeight: "bolder",
@@ -264,7 +264,7 @@ function ViolationsLineSeries({ user }) {
             Violations Timelines
           </AccordionSummary>
           <AccordionDetails>
-            <Box sx={{ minWidth: 120 }} mb={5}>
+            <Box sx={{ minWidth: 120 , backgroundColor: Colors.BACKGROUND_COLOR}} mb={5}>
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">
                   Filter Violations
