@@ -2,8 +2,6 @@ import "../shared/firebase/__mock__/mockFirebase"
 import "../model/__mocks__/User";
 import "../model/__mocks__/SwearType";
 import { render, fireEvent, waitFor, act } from '@testing-library/react';
-import { User } from "../model/User";
-import { SignedInUser } from "../model/SignedInUser";
 import { Teams } from '../model/Teams';
 import AddSwearType from "./AddSwearType";
 import { SwearType } from "../model/SwearType";

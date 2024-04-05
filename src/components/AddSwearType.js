@@ -82,30 +82,6 @@ export default function AddSwearType({ onAdd = () => { } }) {
                         }}
                     />
                 </ListItem>
-                {/* <ListItem>
-                    <FormControl fullWidth
-                        sx={{
-                            selected: { color: 'white' },
-                            label: { color: 'white' },
-                            "& .MuiOutlinedInput-notchedOutline": { borderColor: 'white' },
-                            "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: 'yellow' },
-                            "& .MuiFormLabel-root.Mui-focused": { color: 'yellow' },
-                        }}
-                    >
-                        <InputLabel id="demo-simple-select-label">Select Level</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            value={level}
-                            label="Level"
-                            onChange={ (e) => setLevel(e.target.value)}
-                            sx={{ color: 'white' }}
-                        >
-                            <MenuItem value="minor">Minor</MenuItem>
-                            <MenuItem value="medium">Medium</MenuItem>
-                            <MenuItem value="major">Major</MenuItem>
-                        </Select>
-                    </FormControl>
-                </ListItem> */}
                 <ListItem>
                     <Button
                         variant="contained"

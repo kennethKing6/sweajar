@@ -62,15 +62,15 @@ export default function ViolationSelectList({
     }
   };
 
-  useEffect(() => {
-    // Fetch the menu items from the database
-    const fetchItems = async () => {
-      const companyID = SignedInUser.user.companyID;
-      const swearTypes = await SwearType.getSwearTypesByCompany(companyID);
-      setItems(swearTypes);
-    };
-    fetchItems().then().catch();
-  }, []);
+  // useEffect(() => {
+  //   // Fetch the menu items from the database
+  //   const fetchItems = async () => {
+  //     const companyID = SignedInUser.user.teamID;
+  //     const swearTypes = await SwearType.getSwearTypesByCompany(companyID);
+  //     setItems(swearTypes);
+  //   };
+  //   fetchItems().then().catch();
+  // }, []);
 
   function addDefaultViolation({ name, description }) {
     ReportViolationsController.selectSwearType({

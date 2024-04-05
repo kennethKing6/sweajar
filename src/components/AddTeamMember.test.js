@@ -1,17 +1,11 @@
 import "../shared/firebase/__mock__/mockFirebase"
 import "../model/__mocks__/User";
 import { render, fireEvent, act } from '@testing-library/react';
-import { User } from "../model/User";
-import { SignedInUser } from "../model/SignedInUser";
 import { Teams } from '../model/Teams';
 import AddTeamMember from "../components/AddTeamMember";
 
 jest.mock('../model/Teams');
 jest.mock('../model/User');
-
-// jest.mock('../model/AppState', () => ({
-//     user: { userID: "userID" }
-// }));
 
 jest.mock('../model/SignedInUser', () => ({
     SignedInUser: { user: { userID: "userID", teamID: "testTeamID" } }
