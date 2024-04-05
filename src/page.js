@@ -15,7 +15,7 @@ import Welcome from "./components/Welcome";
 import UserDetails from "./components/UserDetails";
 import NavBar from "./components/NavBar";
 import TeamViewer from "./components/TeamViewer";
-import Tutorial from "./components/Tutorial"
+import Tutorial from "./components/Tutorial";
 import { reduxStore } from "./shared/redux/reduxStore";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";

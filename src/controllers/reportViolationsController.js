@@ -1,5 +1,6 @@
 import { Report } from "../model/Report";
 import { SignedInUser } from "../model/SignedInUser";
+import { SwearType } from "../model/SwearType";
 import { User } from "../model/User";
 
 export class ReportViolationsController {
@@ -98,5 +99,25 @@ export class ReportViolationsController {
 
     this.tempSelectedReports = {};
     this.tempSelectedUsers = {};
+  }
+
+  /**
+   *
+   * @returns {Promise<[{name:string,description:string,category:string,selected:boolean}]>}
+   */
+  static async getSwearjarViolations() {
+    try {
+      const teamSwearTypes = await SwearType.getSwearTypesByCompany(
+        SignedInUser.user.teamID,
+      );
+      return teamSwearTypes.map((swearType) => {
+        return {
+          ...swearType,
+          selected: false,
+        };
+      });
+    } catch (err) {
+      return [];
+    }
   }
 }
