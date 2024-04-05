@@ -235,7 +235,7 @@ export const DefaultViolations = [
     description:
       "Choose this option if the user's motto is 'I'll do it tomorrow... or never' 📅🙅‍♂️",
     category: "Virtual Meeting Fashion Critic",
-    categoryIcon: "👗👠",
+    categoryIcon: "👗",
   },
   {
     name: "Coffee Connoisseur",

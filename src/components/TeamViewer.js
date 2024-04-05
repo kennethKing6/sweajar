@@ -18,7 +18,7 @@ import PeopleOutlineIcon from '@mui/icons-material/PeopleAlt';
 import BrowserNotSupportedIcon from '@mui/icons-material/BrowserNotSupported';
 import { ButtonStyles } from "../assets/ButtonStyles";
 import { Colors } from "../assets/colors";
-import {FontFamilies} from "../assets/fontFamilies";
+import { FontFamilies } from "../assets/fontFamilies";
 import { MARGIN_SIZES } from "../assets/sizes";
 
 export default function TeamViewer({ onPress = () => { } }) {
@@ -66,12 +66,14 @@ export default function TeamViewer({ onPress = () => { } }) {
         alignSelf: "flex-start",
         justifyContent: "flex-end",
         alignItems: "flex-start",
-        height: "90%",
+        height: "100%",
+        //overflowY: 'auto',
+        backgroundColor: Colors.BACKGROUND_COLOR,
       }}
     >
       <Box
         sx={{
-          bgcolor: "black",
+          bgcolor: Colors.BACKGROUND_COLOR,
           color: "white",
           padding: 2,
           height: "100%",
@@ -82,7 +84,7 @@ export default function TeamViewer({ onPress = () => { } }) {
         }}
       >
         <Box>
-          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems:"center" }}>
+          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <h1 style={{ fontFamily: FontFamilies.title }}>Team Viewer</h1>
             <Box >
               <IconButton
@@ -159,7 +161,8 @@ export default function TeamViewer({ onPress = () => { } }) {
                     sx={{
                       display: "flex",
                       flexDirection: "column",
-                      justifyContent: "center",
+                      justifyContent: "flex-start",
+                      marginTop: "170px",
                       alignItems: "center",
                       minHeight: "200px",
                       height: "100%",
@@ -168,10 +171,24 @@ export default function TeamViewer({ onPress = () => { } }) {
                       textAlign: "center",
                     }}
                   >
-                    <BrowserNotSupportedIcon sx={{ fontSize: 100 }} />
-                    <Typography variant="body1" align="center">
-                      You don't have any teams yet. Click on a "Plus" icon to create a team.
-                    </Typography>
+                    <BrowserNotSupportedIcon sx={{ fontSize: 100, opacity:"60%" }} />
+                    <Box sx={{ marginTop: "30px" }}>
+                      <Typography variant="body1" align="center">
+                        You don't have any teams yet.
+                      </Typography>
+                      <Typography variant="body1" align="center">
+                        Click on the "Plus" icon BELOW to create a team.
+                      </Typography>
+                      <IconButton
+                        title="Create a New Team / Delete a Team"
+                        onClick={() => {
+                          setShowNewTeam(true);
+                          setShowUserTeams(false);
+                        }}
+                      >
+                        <AddIcon sx={{ backgroundColor: Colors.NAVBAR_SELECT_COLOR, color: Colors.TEXT_COLOR, fontSize: "50px", borderRadius: "10%", padding: '5px', marginTop: '20px' }} />
+                      </IconButton>
+                    </Box>
                   </Box>
                 )}
               </Grid>
@@ -179,8 +196,6 @@ export default function TeamViewer({ onPress = () => { } }) {
           </Grid>
           {showNewTeam && <CreateNewTeam />}
         </Box>
-
-
       </Box>
     </Grid>
   );
