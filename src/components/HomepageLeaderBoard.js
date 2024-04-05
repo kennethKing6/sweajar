@@ -96,7 +96,7 @@ export default function HomepageLeaderBoard({
               <Grid container>
                 <Grid item xs={7.5}>
                   <h1 style={{ fontWeight: "900" }}>Leaderboard </h1>
-                  {team ? (
+                  {team && team.teamName ? (
                     <Chip
                       label={team.teamName}
                       sx={{
