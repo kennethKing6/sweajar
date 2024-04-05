@@ -3,7 +3,7 @@ import { Colors } from "./colors";
 export const TextFieldStyles = {
   input: {
     "& .MuiInputBase-input": {
-      color: "black",
+      color: Colors.TEXT_COLOR,
     },
     "& .MuiOutlinedInput-root": {
       "& fieldset": {

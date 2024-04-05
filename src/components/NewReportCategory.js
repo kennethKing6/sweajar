@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Grid, Paper, Typography } from "@mui/material";
 import { DefaultViolations } from "../model/DefaultViolations";
 import { FontSizes } from "../assets/fonts";
+import { Colors } from "../assets/colors";
 
 const NewReportCategory = ({ onSelectedViolations = () => {} }) => {
   const [categories, setCategories] = useState([]);
@@ -17,7 +18,7 @@ const NewReportCategory = ({ onSelectedViolations = () => {} }) => {
     setCategories([...result]);
   }, []);
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={3} mb={5}>
       {categories.map(({ key, value }) => {
         return (
           <Grid
@@ -26,7 +27,14 @@ const NewReportCategory = ({ onSelectedViolations = () => {} }) => {
             sx={{ textAlign: "center" }}
             onClick={() => onSelectedViolations({ name: key, icon: value })}
           >
-            <Paper elevation={10} sx={{ height: 180 }}>
+            <Paper
+              elevation={10}
+              sx={{
+                height: 180,
+                bgcolor: Colors.BACKGROUND_COLOR_EERIE,
+                color: Colors.TEXT_COLOR,
+              }}
+            >
               <Typography
                 sx={{
                   fontSize: FontSizes.largeFontSize * 3,

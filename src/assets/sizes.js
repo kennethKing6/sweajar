@@ -1,6 +1,12 @@
 // Margins
+const MARGIN_1 = 1;
+const MARGIN_2 = 2;
+const MARGIN_3 = 3;
 const MARGIN_4 = 4;
+const MARGIN_5 = 5;
+const MARGIN_6 = 6;
 const MARGIN_8 = 8;
+const MARGIN_10 = 10;
 const MARGIN_12 = 12;
 const MARGIN_16 = 16;
 const MARGIN_20 = 20;
@@ -51,8 +57,14 @@ const MARGIN_196 = 196;
 const MARGIN_200 = 200;
 
 export const MARGIN_SIZES = {
+  MARGIN_1,
+  MARGIN_2,
+  MARGIN_3,
   MARGIN_4,
+  MARGIN_5,
+  MARGIN_6,
   MARGIN_8,
+  MARGIN_10,
   MARGIN_12,
   MARGIN_16,
   MARGIN_20,

@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   List,
@@ -14,6 +14,10 @@ import {
   Typography,
   Grid,
   Badge,
+  Card,
+  Chip,
+  Tabs,
+  Tab,
 } from "@mui/material";
 import { SwearType } from "../model/SwearType";
 import { SignedInUser } from "../model/SignedInUser";
@@ -28,6 +32,15 @@ import { FontSizes } from "../assets/fonts";
 import { Colors } from "../assets/colors";
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined";
 import { appDimensions } from "../assets/appDimensions";
+import {
+  AddIcon,
+  DeleteIcon,
+  EditIcon,
+  FavoriteIcon,
+  MenuIcon,
+  RemoveIcon,
+} from "../assets/icons";
+import { MARGIN_SIZES } from "../assets/sizes";
 export default function ViolationSelectList({
   onPress = () => {},
   onNavigateToUserToReport = () => {},
@@ -89,7 +102,7 @@ export default function ViolationSelectList({
                 sx={{
                   backgroundColor: "transparent",
                   textAlign: "center",
-                  fontSize: FontSizes.largeFontSize * 4,
+                  fontSize: FontSizes.largeFontSize * 5,
                 }}
               >
                 {currentCategory.icon}
@@ -299,53 +312,295 @@ export default function ViolationSelectList({
     );
   }
 
+  // return (
+  //   <Box
+  //     sx={{
+  //       bgcolor: "black",
+  //       color: "white",
+  //       padding: 2,
+  //       border: "2px solid yellow",
+  //       overflow: "auto",
+  //       display: "flex",
+  //       flexDirection: "column",
+  //       justifyContent: "space-between",
+  //       position: "relative",
+  //     }}
+  //   >
+  //     <Box mb={5}>
+  //       <Badge
+  //         onClick={() => {
+  //           if (ReportViolationsController.getSelectedSwearTypeCount() > 0)
+  //             setHasOpenBadge(!openBadge);
+  //         }}
+  //         badgeContent={ReportViolationsController.getSelectedSwearTypeCount()}
+  //         color="error"
+  //       >
+  //         <Typography variant="h4">New Report</Typography>
+  //       </Badge>
+  //       <Grid container>
+  //         {" "}
+  //         <Typography variant="caption">
+  //           Pick the category that best describes the behaviour of your coworker
+  //         </Typography>
+  //       </Grid>
+  //     </Box>
+  //     {openBadge ? (
+  //       <SelectedViolations />
+  //     ) : (
+  //       <Grid container sx={{ height: "80vh" }}>
+  //         {" "}
+  //         {!selectedCategory && (
+  //           <NewReportCategory
+  //             onSelectedViolations={(category) => setSelectedCategory(category)}
+  //           />
+  //         )}
+  //         {selectedCategory && (
+  //           <ViolationByCategoryList currentCategory={selectedCategory} />
+  //         )}
+  //       </Grid>
+  //     )}
+  //   </Box>
+  // );
+
+  function CategorySwears() {
+    return (
+      <div>
+        <Grid container>
+          <Grid item xs={9}>
+            <Typography variant="h3" gutterBottom>
+              Category
+            </Typography>
+            <Chip
+              label="Add each swear to your team jar"
+              sx={{
+                bgcolor: Colors.ACCENT_COLOR_1,
+                color: Colors.TEXT_COLOR,
+                fontSize: FontSizes.bodyFontSize,
+              }}
+            />
+          </Grid>
+          <Grid xs={3}>
+            <AddIcon
+              style={{
+                color: Colors.CHART_TEXT,
+                fontSize: 30,
+                padding: 1,
+              }}
+            />
+            <FavoriteIcon
+              style={{
+                color: Colors.TEAM_COLOR_ORANGE,
+                fontSize: 32,
+                padding: 1,
+              }}
+            />
+            <MenuIcon
+              style={{
+                color: Colors.ERROR_COLOR,
+                fontSize: 30,
+                padding: 1,
+              }}
+            />
+          </Grid>
+        </Grid>
+        <Grid sx={{ mt: MARGIN_SIZES.MARGIN_4 / 2 }}></Grid>
+        {openBadge ? (
+          <SelectedViolations />
+        ) : (
+          <Grid container sx={{ height: "80vh" }}>
+            {" "}
+            {!selectedCategory && (
+              <NewReportCategory
+                onSelectedViolations={(category) =>
+                  setSelectedCategory(category)
+                }
+              />
+            )}
+            {selectedCategory && (
+              <ViolationByCategoryList currentCategory={selectedCategory} />
+            )}
+          </Grid>
+        )}
+      </div>
+    );
+  }
   return (
     <Box
       sx={{
         bgcolor: "black",
         color: "white",
         padding: 2,
-        border: "2px solid yellow",
         overflow: "auto",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
         position: "relative",
+        height: "100%",
       }}
     >
-      <Box mb={5}>
-        <Badge
-          onClick={() => {
-            if (ReportViolationsController.getSelectedSwearTypeCount() > 0)
-              setHasOpenBadge(!openBadge);
-          }}
-          badgeContent={ReportViolationsController.getSelectedSwearTypeCount()}
-          color="error"
-        >
-          <Typography variant="h4">New Report</Typography>
-        </Badge>
-        <Grid container>
-          {" "}
-          <Typography variant="caption">
-            Pick the category that best describes the behaviour of your coworker
-          </Typography>
-        </Grid>
-      </Box>
-      {openBadge ? (
-        <SelectedViolations />
-      ) : (
-        <Grid container sx={{ height: "80vh" }}>
-          {" "}
-          {!selectedCategory && (
-            <NewReportCategory
-              onSelectedViolations={(category) => setSelectedCategory(category)}
-            />
-          )}
-          {selectedCategory && (
-            <ViolationByCategoryList currentCategory={selectedCategory} />
-          )}
-        </Grid>
-      )}
+      {/* <SwearJarMenu /> */}
+
+      <CategorySwears />
+      {/* <CustomTeamViolation /> */}
     </Box>
+  );
+}
+
+function SwearJarMenu() {
+  return (
+    <div>
+      <Grid container>
+        <Grid item xs={9}>
+          <Typography variant="h3" gutterBottom>
+            SwearJar
+          </Typography>
+          <Chip
+            label="Click on the violations to put in the jar (report)"
+            sx={{
+              bgcolor: Colors.ACCENT_COLOR_1,
+              color: Colors.TEXT_COLOR,
+              fontSize: FontSizes.bodyFontSize,
+            }}
+          />
+        </Grid>
+        <Grid xs={3}>
+          <AddIcon
+            style={{
+              color: Colors.CHART_TEXT,
+              fontSize: 30,
+              padding: 1,
+            }}
+          />
+          <FavoriteIcon
+            style={{
+              color: Colors.TEAM_COLOR_ORANGE,
+              fontSize: 32,
+              padding: 1,
+            }}
+          />
+          <MenuIcon
+            style={{
+              color: Colors.ERROR_COLOR,
+              fontSize: 30,
+              padding: 1,
+            }}
+          />
+        </Grid>
+      </Grid>
+      <Card
+        sx={{
+          bgcolor: Colors.NAVBAR_PRIMARY_BACKGROUND,
+          mt: MARGIN_SIZES.MARGIN_4 / 2,
+        }}
+      >
+        {" "}
+        <ListItem
+          secondaryAction={<DeleteIcon style={{ color: "white" }} />}
+          onClick={() => {}}
+        >
+          <ListItemIcon>
+            <Checkbox checked={false} sx={{ color: "white" }} />
+          </ListItemIcon>
+          <ListItemText
+            sx={{ color: "white" }}
+            primary={"Running"}
+            secondaryTypographyProps={{
+              style: { color: "white" },
+            }}
+            secondary={"The description"}
+          ></ListItemText>
+        </ListItem>
+      </Card>
+      <Card
+        sx={{
+          bgcolor: Colors.NAVBAR_PRIMARY_BACKGROUND,
+          mt: MARGIN_SIZES.MARGIN_4 / 2,
+        }}
+      >
+        {" "}
+        <ListItem
+          secondaryAction={<DeleteIcon style={{ color: "white" }} />}
+          onClick={() => {}}
+        >
+          <ListItemIcon>
+            <Checkbox checked={false} sx={{ color: "white" }} />
+          </ListItemIcon>
+          <ListItemText
+            sx={{ color: "white" }}
+            primary={"Running"}
+            secondaryTypographyProps={{
+              style: { color: "white" },
+            }}
+            secondary={"The description"}
+          ></ListItemText>
+        </ListItem>
+      </Card>
+    </div>
+  );
+}
+
+function CustomTeamViolation() {
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  return (
+    <Grid container>
+      <Grid item xs={9}>
+        <Typography variant="h3" gutterBottom>
+          Customizer
+        </Typography>
+        <Chip
+          label="Create swears that best match your team"
+          sx={{
+            bgcolor: Colors.ACCENT_COLOR_1,
+            color: Colors.TEXT_COLOR,
+            fontSize: FontSizes.bodyFontSize,
+          }}
+        />
+      </Grid>
+      <Grid xs={3}>
+        <AddIcon
+          style={{
+            color: Colors.CHART_TEXT,
+            fontSize: 30,
+            padding: 1,
+          }}
+        />
+        <FavoriteIcon
+          style={{
+            color: Colors.TEAM_COLOR_ORANGE,
+            fontSize: 32,
+            padding: 1,
+          }}
+        />
+        <MenuIcon
+          style={{
+            color: Colors.ERROR_COLOR,
+            fontSize: 30,
+            padding: 1,
+          }}
+        />
+      </Grid>
+      <Grid mt={4} sx={{ width: "100%" }}>
+        <Paper sx={{ flexGrow: 1 }}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            indicatorColor="primary"
+            textColor="primary"
+            centered
+            sx={{
+              bgcolor: Colors.BACKGROUND_COLOR_EERIE,
+            }}
+          >
+            <Tab label="Category" sx={{ color: Colors.TEXT_COLOR }} />
+            <Tab label="New item" sx={{ color: Colors.TEXT_COLOR }} />
+          </Tabs>
+        </Paper>
+      </Grid>
+    </Grid>
   );
 }

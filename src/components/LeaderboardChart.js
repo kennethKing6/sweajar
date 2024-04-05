@@ -1,5 +1,6 @@
 import React from "react";
 import { BarChart } from "@mui/x-charts/BarChart";
+import {Colors} from "../assets/colors"
 //import { CHART_COLOR, CHART_TEXT, CHART_LABEL } from "../assets/colors";
 
 const chartSetting = {
@@ -14,7 +15,7 @@ const chartSetting = {
 
 const chartStyles = {
   ".recharts-label": {
-    fill: "white", // NOT WORKING
+    fill: Colors.BACKGROUND_COLOR_EERIE, // NOT WORKING
   },
 };
 

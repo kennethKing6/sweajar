@@ -37,9 +37,9 @@ import { AppState } from "../model/AppState";
 
 export default function HomepageLeaderBoard({
   data,
-  onExit = () => {},
-  onPress = () => {},
-  onNavigateToTeams = () => {},
+  onExit = () => { },
+  onPress = () => { },
+  onNavigateToTeams = () => { },
 }) {
   const [sortedData, setSortedData] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -70,15 +70,15 @@ export default function HomepageLeaderBoard({
       sx={{
         width: appDimensions.EXTENSION_WIDTH,
         bgcolor: Colors.BACKGROUND_COLOR,
-        height: "100%",
+        height: "110vh",
       }}
-      spacing={2}
+      spacing={1}
     >
       {sortedData.length > 0 ? (
         <Grid item alignSelf="flex-start">
           <Box
             sx={{
-              color: "white",
+              color: Colors.TEXT_COLOR,
               padding: 2,
             }}
           >
@@ -129,7 +129,7 @@ export default function HomepageLeaderBoard({
   );
 }
 
-function UserItem({ person, index, pageDetails = () => {} }) {
+function UserItem({ person, index, pageDetails = () => { } }) {
   const [user, setUser] = useState(null);
   const [highestViolation, setHighestViolation] = useState(null);
   const [highestViolationCount, setHighestViolationCount] = useState("0");
@@ -168,10 +168,11 @@ function UserItem({ person, index, pageDetails = () => {} }) {
           onClick={() => pageDetails(person.userID)}
           key={index}
           sx={{
-            backgroundColor: "white",
-            marginTop: MARGIN_SIZES.MARGIN_4,
+            backgroundColor: Colors.BACKGROUND_COLOR_EERIE,
+            marginTop: MARGIN_SIZES.MARGIN_3,
+            border: `1px solid ${Colors.BORDER_BLUE}`,
             "&:hover": {
-              boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+              boxShadow: "0px 0px 10px 5px rgba(0, 150, 255, 0.5)",
             },
           }}
         >
@@ -185,32 +186,34 @@ function UserItem({ person, index, pageDetails = () => {} }) {
                 )}
               </ListItemAvatar>
               <ListItemText
+                sx={{ color: Colors.TEXT_COLOR }}
                 primary={`${user ? user.firstName : ""} ${user ? user.lastName : ""}`}
-                sx={{ color: Colors.TEXT_COLOR_SECONDARY }}
                 secondary={
                   highestViolation ? (
                     <Chip
                       label={`${highestViolation}`}
                       sx={{
-                        backgroundColor: violationColor,
-                        color: Colors.TEXT_COLOR_SECONDARY,
-                        fontSize: FontSizes.captionFontSize,
+                        backgroundColor: Colors.TEAM_COLOR_BLUE,
+                        color: Colors.TEXT_COLOR,
+                        fontSize: FontSizes.bodyFontSize,
                       }}
                     />
                   ) : (
                     <></>
                   )
-                }
+                } primaryTypographyProps={{ variant: 'h5', paddingBottom: '5px' }}
               />
 
               <ListItemSecondaryAction>
                 <Chip
                   label={highestViolationCount}
                   sx={{
-                    backgroundColor: violationColor,
+                    backgroundColor: Colors.TEAM_COLOR_BLUE,
                     color: Colors.TEXT_COLOR,
                     fontWeight: "bold",
-                    fontSize: FontSizes.captionFontSize,
+                    fontSize: FontSizes.bodyFontSize,
+                    width: 35, 
+                    height: 35,
                   }}
                 />
               </ListItemSecondaryAction>
@@ -224,7 +227,7 @@ function UserItem({ person, index, pageDetails = () => {} }) {
   );
 }
 
-function FilterDropDown({ onSelectFilter = () => {} }) {
+function FilterDropDown({ onSelectFilter = () => { } }) {
   const [filters, setFilters] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState("All");
   useEffect(() => {
@@ -254,8 +257,15 @@ function FilterDropDown({ onSelectFilter = () => {} }) {
             sx: {
               color: "white",
               borderWidth: 0,
-              borderColor: "brown",
-              backgroundColor: "brown",
+              borderColor: Colors.BUTTON_PRIMARY_COLOR,
+              backgroundColor: Colors.BUTTON_SECONDARY_COLOR,
+            },
+          }}
+          MenuProps={{
+            PaperProps: {
+              sx: {
+                backgroundColor: Colors.ACCENT_COLOR_4,
+              },
             },
           }}
         >

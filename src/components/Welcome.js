@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, ImageListItem } from "@mui/material";
 import Signup from "./Signup";
 import Signin from "./Signin";
-import SwearJar from "../assets/swearjar.jpg";
+import SwearJar from "../assets/sj_logo.png";
 import { Colors } from "../assets/colors";
 import { ButtonStyles } from "../assets/ButtonStyles";
 
@@ -15,14 +15,16 @@ const Welcome = () => {
   return (
     <div
       style={{
+        margin: 0,
         textAlign: "center",
         fontFamily: "Noto Sans",
         height: "100%",
+        backgroundColor: Colors.BACKGROUND_COLOR,
       }}
     >
       {welcomeAction === WELCOME_PAGE ? (
         <div>
-          <h1 style={{ fontWeight: "bolder" }}>Welcome to SwearJar</h1>
+          <h1 style={{ fontWeight: "bolder", color: Colors.TEXT_COLOR, margin: 0 }}>Welcome to SwearJar</h1>
           <ImageListItem sx={{ height: 10 }}>
             <img
               style={{ height: 250, objectFit: "contain" }}
@@ -34,7 +36,7 @@ const Welcome = () => {
               className="lk21hp11 _1286nb199 _1286nb19x _1286nb16 _1286nb183 _1286nb18b"
             />
           </ImageListItem>
-          <p style={{ color: Colors.TEXT_COLOR_TERTIARY }}>
+          <p style={{ color: Colors.TEXT_COLOR }}>
             Are you tired of your foul-mouthed habits? 😡🤬
             <br />
             Well, fear not! SwearJar is here to help you keep those profanities

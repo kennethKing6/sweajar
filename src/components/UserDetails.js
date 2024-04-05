@@ -4,7 +4,6 @@ import { SignedInUser } from "../model/SignedInUser";
 import { User } from "../model/User";
 import UserDetailsChart from "./UserDetailsChart";
 import ViolationsLineChart from "./ViolationsLineChart";
-import { Report } from "../model/Report";
 import { UserDetailsController } from "../controllers/userDetailsController";
 import { FontSizes } from "../assets/fonts";
 import {
@@ -14,6 +13,7 @@ import {
   ListItemText,
   AccordionSummary,
   AccordionDetails,
+  colors,
 } from "@mui/material";
 import { ExpandMoreRounded } from "@mui/icons-material";
 import { Colors } from "../assets/colors";
@@ -24,7 +24,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
-export default function UserDetails({ onPress = () => {} }) {
+export default function UserDetails({ onPress = () => { } }) {
   const [user, setUser] = useState(null);
   const [chartData, setChartData] = useState([]);
   const [lineData, setLineData] = useState([]);
@@ -41,7 +41,7 @@ export default function UserDetails({ onPress = () => {} }) {
           .then((data) => setUser(data))
           .catch();
       }
-    } catch (err) {}
+    } catch (err) { }
   }, []);
 
   useEffect(() => {
@@ -62,13 +62,14 @@ export default function UserDetails({ onPress = () => {} }) {
   }, [user]);
 
   return (
-    <div style={{ textAlign: "center", marginTop: "5%" }}>
+    <div style={{ height: "110vh", textAlign: "center", padding: "10px", color: Colors.TEXT_COLOR, backgroundColor: Colors.BACKGROUND_COLOR }}>
+      <div style={{textAlign: "left", marginLeft:"5%", display: "flex", alignItems:"center"}}>
       <div onClick={onPress}>
         <img
           src={user ? user.profilePicture : ""}
           alt={`${user ? user.firstName : ""} ${user ? user.lastName : ""}`}
           style={{
-            width: 200,
+            width: 125,
             maxHeight: "auto",
             borderRadius: "50%",
             padding: 2,
@@ -76,65 +77,77 @@ export default function UserDetails({ onPress = () => {} }) {
           }}
         />
       </div>
-      <div>
+      <div style={{ marginLeft: "30px", lineHeight:"8px" }}>
         <p
           style={{
             fontWeight: "bolder",
             fontSize: FontSizes.titleFontSize,
             fontFamily: '"Noto Sans',
           }}
-        >
+        >Name: {""}
           {user ? user.firstName : ""} {""}
           {user ? user.lastName : ""}
         </p>
         <p
           style={{
-            fontWeight: "bold",
+            fontWeight: "bolder",
             fontSize: FontSizes.largeFontSize,
             fontFamily: '"Noto Sans',
-            color: "#E6B545",
           }}
-        >
-          Analysis
+        >Email: {""}
+          {user ? user.email : ""}
         </p>
-
-        {chartData.length > 0 ? (
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreRounded />}
-              aria-controls="panel1-content"
-              id="panel1-header"
-            >
-              Violations Overview
-            </AccordionSummary>
-            <AccordionDetails>
-              <UserDetailsChart violationData={chartData} />
-            </AccordionDetails>
-          </Accordion>
-        ) : (
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreRounded />}
-              aria-controls="panel1-content"
-              id="panel1-header"
-            >
-              Violations Overview
-            </AccordionSummary>
-            <AccordionDetails>
-              No graph available at the moment
-            </AccordionDetails>
-          </Accordion>
-        )}
-        <ViolationsLineSeries user={user} />
-
-        {chartData.length > 0 ? (
-          chartData.map((data) => {
-            return <ViolationType data={data} />;
-          })
-        ) : (
-          <></>
-        )}
       </div>
+    </div>
+      <p
+        style={{
+          fontWeight: "bold",
+          fontSize: FontSizes.largeFontSize,
+          fontFamily: '"Noto Sans',
+          color: "#E6B545",
+        }}
+      >
+        Analysis
+      </p>
+
+      {chartData.length > 0 ? (
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreRounded />}
+            aria-controls="panel1-content"
+            id="panel1-header"
+            sx={{color: Colors.TEXT_COLOR, backgroundColor: Colors.BACKGROUND_COLOR, border:"1px solid blue"}}
+          >
+            Violations Overview
+          </AccordionSummary>
+          <AccordionDetails>
+            <UserDetailsChart violationData={chartData} />
+          </AccordionDetails>
+        </Accordion>
+      ) : (
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreRounded />}
+            aria-controls="panel1-content"
+            id="panel1-header"
+            sx={{color: Colors.TEXT_COLOR, backgroundColor: Colors.BACKGROUND_COLOR, border:"1px solid blue"}}
+          >
+            Violations Overview
+          </AccordionSummary>
+          <AccordionDetails>
+            No graph available at the moment
+          </AccordionDetails>
+        </Accordion>
+      )}
+      <ViolationsLineSeries user={user} />
+
+      {chartData.length > 0 ? (
+        chartData.map((data) => {
+          return <ViolationType data={data} />;
+        })
+      ) : (
+        <></>
+      )}
     </div>
   );
 }
@@ -147,13 +160,13 @@ function ViolationType({ data }) {
   }, [data]);
   return (
     <>
-      <ListItem
+      <ListItem sx={{ backgroundColor: Colors.BACKGROUND_COLOR}}
         alignItems="flex-start"
         secondaryAction={<p>{data["countPerViolation"]}</p>}
       >
         <ListItemText
           primary={data["violationType"]}
-          secondary={<p>{description}</p>}
+          secondary={<p style={{color: Colors.TEXT_COLOR}}>{description}</p>}
         />
       </ListItem>
       <Divider variant="inset" component="li" />
@@ -214,6 +227,7 @@ function ViolationsLineSeries({ user }) {
             expandIcon={<ExpandMoreRounded />}
             aria-controls="panel1-content"
             id="panel1-header"
+            sx={{color: Colors.TEXT_COLOR, backgroundColor: Colors.BACKGROUND_COLOR, border:"1px solid blue", marginTop:"5px"}}
           >
             Violations Timelines
           </AccordionSummary>
@@ -245,6 +259,7 @@ function ViolationsLineSeries({ user }) {
             expandIcon={<ExpandMoreRounded />}
             aria-controls="panel1-content"
             id="panel1-header"
+            sx={{color: Colors.TEXT_COLOR, backgroundColor: Colors.BACKGROUND_COLOR, border:"1px solid blue", marginTop:"5px"}}
           >
             Violations Timelines
           </AccordionSummary>

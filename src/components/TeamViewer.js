@@ -14,12 +14,14 @@ import { SignedInUser } from "../model/SignedInUser";
 import CreateNewTeam from "./CreateNewTeam";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import AddIcon from "@mui/icons-material/Add";
-import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
+import PeopleOutlineIcon from '@mui/icons-material/PeopleAlt';
 import BrowserNotSupportedIcon from '@mui/icons-material/BrowserNotSupported';
 import { ButtonStyles } from "../assets/ButtonStyles";
 import { Colors } from "../assets/colors";
+import {FontFamilies} from "../assets/fontFamilies";
+import { MARGIN_SIZES } from "../assets/sizes";
 
-export default function TeamViewer({ onPress = () => {} }) {
+export default function TeamViewer({ onPress = () => { } }) {
   const [selected, setSelected] = useState();
   const [items, setItems] = useState([]);
   const [showUserTeams, setShowUserTeams] = useState(true);
@@ -72,7 +74,6 @@ export default function TeamViewer({ onPress = () => {} }) {
           bgcolor: "black",
           color: "white",
           padding: 2,
-          border: "2px solid yellow",
           height: "100%",
           display: "flex",
           flexDirection: "column",
@@ -81,30 +82,75 @@ export default function TeamViewer({ onPress = () => {} }) {
         }}
       >
         <Box>
-          <h1>Team Viewer</h1>
+          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems:"center" }}>
+            <h1 style={{ fontFamily: FontFamilies.title }}>Team Viewer</h1>
+            <Box >
+              <IconButton
+                title="Show My Teams"
+                onClick={() => {
+                  setShowNewTeam(false);
+                  setShowUserTeams(true);
+                }}
+              >
+                <FormatListBulletedIcon
+                  sx={{ backgroundColor: Colors.NAVBAR_SELECT_COLOR, color: Colors.TEXT_COLOR, fontSize: "30px", borderRadius: "10%", padding: '5px' }}
+                />
+              </IconButton>
+              <IconButton
+                title="Create a New Team / Delete a Team"
+                onClick={() => {
+                  setShowNewTeam(true);
+                  setShowUserTeams(false);
+                }}
+              >
+                <AddIcon sx={{ backgroundColor: Colors.NAVBAR_SELECT_COLOR, color: Colors.TEXT_COLOR, fontSize: "30px", borderRadius: "10%", padding: '5px' }} />
+              </IconButton>
+            </Box>
+          </Box>
+
           <Grid container>
             {showUserTeams && (
-              <Grid container
-                spacing={2}
-              >
+              <Grid container spacing={1} sx={{ padding: "20px", gridGap: 50, marginTop: MARGIN_SIZES.MARGIN_1 }}>
                 {items.length > 0 ? (
                   items.map((item) => (
                     <Grid item xs={3} key={JSON.stringify(item)} onClick={async () => { await onToggle(item); }}>
                       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <Avatar
-                          sx={{ 
-                            bgcolor: Colors.ACCENT_COLOR_3,
-                            width: '100%',
-                            height: 125,
+                          sx={{
+                            bgcolor: Colors.BACKGROUND_COLOR_EERIE,
+                            width: '80%',
+                            height: '100px',
                             borderRadius: "10%",
-                            border: selected && selected.teamName === item.teamName ? "2px solid yellow" : "none",
+                            border: selected && selected.teamName === item.teamName ? "2px solid blue" : "none",
+                            padding: '8px'
                           }}
                         >
-                          <PeopleOutlineIcon sx={{ fontSize: 70 }}/>
+                          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', }}>
+                            <PeopleOutlineIcon sx={{ fontSize: 45 }} />
+                            <Typography
+                              sx={{
+                                color: "white",
+                                maxLines: 3,
+                                textWrap: "wrap",
+                                fontSize: "14px",
+                                overflow: "hidden",
+                                wordWrap: "break-word",
+                                width: "100%",
+                                textAlign: "center"
+                              }}>
+                              {item.teamName}
+                            </Typography>
+                          </div>
                         </Avatar>
-                        <Typography variant="h5" sx={{ color: "white", mt: 1,  }}>
-                          {item.teamName}
-                        </Typography>
+                        {selected && selected.teamName === item.teamName && (
+                          <Button
+                            variant="contained"
+                            onClick={onPress}
+                            sx={ButtonStyles.BtnStyle3}
+                          >
+                            Details
+                          </Button>
+                        )}
                       </Box>
                     </Grid>
                   ))
@@ -122,7 +168,7 @@ export default function TeamViewer({ onPress = () => {} }) {
                       textAlign: "center",
                     }}
                   >
-                    <BrowserNotSupportedIcon sx={{ fontSize: 100 }}/>
+                    <BrowserNotSupportedIcon sx={{ fontSize: 100 }} />
                     <Typography variant="body1" align="center">
                       You don't have any teams yet. Click on a "Plus" icon to create a team.
                     </Typography>
@@ -133,41 +179,8 @@ export default function TeamViewer({ onPress = () => {} }) {
           </Grid>
           {showNewTeam && <CreateNewTeam />}
         </Box>
-        {showUserTeams && (
-          <Box sx={{ position: "relative", left: "65%",  }}>
-            {items.length > 0 && (
-              <Button
-                variant="contained"
-                onClick={onPress}
-                sx={ButtonStyles.BtnStyle2}
-              >
-                View Details
-              </Button>
-            )}
-          </Box>
-        )}
-        <Box sx={{ position: "absolute", top: 48, right: 8 }}>
-          <IconButton
-            title="Show My Teams"
-            onClick={() => {
-              setShowNewTeam(false);
-              setShowUserTeams(true);
-            }}
-          >
-            <FormatListBulletedIcon
-              sx={{ backgroundColor: "yellow", color: "black" }}
-            />
-          </IconButton>
-          <IconButton
-            title="Create a New Team / Delete a Team"
-            onClick={() => {
-              setShowNewTeam(true);
-              setShowUserTeams(false);
-            }}
-          >
-            <AddIcon sx={{ backgroundColor: "yellow", color: "black" }} />
-          </IconButton>
-        </Box>
+
+
       </Box>
     </Grid>
   );
