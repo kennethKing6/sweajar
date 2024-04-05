@@ -50,8 +50,11 @@ export default function NavBar({
         justifyContent="center"
         style={{
           cursor: "pointer",
-          padding:Padding_Sizes.PADDING_8,
-          backgroundColor: selectedItem === "Leaderboard" ? Colors.NAVBAR_SELECT_COLOR : "transparent",
+          padding: Padding_Sizes.PADDING_8,
+          backgroundColor:
+            selectedItem === "Leaderboard"
+              ? Colors.NAVBAR_SELECT_COLOR
+              : "transparent",
           borderRadius: Border_Sizes.BORDER_SM,
           transition: "background-color 0.2s",
           flex: 1,
@@ -73,7 +76,10 @@ export default function NavBar({
         justifyContent="center"
         style={{
           cursor: "pointer",
-          backgroundColor: selectedItem === "Teams" ? Colors.NAVBAR_SELECT_COLOR : "transparent",
+          backgroundColor:
+            selectedItem === "Teams"
+              ? Colors.NAVBAR_SELECT_COLOR
+              : "transparent",
           borderRadius: Border_Sizes.BORDER_SM,
           transition: "background-color 0.2s",
           flex: 1,
@@ -95,7 +101,10 @@ export default function NavBar({
         justifyContent="center"
         style={{
           cursor: "pointer",
-          backgroundColor: selectedItem === "New Report" ? Colors.NAVBAR_SELECT_COLOR : "transparent",
+          backgroundColor:
+            selectedItem === "New Report"
+              ? Colors.NAVBAR_SELECT_COLOR
+              : "transparent",
           borderRadius: Border_Sizes.BORDER_SM,
           transition: "background-color 0.2s",
           flex: 1,
@@ -116,7 +125,10 @@ export default function NavBar({
         justifyContent="center"
         style={{
           cursor: "pointer",
-          backgroundColor: selectedItem === "Profile" ? Colors.NAVBAR_SELECT_COLOR : "transparent",
+          backgroundColor:
+            selectedItem === "Profile"
+              ? Colors.NAVBAR_SELECT_COLOR
+              : "transparent",
           borderRadius: Border_Sizes.BORDER_SM,
           transition: "background-color 0.2s",
           color: Colors.TEXT_COLOR,
@@ -129,7 +141,11 @@ export default function NavBar({
         <Grid
           item
           sx={styles.text}
-          onClick={() => (AppState.selectUserID = SignedInUser.user.userID)}
+          onClick={() => {
+            try {
+              AppState.selectUserID = SignedInUser.user.userID;
+            } catch (err) {}
+          }}
         >
           Profile
         </Grid>
@@ -142,20 +158,31 @@ export default function NavBar({
         justifyContent="center"
         style={{
           cursor: "pointer",
-          backgroundColor: selectedItem === "Tutorial" ? Colors.NAVBAR_SELECT_COLOR : "transparent",
+          backgroundColor:
+            selectedItem === "Tutorial"
+              ? Colors.NAVBAR_SELECT_COLOR
+              : "transparent",
           borderRadius: Border_Sizes.BORDER_SM,
           transition: "background-color 0.2s",
           color: Colors.TEXT_COLOR,
           flex: 1,
         }}
         item
-        onClick={() => handleItemClick("Tutorial", onTutorialClick)}
+        onClick={() => {
+          try {
+            handleItemClick("Tutorial", onTutorialClick);
+          } catch (err) {}
+        }}
       >
         <HelpIcon />
         <Grid
           item
           sx={styles.text}
-          onClick={() => (AppState.selectUserID = SignedInUser.user.userID)}
+          onClick={() => {
+            try {
+              AppState.selectUserID = SignedInUser.user.userID;
+            } catch (err) {}
+          }}
         >
           Tutorial
         </Grid>
@@ -169,7 +196,10 @@ export default function NavBar({
         justifyContent="center"
         style={{
           cursor: "pointer",
-          backgroundColor: selectedItem === "Logout" ? Colors.NAVBAR_SELECT_COLOR : "transparent",
+          backgroundColor:
+            selectedItem === "Logout"
+              ? Colors.NAVBAR_SELECT_COLOR
+              : "transparent",
           borderRadius: Border_Sizes.BORDER_SM,
           transition: "background-color 0.2s",
           color: Colors.TEXT_COLOR,
@@ -188,6 +218,6 @@ export default function NavBar({
 
 const styles = {
   text: {
-    fontWeight: "bold"
-  }
+    fontWeight: "bold",
+  },
 };

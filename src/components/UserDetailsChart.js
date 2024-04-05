@@ -17,12 +17,19 @@ export default function UserDetailsChart({ violationData }) {
   return (
     <BarChart
       dataset={violationData}
-      xAxis={[{ scaleType: "band", dataKey: "violationType" }]}
+      xAxis={[
+        {
+          scaleType: "band",
+          dataKey: "violationType",
+          labelStyle: {
+            color: "white",
+          },
+        },
+      ]}
       series={[
         {
           dataKey: "countPerViolation",
           label: "Violation Count",
-          color: "#FFC107",
         },
       ]}
       yAxis={[
@@ -33,6 +40,9 @@ export default function UserDetailsChart({ violationData }) {
           tickMinStep: 1,
         },
       ]}
+      sx={{
+        bgcolor: Colors.ACCENT_COLOR_4,
+      }}
       {...chartSetting}
     />
   );

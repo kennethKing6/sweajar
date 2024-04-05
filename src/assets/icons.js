@@ -6,6 +6,7 @@ import {
   FormatAlignJustifyRounded,
   EditNoteRounded,
   Favorite,
+  Inbox,
 } from "@mui/icons-material";
 
 export function DeleteIcon({ style = {}, onClick = () => {} }) {
@@ -37,4 +38,8 @@ export function EditIcon({ style = {}, onClick = () => {} }) {
 
 export function FavoriteIcon({ style = {}, onClick = () => {} }) {
   return <Favorite sx={[style, { cursor: "pointer" }]} onClick={onClick} />;
+}
+
+export function EmptyIcon({ style = {}, onClick = () => {} }) {
+  return <Inbox sx={[style, { cursor: "pointer" }]} onClick={onClick} />;
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import { LineChart } from "@mui/x-charts/LineChart";
+import { Colors } from "../assets/colors";
 
 const data = [
   {
@@ -35,6 +36,9 @@ export default function ViolationsLineChart({ lineData, lineSeries }) {
     <LineChart
       data-testid="line-chart"
       dataset={lineData}
+      sx={{
+        backgroundColor: Colors.ACCENT_COLOR_4,
+      }}
       xAxis={[
         {
           dataKey: "date",

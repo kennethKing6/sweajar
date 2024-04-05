@@ -34,16 +34,18 @@ import { Teams } from "../model/Teams";
 import { HomePageLeaderBoardController } from "../controllers/homePageLeaderBoardController";
 import { FirebaseDatabase } from "../shared/firebase/firebaseDatabase";
 import { AppState } from "../model/AppState";
+import { Padding_Sizes } from "../assets/paddingSizes";
 
 export default function HomepageLeaderBoard({
   data,
-  onExit = () => { },
-  onPress = () => { },
-  onNavigateToTeams = () => { },
+  onExit = () => {},
+  onPress = () => {},
+  onNavigateToTeams = () => {},
 }) {
   const [sortedData, setSortedData] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [profanitySorter, setProfanitySorter] = useState(null);
+  const [team, setTeam] = useState(null);
 
   useEffect(() => {
     if (!profanitySorter || profanitySorter === "All") {
@@ -58,6 +60,14 @@ export default function HomepageLeaderBoard({
         .catch();
     }
   }, [profanitySorter]);
+
+  useEffect(() => {
+    try {
+      Teams.getTeam(SignedInUser.user.teamID)
+        .then((team) => setTeam(team))
+        .catch();
+    } catch (err) {}
+  });
 
   const handleUserClick = (user) => {
     AppState.selectUserID = user;
@@ -86,6 +96,20 @@ export default function HomepageLeaderBoard({
               <Grid container>
                 <Grid item xs={7.5}>
                   <h1 style={{ fontWeight: "900" }}>Leaderboard </h1>
+                  {team ? (
+                    <Chip
+                      label={team.teamName}
+                      sx={{
+                        bgcolor: Colors.ACCENT_COLOR_1,
+                        color: Colors.TEXT_COLOR,
+                        fontSize: FontSizes.mediumFontSize,
+                        fontWeight: "900",
+                        padding: Padding_Sizes.PADDING_4,
+                      }}
+                    />
+                  ) : (
+                    <></>
+                  )}
                 </Grid>
                 <Grid item xs={4} mt={2}>
                   <FilterDropDown
@@ -129,7 +153,7 @@ export default function HomepageLeaderBoard({
   );
 }
 
-function UserItem({ person, index, pageDetails = () => { } }) {
+function UserItem({ person, index, pageDetails = () => {} }) {
   const [user, setUser] = useState(null);
   const [highestViolation, setHighestViolation] = useState(null);
   const [highestViolationCount, setHighestViolationCount] = useState("0");
@@ -201,7 +225,8 @@ function UserItem({ person, index, pageDetails = () => { } }) {
                   ) : (
                     <></>
                   )
-                } primaryTypographyProps={{ variant: 'h5', paddingBottom: '5px' }}
+                }
+                primaryTypographyProps={{ variant: "h5", paddingBottom: "5px" }}
               />
 
               <ListItemSecondaryAction>
@@ -212,7 +237,7 @@ function UserItem({ person, index, pageDetails = () => { } }) {
                     color: Colors.TEXT_COLOR,
                     fontWeight: "bold",
                     fontSize: FontSizes.bodyFontSize,
-                    width: 35, 
+                    width: 35,
                     height: 35,
                   }}
                 />
@@ -227,7 +252,7 @@ function UserItem({ person, index, pageDetails = () => { } }) {
   );
 }
 
-function FilterDropDown({ onSelectFilter = () => { } }) {
+function FilterDropDown({ onSelectFilter = () => {} }) {
   const [filters, setFilters] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState("All");
   useEffect(() => {
