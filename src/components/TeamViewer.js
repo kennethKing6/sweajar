@@ -67,7 +67,7 @@ export default function TeamViewer({ onPress = () => { } }) {
         justifyContent: "flex-end",
         alignItems: "flex-start",
         height: "100%",
-        overflowY: 'auto',
+        //overflowY: 'auto',
         backgroundColor: Colors.BACKGROUND_COLOR,
       }}
     >

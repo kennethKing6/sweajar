@@ -22,9 +22,9 @@ export default function Tutorial({ onPress = () => { } }) {
     const imageSize = { maxWidth: 'auto', maxHeight: '70%' }; // Adjust the size as needed
 
     return (
-        <div sx={{ height:"auto", fontSize: '12px', backgroundColor: "red"}}>
+        <div sx={{ height:"100%", fontSize: '12px'}}>
             <Accordion sx={{ height:"auto", color: Colors.TEXT_COLOR, backgroundColor: Colors.BACKGROUND_COLOR_EERIE, margin: "4px" }}>
-                <AccordionSummary expandIcon={<ExpandMoreRounded />}
+                <AccordionSummary expandIcon={<ExpandMoreRounded sx={{ color: Colors.BORDER_BLUE, fontSize: 40 }} />}
                     aria-controls="panel1-content"
                     id="panel1-header"
                 ><h2>Creating/Deleting a Team</h2></AccordionSummary>
@@ -85,8 +85,9 @@ export default function Tutorial({ onPress = () => { } }) {
                     </ImageListItem>
                 </AccordionDetails>
             </Accordion>
+
             <Accordion sx={{ color: Colors.TEXT_COLOR, backgroundColor: Colors.BACKGROUND_COLOR_EERIE, margin: "4px" }}>
-                <AccordionSummary expandIcon={<ExpandMoreRounded />}
+                <AccordionSummary expandIcon={<ExpandMoreRounded sx={{ color: Colors.BORDER_BLUE, fontSize: 40 }} />}
                     aria-controls="panel1-content"
                     id="panel1-header"
                 ><h2>Viewing Teams</h2></AccordionSummary>
@@ -124,7 +125,7 @@ export default function Tutorial({ onPress = () => { } }) {
             </Accordion>
 
             <Accordion sx={{ color: Colors.TEXT_COLOR, backgroundColor: Colors.BACKGROUND_COLOR_EERIE, margin: "4px" }}>
-                <AccordionSummary expandIcon={<ExpandMoreRounded />}
+                <AccordionSummary expandIcon={<ExpandMoreRounded sx={{ color: Colors.BORDER_BLUE, fontSize: 40 }} />}
                     aria-controls="panel1-content"
                     id="panel1-header"
                 ><h2>Adding a Team Member to a Team</h2></AccordionSummary>
@@ -185,7 +186,7 @@ export default function Tutorial({ onPress = () => { } }) {
             </Accordion>
 
             <Accordion sx={{ color: Colors.TEXT_COLOR, backgroundColor: Colors.BACKGROUND_COLOR_EERIE, margin: "4px" }}>
-                <AccordionSummary expandIcon={<ExpandMoreRounded />}
+                <AccordionSummary expandIcon={<ExpandMoreRounded sx={{ color: Colors.BORDER_BLUE, fontSize: 40 }} />}
                     aria-controls="panel1-content"
                     id="panel1-header"
                 ><h2>Reporting a User Violation</h2></AccordionSummary>

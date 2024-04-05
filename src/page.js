@@ -99,6 +99,7 @@ function App() {
         height: appDimensions.EXTENSION_HEIGHT,
         width: appDimensions.EXTENSION_WIDTH,
         backgroundColor: Colors.BACKGROUND_COLOR,
+        overflowY: 'auto',
       }}
     >
       <NavBar
