@@ -168,13 +168,21 @@ export default function NavBar({
           flex: 1,
         }}
         item
-        onClick={() => handleItemClick("Tutorial", onTutorialClick)}
+        onClick={() => {
+          try {
+            handleItemClick("Tutorial", onTutorialClick);
+          } catch (err) {}
+        }}
       >
         <HelpIcon />
         <Grid
           item
           sx={styles.text}
-          onClick={() => (AppState.selectUserID = SignedInUser.user.userID)}
+          onClick={() => {
+            try {
+              AppState.selectUserID = SignedInUser.user.userID;
+            } catch (err) {}
+          }}
         >
           Tutorial
         </Grid>
