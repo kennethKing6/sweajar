@@ -18,6 +18,7 @@ import {
   Chip,
   Tabs,
   Tab,
+  TextField,
 } from "@mui/material";
 import { SwearType } from "../model/SwearType";
 import { SignedInUser } from "../model/SignedInUser";
@@ -41,9 +42,12 @@ import {
   MenuIcon,
   RemoveIcon,
 } from "../assets/icons";
-import { MARGIN_SIZES } from "../assets/sizes";
+import { MARGIN_SIZES, PADDING_SIZES } from "../assets/sizes";
 import { connect } from "react-redux";
 import { NewReportReduxActions } from "../shared/redux/actions/newReportActions";
+import { TextFieldStyles } from "../assets/TextFieldStyles";
+import { ButtonStyles } from "../assets/ButtonStyles";
+import { Padding_Sizes } from "../assets/paddingSizes";
 function ViolationSelectList({
   onPress = () => {},
   onNavigateToUserToReport = () => {},
@@ -385,28 +389,23 @@ function ViolationSelectList({
   //   </Box>
   // );
 
-  function CategorySwears() {
+  function CategorySwears({ onNavigateToUserToReport = () => {} }) {
     return (
       <div>
-        <NewReportHeader />
+        <NewReportHeader onNavigateToUserToReport={onNavigateToUserToReport} />
         <Grid sx={{ mt: MARGIN_SIZES.MARGIN_4 / 2 }}></Grid>
-        {openBadge ? (
-          <SelectedViolations />
-        ) : (
-          <Grid container sx={{ height: "80vh" }}>
-            {" "}
-            {!selectedCategory && (
-              <NewReportCategory
-                onSelectedViolations={(category) =>
-                  setSelectedCategory(category)
-                }
-              />
-            )}
-            {selectedCategory && (
-              <ViolationByCategoryList currentCategory={selectedCategory} />
-            )}
-          </Grid>
-        )}
+
+        <Grid container sx={{ height: "80vh" }}>
+          {" "}
+          {!selectedCategory && (
+            <NewReportCategory
+              onSelectedViolations={(category) => setSelectedCategory(category)}
+            />
+          )}
+          {selectedCategory && (
+            <ViolationByCategoryList currentCategory={selectedCategory} />
+          )}
+        </Grid>
       </div>
     );
   }
@@ -426,19 +425,33 @@ function ViolationSelectList({
         height: "100%",
       }}
     >
-      {newReportAction === "new_report/swearjar" ? <SwearJarMenu /> : <></>}
-      {newReportAction === "new_report/category" ? <CategorySwears /> : <></>}
-      {newReportAction === "new_report/violation" ? (
-        <CustomTeamViolation />
+      {newReportAction === "new_report/swearjar" ? (
+        <SwearJarMenu onNavigateToUserToReport={onNavigateToUserToReport} />
       ) : (
         <></>
       )}
-      {!newReportAction ? <SwearJarMenu /> : <></>}
+      {newReportAction === "new_report/category" ? (
+        <CategorySwears onNavigateToUserToReport={onNavigateToUserToReport} />
+      ) : (
+        <></>
+      )}
+      {newReportAction === "new_report/violation" ? (
+        <CustomTeamViolation
+          onNavigateToUserToReport={onNavigateToUserToReport}
+        />
+      ) : (
+        <></>
+      )}
+      {!newReportAction ? (
+        <SwearJarMenu onNavigateToUserToReport={onNavigateToUserToReport} />
+      ) : (
+        <></>
+      )}
     </Box>
   );
 }
 
-function SwearJarMenu() {
+function SwearJarMenu({ onNavigateToUserToReport = () => {} }) {
   const [jar, setJar] = useState([]);
 
   useEffect(() => {
@@ -451,7 +464,7 @@ function SwearJarMenu() {
 
   return (
     <div>
-      <NewReportHeader />
+      <NewReportHeader onNavigateToUserToReport={onNavigateToUserToReport} />
       {jar.length > 0 ? (
         jar.map(({ name, description, selected }, index) => {
           return (
@@ -463,20 +476,41 @@ function SwearJarMenu() {
             >
               {" "}
               <ListItem
-                secondaryAction={<DeleteIcon style={{ color: "white" }} />}
-                onClick={() => {
-                  let tempJar = [...jar];
-                  tempJar[index].selected = !tempJar[index].selected;
-                  ReportViolationsController.selectSwearType({
-                    description: description,
-                    name: name,
-                    swearTypeID: name,
-                    levels: "minor",
-                  });
-                  setJar(tempJar);
-                }}
+                secondaryAction={
+                  <DeleteIcon
+                    style={{ color: "white" }}
+                    onClick={async () => {
+                      const { name } = jar[index];
+                      try {
+                        await SwearType.deleteSwearType({
+                          name: name,
+                          teamID: SignedInUser.user.teamID,
+                        });
+                        const newJar = [];
+                        jar.forEach((v, i) => {
+                          if (i !== index) newJar.push(v);
+                        });
+                        setJar(newJar);
+                      } catch (err) {
+                        alert("Ensure a team has been selected");
+                      }
+                    }}
+                  />
+                }
               >
-                <ListItemIcon>
+                <ListItemIcon
+                  onClick={() => {
+                    let tempJar = [...jar];
+                    tempJar[index].selected = !tempJar[index].selected;
+                    ReportViolationsController.selectSwearType({
+                      description: description,
+                      name: name,
+                      swearTypeID: name,
+                      levels: "minor",
+                    });
+                    setJar(tempJar);
+                  }}
+                >
                   <Checkbox checked={selected} sx={{ color: "white" }} />
                 </ListItemIcon>
                 <ListItemText
@@ -509,38 +543,107 @@ function SwearJarMenu() {
   );
 }
 
-function CustomTeamViolation() {
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
+function CustomTeamViolation({ onNavigateToUserToReport = () => {} }) {
   return (
     <Grid container>
-      <NewReportHeader />
-      <Grid mt={4} sx={{ width: "100%" }}>
-        <Paper sx={{ flexGrow: 1 }}>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            indicatorColor="primary"
-            textColor="primary"
-            centered
-            sx={{
-              bgcolor: Colors.BACKGROUND_COLOR_EERIE,
-            }}
-          >
-            <Tab label="Category" sx={{ color: Colors.TEXT_COLOR }} />
-            <Tab label="New item" sx={{ color: Colors.TEXT_COLOR }} />
-          </Tabs>
-        </Paper>
-      </Grid>
+      <NewReportHeader onNavigateToUserToReport={onNavigateToUserToReport} />
+
+      <MyForm />
     </Grid>
   );
 }
 
-function NewReportHeader() {
+const MyForm = () => {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission here
+    console.log("Name:", name);
+    console.log("Description:", description);
+  };
+
+  return (
+    <Box
+      component="form"
+      onSubmit={handleSubmit}
+      sx={{ justifyContent: "center", alignItems: "center", flex: 1 }}
+    >
+      <Typography
+        variant="h5"
+        gutterBottom
+        mt={4}
+        sx={{
+          textAlign: "center",
+          fontWeight: "900",
+          marginTop: Padding_Sizes.PADDING_4,
+        }}
+      >
+        Make the best attributes of your team shine
+      </Typography>
+      <Grid
+        item
+        sx={{
+          width: "90%",
+          margin: "0 auto",
+          marginTop: Padding_Sizes.PADDING_4,
+        }}
+      >
+        <TextField
+          label="Violation Name"
+          variant="outlined"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          margin="normal"
+          sx={[TextFieldStyles.input, { width: 500 }]}
+          focused
+        />
+        <TextField
+          label="Tell your team what this violation tracks"
+          variant="outlined"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          margin="normal"
+          focused
+          sx={[
+            TextFieldStyles.input,
+            { width: 500, marginTop: Padding_Sizes.PADDING_4 },
+          ]}
+        />
+      </Grid>
+      <Button
+        style={[
+          ButtonStyles.BtnStyle2,
+          {
+            width: 250,
+            position: "relative",
+            left: "5%",
+            marginTop: Padding_Sizes.PADDING_4,
+          },
+        ]}
+        text="Build my team"
+        onPress={async () => {
+          try {
+            await SwearType.createNewSwearType({
+              description: description,
+              levels: "minor",
+              name: name,
+              teamID: SignedInUser.user.teamID,
+            });
+            alert("We successfully created the new swearType");
+          } catch (err) {
+            alert(
+              "We could not create your violation. Ensure to select a team",
+            );
+          }
+        }}
+      />
+    </Box>
+  );
+};
+
+function NewReportHeader({ onNavigateToUserToReport = () => {} }) {
   function getLabel() {
     if (
       NewReportReduxActions.getNewReportActionState() === "new_report/violation"
@@ -573,14 +676,32 @@ function NewReportHeader() {
             ? "Category"
             : ""}
         </Typography>
-        <Chip
-          label={getLabel()}
-          sx={{
-            bgcolor: Colors.ACCENT_COLOR_1,
-            color: Colors.TEXT_COLOR,
-            fontSize: FontSizes.bodyFontSize,
-          }}
-        />
+        <Grid container>
+          <Grid item xs={11.98}>
+            <Chip
+              label={getLabel()}
+              sx={{
+                bgcolor: Colors.ACCENT_COLOR_1,
+                color: Colors.TEXT_COLOR,
+                fontSize: FontSizes.bodyFontSize,
+              }}
+            />
+          </Grid>
+          {ReportViolationsController.getSelectedSwearTypeCount() > 0 ? (
+            <Grid item xs={0.02}>
+              <Button
+                style={[
+                  ButtonStyles.BtnStyle3,
+                  { position: "relative", bottom: 15, left: 50 },
+                ]}
+                text="Report"
+                onPress={() => onNavigateToUserToReport()}
+              />
+            </Grid>
+          ) : (
+            <></>
+          )}
+        </Grid>
       </Grid>
       <Grid xs={3}>
         <AddIcon
