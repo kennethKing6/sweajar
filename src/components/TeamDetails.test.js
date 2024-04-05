@@ -1,8 +1,7 @@
 import "../shared/firebase/__mock__/mockFirebase";
 import "../model/__mocks__/User";
-import { render, fireEvent, act, screen, getByTestId } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import { User } from "../model/User";
-import { SignedInUser } from "../model/SignedInUser";
 import { Teams } from "../model/Teams";
 import TeamDetails, { TeamMemberItem } from '../components/TeamDetails';
 

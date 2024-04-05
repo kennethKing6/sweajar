@@ -2,10 +2,18 @@ import React from "react";
 import { Accordion, AccordionDetails, AccordionSummary, Typography, ImageListItem } from "@mui/material";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import AddIcon from "@mui/icons-material/Add";
+import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import CreateTeamSS from "../assets/createTeamSS.PNG";
 import CreateTeamSS_input from "../assets/createTeamSS_input.PNG"
 import CreateTeamSS_alert from "../assets/createTeamSS_alert.PNG"
 import CreateTeamSS_confirm from "../assets/createTeamSS_confirm.PNG"
+import AddTeamMember from "../assets/addTeamMember.png"
+import AddTeamMember_details from "../assets/addTeamMember_details.png"
+import AddTeamMember_input from "../assets/addTeamMember_input.png"
+import AddTeamMember_confirm from "../assets/addTeamMember_conf.png"
+import Report_category from "../assets/report_category.png"
+import Report_violations from "../assets/report_violations.png"
+import Report_list from "../assets/report_list.png"
 import { ExpandMoreRounded } from "@mui/icons-material";
 import { Colors } from "../assets/colors"
 
@@ -115,6 +123,7 @@ export default function Tutorial({ onPress = () => { } }) {
                     </ImageListItem>
                 </AccordionDetails>
             </Accordion>
+
             <Accordion sx={{ color: Colors.TEXT_COLOR, backgroundColor: Colors.BACKGROUND_COLOR_EERIE, margin: "4px" }}>
                 <AccordionSummary expandIcon={<ExpandMoreRounded />}
                     aria-controls="panel1-content"
@@ -122,10 +131,60 @@ export default function Tutorial({ onPress = () => { } }) {
                 ><h2>Adding a Team Member to a Team</h2></AccordionSummary>
                 <AccordionDetails>
                     <Typography>
-                        Steps to add a team member go here...
+                        Steps to add a team member to a team...
                     </Typography>
+                    <Typography>1. Click on 'Teams' on the Nav Bar.</Typography>
+                    <Typography>2. Select a team and click on 'Details' button.</Typography>
+                    <ImageListItem sx={{ ...listItemStyle, ...imageSize }}>
+                        <img
+                            style={{ ...imageSize, objectFit: "contain" }}
+                            src={`${AddTeamMember}?w=248&fit=crop&auto=format`}
+                            loading="lazy"
+                            decoding="async"
+                            data-nimg="1"
+                            alt="Add Team Member representation"
+                            className="lk21hp11 _1286nb199 _1286nb19x _1286nb16 _1286nb183 _1286nb18b"
+                        />
+                    </ImageListItem>
+                    <Typography>3. On the 'Team Details' page, click on the <GroupAddIcon sx={{ backgroundColor: Colors.NAVBAR_SELECT_COLOR, color: Colors.TEXT_COLOR }}/> 'Add/Delete Team Member' button on the right side.</Typography>
+                    <ImageListItem sx={{ ...listItemStyle, ...imageSize }}>
+                        <img
+                            style={{ ...imageSize, objectFit: "contain" }}
+                            src={`${AddTeamMember_details}?w=248&fit=crop&auto=format`}
+                            loading="lazy"
+                            decoding="async"
+                            data-nimg="1"
+                            alt="Add Team Member representation"
+                            className="lk21hp11 _1286nb199 _1286nb19x _1286nb16 _1286nb183 _1286nb18b"
+                        />
+                    </ImageListItem>
+                    <Typography>4. Enter an email of an existing user and click on 'Add' button.</Typography>
+                    <ImageListItem sx={{ ...listItemStyle, ...imageSize }}>
+                        <img
+                            style={{ ...imageSize, objectFit: "contain" }}
+                            src={`${AddTeamMember_input}?w=248&fit=crop&auto=format`}
+                            loading="lazy"
+                            decoding="async"
+                            data-nimg="1"
+                            alt="Add Team Member representation"
+                            className="lk21hp11 _1286nb199 _1286nb19x _1286nb16 _1286nb183 _1286nb18b"
+                        />
+                    </ImageListItem>
+                    <Typography>5. The user is now part of your team.</Typography>
+                    <ImageListItem sx={{ ...listItemStyle, ...imageSize }}>
+                        <img
+                            style={{ ...imageSize, objectFit: "contain" }}
+                            src={`${AddTeamMember_confirm}?w=248&fit=crop&auto=format`}
+                            loading="lazy"
+                            decoding="async"
+                            data-nimg="1"
+                            alt="Add Team Member representation"
+                            className="lk21hp11 _1286nb199 _1286nb19x _1286nb16 _1286nb183 _1286nb18b"
+                        />
+                    </ImageListItem>
                 </AccordionDetails>
             </Accordion>
+
             <Accordion sx={{ color: Colors.TEXT_COLOR, backgroundColor: Colors.BACKGROUND_COLOR_EERIE, margin: "4px" }}>
                 <AccordionSummary expandIcon={<ExpandMoreRounded />}
                     aria-controls="panel1-content"
@@ -133,8 +192,46 @@ export default function Tutorial({ onPress = () => { } }) {
                 ><h2>Reporting a User Violation</h2></AccordionSummary>
                 <AccordionDetails>
                     <Typography>
-                        Steps to report a user violation go here...
+                        Steps to report a user violation...
                     </Typography>
+                    <Typography>1. Make sure you are part of a team. Click on 'New Report' on the Nav Bar.</Typography>
+                    <Typography>2. Select a violation category.</Typography>
+                    <ImageListItem sx={{ ...listItemStyle, ...imageSize }}>
+                        <img
+                            style={{ ...imageSize, objectFit: "contain" }}
+                            src={`${Report_category}?w=248&fit=crop&auto=format`}
+                            loading="lazy"
+                            decoding="async"
+                            data-nimg="1"
+                            alt="Add Team Member representation"
+                            className="lk21hp11 _1286nb199 _1286nb19x _1286nb16 _1286nb183 _1286nb18b"
+                        />
+                    </ImageListItem>
+                    <Typography>3. Select one or several violations from a category. Click on the 'Next' button at the bottom of the page.</Typography>
+                    <ImageListItem sx={{ ...listItemStyle, ...imageSize }}>
+                        <img
+                            style={{ ...imageSize, objectFit: "contain" }}
+                            src={`${Report_violations}?w=248&fit=crop&auto=format`}
+                            loading="lazy"
+                            decoding="async"
+                            data-nimg="1"
+                            alt="Add Team Member representation"
+                            className="lk21hp11 _1286nb199 _1286nb19x _1286nb16 _1286nb183 _1286nb18b"
+                        />
+                    </ImageListItem>
+                    <Typography>4. Select one or several employees that you want to report. Click on the 'Report' button.</Typography>
+                    <ImageListItem sx={{ ...listItemStyle, ...imageSize }}>
+                        <img
+                            style={{ ...imageSize, objectFit: "contain" }}
+                            src={`${Report_list}?w=248&fit=crop&auto=format`}
+                            loading="lazy"
+                            decoding="async"
+                            data-nimg="1"
+                            alt="Add Team Member representation"
+                            className="lk21hp11 _1286nb199 _1286nb19x _1286nb16 _1286nb183 _1286nb18b"
+                        />
+                    </ImageListItem>
+                    <Typography>5. You successfully reported a violation.</Typography>
                 </AccordionDetails>
             </Accordion>
         </div>
