@@ -418,7 +418,7 @@ function ViolationSelectList({
         bgcolor: "black",
         color: "white",
         padding: 2,
-        overflow: "auto",
+        //overflow: "auto",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",

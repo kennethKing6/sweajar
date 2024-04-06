@@ -15,7 +15,7 @@ import {
   AccordionDetails,
   colors,
 } from "@mui/material";
-import { ExpandMoreRounded } from "@mui/icons-material";
+import { Circle, ExpandMoreRounded } from "@mui/icons-material";
 import { Colors } from "../assets/colors";
 import { DefaultViolations } from "../model/DefaultViolations";
 import Box from "@mui/material/Box";
@@ -64,11 +64,11 @@ export default function UserDetails({ onPress = () => {} }) {
   return (
     <div
       style={{
-        height: "110vh",
+        height: "auto",
         textAlign: "center",
         padding: "10px",
         color: Colors.TEXT_COLOR,
-        backgroundColor: Colors.BACKGROUND_COLOR_SECONDARY,
+        backgroundColor: Colors.BACKGROUND_COLOR,
       }}
     >
       <div
@@ -92,7 +92,13 @@ export default function UserDetails({ onPress = () => {} }) {
             }}
           />
         </div>
-        <div style={{ marginLeft: "30px", lineHeight: "8px" }}>
+        <div
+          style={{
+            marginLeft: "30px",
+            lineHeight: "8px",
+            backgroundColor: Colors.BACKGROUND_COLOR,
+          }}
+        >
           <p
             style={{
               fontWeight: "bolder",
@@ -182,19 +188,39 @@ function ViolationType({ data }) {
     });
   }, [data]);
   return (
-    <>
+    <Box sx={{ backgroundColor: Colors.BACKGROUND_COLOR }}>
       <ListItem
-        sx={{ backgroundColor: Colors.BACKGROUND_COLOR }}
+        sx={{ backgroundColor: Colors.BACKGROUND_COLOR_EERIE }}
         alignItems="flex-start"
-        secondaryAction={<p>{data["countPerViolation"]}</p>}
+        secondaryAction={
+          <p
+            style={{
+              backgroundColor: Colors.BACKGROUND_COLOR_YELLOW,
+              color: Colors.TEXT_COLOR_SECONDARY,
+              fontSize: 16,
+              fontWeight: "bold",
+              width: "25px",
+              height: "25px",
+              borderRadius: "50%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            {data["countPerViolation"]}
+          </p>
+        }
       >
         <ListItemText
           primary={data["violationType"]}
           secondary={<p style={{ color: Colors.TEXT_COLOR }}>{description}</p>}
         />
       </ListItem>
-      <Divider variant="inset" component="li" />
-    </>
+      <Divider
+        variant="middle"
+        sx={{ height: 2, backgroundColor: Colors.BACKGROUND_COLOR, padding: 1 }}
+      />
+    </Box>
   );
 }
 

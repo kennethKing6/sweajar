@@ -80,7 +80,7 @@ export default function HomepageLeaderBoard({
       sx={{
         width: appDimensions.EXTENSION_WIDTH,
         bgcolor: Colors.BACKGROUND_COLOR,
-        height: "110vh",
+        height: "auto",
       }}
       spacing={1}
     >
@@ -96,7 +96,7 @@ export default function HomepageLeaderBoard({
               <Grid container>
                 <Grid item xs={7.5}>
                   <h1 style={{ fontWeight: "900" }}>Leaderboard </h1>
-                  {team ? (
+                  {team && team.teamName ? (
                     <Chip
                       label={team.teamName}
                       sx={{
@@ -193,7 +193,7 @@ function UserItem({ person, index, pageDetails = () => {} }) {
           key={index}
           sx={{
             backgroundColor: Colors.BACKGROUND_COLOR_EERIE,
-            marginTop: MARGIN_SIZES.MARGIN_3,
+            marginTop: MARGIN_SIZES.MARGIN_1,
             border: `1px solid ${Colors.BORDER_BLUE}`,
             "&:hover": {
               boxShadow: "0px 0px 10px 5px rgba(0, 150, 255, 0.5)",
