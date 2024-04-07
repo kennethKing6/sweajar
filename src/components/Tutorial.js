@@ -4,6 +4,7 @@ import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import AddIcon from "@mui/icons-material/Add";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import CreateTeamSS from "../assets/createTeamSS.PNG";
+import CreateTeamSS_buttons from "../assets/createTeamSS_buttons.PNG";
 import CreateTeamSS_input from "../assets/createTeamSS_input.PNG"
 import CreateTeamSS_alert from "../assets/createTeamSS_alert.PNG"
 import CreateTeamSS_confirm from "../assets/createTeamSS_confirm.PNG"
@@ -31,8 +32,8 @@ export default function Tutorial({ onPress = () => { } }) {
                 <AccordionDetails sx={{ backgroundColor: Colors.BACKGROUND_COLOR }}>
                     <Typography>Steps to CREATE a new team or DELETE an old one...</Typography>
                     <Typography>1. Click on 'Teams' on the Nav Bar.</Typography>
-                    <Typography>2. Click on the <AddIcon sx={{ backgroundColor: "yellow", color: "black" }} /> icon on the right side, which will open up an input field...</Typography>
-                    <Typography>The <AddIcon sx={{ backgroundColor: "yellow", color: "black" }} /> button is called "Create a New Team/Delete a Team"</Typography>
+                    <Typography>2. Click on the <AddIcon sx={{ backgroundColor: Colors.NAVBAR_SELECT_COLOR, color: Colors.TEXT_COLOR, fontSize: "15px", borderRadius: "10%", padding: '2px' }} /> icon on the right side or below, which will open up an input field...</Typography>
+                    <Typography>The <AddIcon sx={{ backgroundColor: Colors.NAVBAR_SELECT_COLOR, color: Colors.TEXT_COLOR, fontSize: "15px", borderRadius: "10%", padding: '2px' }} /> button is called "Create a New Team/Delete a Team"</Typography>
                     <ImageListItem sx={{ ...listItemStyle, ...imageSize }}>
                         <img
                             style={{ ...imageSize, objectFit: "contain" }}
@@ -96,12 +97,12 @@ export default function Tutorial({ onPress = () => { } }) {
                         Steps to view your teams...
                     </Typography>
                     <Typography>1. Click on 'Teams' on the Nav Bar.</Typography>
-                    <Typography>2. Click on the <FormatListBulletedIcon sx={{ backgroundColor: "yellow", color: "black" }} /> icon on the right side</Typography>
-                    <Typography>The <FormatListBulletedIcon sx={{ backgroundColor: "yellow", color: "black" }} /> button is called "Show My Teams"</Typography>
+                    <Typography>2. Click on the <FormatListBulletedIcon sx={{ backgroundColor: Colors.NAVBAR_SELECT_COLOR, color: Colors.TEXT_COLOR, fontSize: "15px", borderRadius: "10%", padding: '2px' }} /> icon on the right side</Typography>
+                    <Typography>The <FormatListBulletedIcon sx={{ backgroundColor: Colors.NAVBAR_SELECT_COLOR, color: Colors.TEXT_COLOR, fontSize: "15px", borderRadius: "10%", padding: '2px' }} /> button is called "Show My Teams"</Typography>
                     <ImageListItem sx={{ ...listItemStyle, ...imageSize }}>
                         <img
                             style={{ ...imageSize, objectFit: "contain" }}
-                            src={`${CreateTeamSS}?w=248&fit=crop&auto=format`}
+                            src={`${CreateTeamSS_buttons}?w=248&fit=crop&auto=format`}
                             loading="lazy"
                             decoding="async"
                             data-nimg="1"
