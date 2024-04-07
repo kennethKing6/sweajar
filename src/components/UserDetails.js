@@ -185,6 +185,7 @@ function ViolationType({ data }) {
   useEffect(() => {
     DefaultViolations.forEach(({ name, description }) => {
       if (name === data["violationType"]) setDescription(description);
+      else if (data["description"]) setDescription(data["description"]);
     });
   }, [data]);
   return (
