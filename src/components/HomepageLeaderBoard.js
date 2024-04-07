@@ -294,11 +294,12 @@ function FilterDropDown({ onSelectFilter = () => {} }) {
             },
           }}
         >
-          {filters.map((v) => (
-            <MenuItem key={v} value={v} sx={{ color: "black" }}>
-              {v}
-            </MenuItem>
-          ))}
+          {Array.isArray(filters) &&
+            filters.map((v) => (
+              <MenuItem key={v} value={v} sx={{ color: "black" }}>
+                {v}
+              </MenuItem>
+            ))}
         </Select>
       </FormControl>
     </Box>

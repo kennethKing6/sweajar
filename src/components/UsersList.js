@@ -82,7 +82,7 @@ export default function UsersList({ onPress = () => {} }) {
           />
         </Grid>
       </Grid>
-      <Grid container>
+      <Grid container sx={{ height: "100%" }}>
         <List dense sx={{ width: "100%" }}>
           {users.map((user) => {
             /**@type {User} */
