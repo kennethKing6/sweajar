@@ -15,10 +15,15 @@ export class UserDetailsController {
     const result = [];
 
     for (let reportCategory in userReports) {
-      const count = Object.values(userReports[reportCategory]).length;
+      const values = Object.values(userReports[reportCategory]);
+      const {
+        swearType: { description = null },
+      } = values[0];
+      const count = values.length;
       result.push({
         violationType: reportCategory,
         countPerViolation: count,
+        description,
       });
     }
 

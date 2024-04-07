@@ -185,6 +185,7 @@ function ViolationType({ data }) {
   useEffect(() => {
     DefaultViolations.forEach(({ name, description }) => {
       if (name === data["violationType"]) setDescription(description);
+      else if (data["description"]) setDescription(data["description"]);
     });
   }, [data]);
   return (
@@ -288,7 +289,13 @@ function ViolationsLineSeries({ user }) {
           </AccordionSummary>
           <AccordionDetails>
             <Box sx={{ minWidth: 120 }}>
-              <FormControl fullWidth>
+              <FormControl
+                fullWidth
+                sx={{
+                  backgroundColor: Colors.BACKGROUND_COLOR_GOLD,
+                  marginBottom: 2,
+                }}
+              >
                 <InputLabel id="demo-simple-select-label">
                   Filter Violations
                 </InputLabel>
