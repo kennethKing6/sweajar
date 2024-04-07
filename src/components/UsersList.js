@@ -22,9 +22,9 @@ import { Colors } from "../assets/colors";
 import { ReportViolationsController } from "../controllers/reportViolationsController";
 import { Teams } from "../model/Teams";
 import { FontFamilies } from "../assets/fontFamilies";
-import { FontSizes } from "../assets/fonts"
+import { FontSizes } from "../assets/fonts";
 
-export default function UsersList({ onPress = () => { } }) {
+export default function UsersList({ onPress = () => {} }) {
   /**@param {[User]} */
   const [users, setUsers] = useState([]);
   const [checked, setChecked] = React.useState([1]);
@@ -45,8 +45,6 @@ export default function UsersList({ onPress = () => { } }) {
       container
       p={2}
       sx={{
-        flex: 1,
-        flexDirection: "column",
         bgcolor: Colors.BACKGROUND_COLOR,
         height: "95%",
       }}
@@ -84,18 +82,20 @@ export default function UsersList({ onPress = () => { } }) {
           />
         </Grid>
       </Grid>
-      <List dense sx={{ width: "100%" }}>
-        {users.map((user) => {
-          /**@type {User} */
-          return (
-            <TeamMemberItem
-              value={user.userID}
-              checked={checked}
-              setChecked={setChecked}
-            />
-          );
-        })}
-      </List>
+      <Grid container>
+        <List dense sx={{ width: "100%" }}>
+          {users.map((user) => {
+            /**@type {User} */
+            return (
+              <TeamMemberItem
+                value={user.userID}
+                checked={checked}
+                setChecked={setChecked}
+              />
+            );
+          })}
+        </List>
+      </Grid>
     </Grid>
   );
 }
@@ -131,11 +131,11 @@ export function TeamMemberItem({ value, checked, setChecked }) {
         mb: 2,
         border: `1px solid ${Colors.BORDER_BLUE}`,
         bgcolor:
-          checked.indexOf(value) !== -1 ? Colors.NAVBAR_SELECT_COLOR : Colors.BACKGROUND_COLOR_EERIE,
-        color:
           checked.indexOf(value) !== -1
-            ? Colors.TEXT_COLOR
-            : Colors.TEXT_COLOR,
+            ? Colors.NAVBAR_SELECT_COLOR
+            : Colors.BACKGROUND_COLOR_EERIE,
+        color:
+          checked.indexOf(value) !== -1 ? Colors.TEXT_COLOR : Colors.TEXT_COLOR,
       }}
     >
       <CardContent onClick={() => handleToggle(value, currentUser)}>
@@ -149,7 +149,9 @@ export function TeamMemberItem({ value, checked, setChecked }) {
               checked={checked.indexOf(value) !== -1}
               inputProps={{ "aria-labelledby": labelId }}
               sx={{
-                bgcolor: Colors.SECONDARY_COLOR, borderWidth: 2, "&:hover": {
+                bgcolor: Colors.SECONDARY_COLOR,
+                borderWidth: 2,
+                "&:hover": {
                   bgcolor: Colors.BACKGROUND_COLOR_GOLD,
                 },
               }}
@@ -157,7 +159,7 @@ export function TeamMemberItem({ value, checked, setChecked }) {
           }
           disablePadding
         >
-          <Grid container >
+          <Grid container>
             <ListItemAvatar>
               <Avatar
                 alt={`Avatar n°${value + 1}`}
