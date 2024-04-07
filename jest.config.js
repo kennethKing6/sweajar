@@ -34,7 +34,7 @@ module.exports = {
     global: {
       functions: 50,
       lines: 50,
-      statements: -50,
+      statements: 50,
     },
   },
   coverageDirectory: undefined,
