@@ -48,7 +48,6 @@ import { NewReportReduxActions } from "../shared/redux/actions/newReportActions"
 import { TextFieldStyles } from "../assets/TextFieldStyles";
 import { ButtonStyles } from "../assets/ButtonStyles";
 import { Padding_Sizes } from "../assets/paddingSizes";
-import { BubbleListComponent } from "./BubbleUI";
 function ViolationSelectList({
   onPress = () => {},
   onNavigateToUserToReport = () => {},
