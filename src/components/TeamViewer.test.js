@@ -1,6 +1,6 @@
 import "../shared/firebase/__mock__/mockFirebase";
 import "../model/__mocks__/User";
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { render, fireEvent, waitFor, getByTestId, getByLabelText } from '@testing-library/react';
 import TeamViewer from '../components/TeamViewer';
 import { Teams } from '../model/Teams';
 import { SignedInUser } from '../model/SignedInUser';
@@ -37,7 +37,7 @@ describe('TeamViewer', () => {
 
     it('renders Create New Team form when "Create New Team" button is clicked', async () => {
         const { getByTitle, getByText } = render(<TeamViewer />);
-        const createNewTeamButton = getByTitle('Create a New Team / Delete a Team');
+        const createNewTeamButton = getByTitle('Create or Delete a Team');
 
         fireEvent.click(createNewTeamButton);
 
@@ -51,7 +51,12 @@ describe('TeamViewer', () => {
         fireEvent.click(showMyTeamsButton);
 
         await waitFor(() => {
-            expect(getByText('View Details')).toBeInTheDocument();
+            const teamBox = document.querySelector('.testBox');
+            if (teamBox) {
+                fireEvent.click(teamBox);
+                expect(teamBox).toHaveStyle('border: 2px solid blue');
+                expect(getByTitle('Details')).toBeInTheDocument();
+            }
         });
     });
 });

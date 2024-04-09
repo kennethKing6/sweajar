@@ -99,7 +99,7 @@ export default function TeamViewer({ onPress = () => { } }) {
                 />
               </IconButton>
               <IconButton
-                title="Create a New Team / Delete a Team"
+                title="Create or Delete a Team"
                 onClick={() => {
                   setShowNewTeam(true);
                   setShowUserTeams(false);
@@ -115,8 +115,8 @@ export default function TeamViewer({ onPress = () => { } }) {
               <Grid container spacing={1} sx={{ padding: "20px", gridGap: 50, marginTop: MARGIN_SIZES.MARGIN_1 }}>
                 {items.length > 0 ? (
                   items.map((item) => (
-                    <Grid item xs={3} key={JSON.stringify(item)} onClick={async () => { await onToggle(item); }}>
-                      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <Grid  item xs={3} key={JSON.stringify(item)} onClick={async () => { await onToggle(item); }} className="testBox">
+                      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', }} >
                         <Avatar
                           sx={{
                             bgcolor: Colors.BACKGROUND_COLOR_EERIE,
