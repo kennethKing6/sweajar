@@ -451,7 +451,7 @@ function ViolationSelectList({
   );
 }
 
-function SwearJarMenu({ onNavigateToUserToReport = () => {} }) {
+export function SwearJarMenu({ onNavigateToUserToReport = () => {} }) {
   const [jar, setJar] = useState([]);
 
   useEffect(() => {
@@ -463,7 +463,7 @@ function SwearJarMenu({ onNavigateToUserToReport = () => {} }) {
   }, []);
 
   return (
-    <div>
+    <div role="SwearJarMenu">
       <NewReportHeader onNavigateToUserToReport={onNavigateToUserToReport} />
       {jar.length > 0 ? (
         jar.map(({ name, description, selected }, index) => {
@@ -473,6 +473,7 @@ function SwearJarMenu({ onNavigateToUserToReport = () => {} }) {
                 bgcolor: Colors.NAVBAR_PRIMARY_BACKGROUND,
                 mt: MARGIN_SIZES.MARGIN_4 / 2,
               }}
+              key={name}
             >
               {" "}
               <ListItem
@@ -499,6 +500,7 @@ function SwearJarMenu({ onNavigateToUserToReport = () => {} }) {
                 }
               >
                 <ListItemIcon
+                  role={`ListItemIcon${index}`}
                   onClick={() => {
                     let tempJar = [...jar];
                     tempJar[index].selected = !tempJar[index].selected;
@@ -553,7 +555,7 @@ function CustomTeamViolation({ onNavigateToUserToReport = () => {} }) {
   );
 }
 
-const MyForm = () => {
+export const MyForm = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
@@ -703,7 +705,7 @@ function NewReportHeader({ onNavigateToUserToReport = () => {} }) {
           )}
         </Grid>
       </Grid>
-      <Grid xs={3}>
+      <Grid xs={3} item>
         <AddIcon
           style={{
             color: Colors.CHART_TEXT,

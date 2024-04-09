@@ -3,7 +3,7 @@ import { LineChart } from "./__mocks__/@mui/x-charts/LineChart";
 import "../shared/firebase/__mock__/mockFirebase";
 import "../model/__mocks__/User";
 import React from "react";
-import { render, fireEvent, waitFor } from "@testing-library/react";
+import { render, fireEvent, waitFor, act } from "@testing-library/react";
 import UserDetails from "./UserDetails";
 import { User } from "../model/User";
 import { UserDetailsController } from "../controllers/userDetailsController";
@@ -24,23 +24,23 @@ beforeEach(() => {
   jest.spyOn(User, "getUserByID").mockResolvedValue(user);
 });
 describe("UserDetails Component", () => {
-  it("renders without crashing", () => {
-    render(<UserDetails />);
+  it("renders without crashing", async () => {
+    await act(async () => await render(<UserDetails />));
   });
 
   it("displays user information", async () => {
-    const { getByText } = render(<UserDetails />);
+    const { getByText } = await act(async () => await render(<UserDetails />));
     // Wait for user data to be fetched
     await waitFor(() => expect(getByText(/Analysis/i)).toBeInTheDocument());
   });
 
   it("fetches bar chart data when user is set", async () => {
-    await render(<UserDetails />);
+    await act(async () => await render(<UserDetails />));
     await waitFor(() => expect(User.getUserByID).toHaveBeenCalled());
   });
 
   it("fetches line chart data when user is set", async () => {
-    await render(<UserDetails />);
+    await act(async () => await render(<UserDetails />));
     waitFor(() => {
       expect(
         require("../controllers/userDetailsController").UserDetailsController
@@ -50,7 +50,7 @@ describe("UserDetails Component", () => {
   });
 
   it('shows "No graph available" message if bar chart data is empty', async () => {
-    await render(<UserDetails />);
+    await act(async () => await render(<UserDetails />));
 
     waitFor(() => expect(getByText(/No graph available/i)).toBeInTheDocument());
   });

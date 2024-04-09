@@ -14,14 +14,14 @@ import { SignedInUser } from "../model/SignedInUser";
 import CreateNewTeam from "./CreateNewTeam";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import AddIcon from "@mui/icons-material/Add";
-import PeopleOutlineIcon from '@mui/icons-material/PeopleAlt';
-import BrowserNotSupportedIcon from '@mui/icons-material/BrowserNotSupported';
+import PeopleOutlineIcon from "@mui/icons-material/PeopleAlt";
+import BrowserNotSupportedIcon from "@mui/icons-material/BrowserNotSupported";
 import { ButtonStyles } from "../assets/ButtonStyles";
 import { Colors } from "../assets/colors";
 import { FontFamilies } from "../assets/fontFamilies";
 import { MARGIN_SIZES } from "../assets/sizes";
 
-export default function TeamViewer({ onPress = () => { } }) {
+export default function TeamViewer({ onPress = () => {} }) {
   const [selected, setSelected] = useState();
   const [items, setItems] = useState([]);
   const [showUserTeams, setShowUserTeams] = useState(true);
@@ -45,7 +45,6 @@ export default function TeamViewer({ onPress = () => { } }) {
         .catch();
     }
   }, []);
-
   useEffect(() => {
     // Fetch the list items from the database
     const fetchItems = async () => {
@@ -84,9 +83,15 @@ export default function TeamViewer({ onPress = () => { } }) {
         }}
       >
         <Box>
-          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
             <h1 style={{ fontFamily: FontFamilies.title }}>Team Viewer</h1>
-            <Box >
+            <Box>
               <IconButton
                 title="Show My Teams"
                 onClick={() => {
@@ -95,7 +100,13 @@ export default function TeamViewer({ onPress = () => { } }) {
                 }}
               >
                 <FormatListBulletedIcon
-                  sx={{ backgroundColor: Colors.NAVBAR_SELECT_COLOR, color: Colors.TEXT_COLOR, fontSize: "30px", borderRadius: "10%", padding: '5px' }}
+                  sx={{
+                    backgroundColor: Colors.NAVBAR_SELECT_COLOR,
+                    color: Colors.TEXT_COLOR,
+                    fontSize: "30px",
+                    borderRadius: "10%",
+                    padding: "5px",
+                  }}
                 />
               </IconButton>
               <IconButton
@@ -105,29 +116,70 @@ export default function TeamViewer({ onPress = () => { } }) {
                   setShowUserTeams(false);
                 }}
               >
-                <AddIcon sx={{ backgroundColor: Colors.NAVBAR_SELECT_COLOR, color: Colors.TEXT_COLOR, fontSize: "30px", borderRadius: "10%", padding: '5px' }} />
+                <AddIcon
+                  sx={{
+                    backgroundColor: Colors.NAVBAR_SELECT_COLOR,
+                    color: Colors.TEXT_COLOR,
+                    fontSize: "30px",
+                    borderRadius: "10%",
+                    padding: "5px",
+                  }}
+                />
               </IconButton>
             </Box>
           </Box>
 
           <Grid container>
             {showUserTeams && (
-              <Grid container spacing={1} sx={{ padding: "20px", gridGap: 50, marginTop: MARGIN_SIZES.MARGIN_1 }}>
+              <Grid
+                container
+                spacing={1}
+                sx={{
+                  padding: "20px",
+                  gridGap: 50,
+                  marginTop: MARGIN_SIZES.MARGIN_1,
+                }}
+              >
                 {items.length > 0 ? (
                   items.map((item) => (
-                    <Grid  item xs={3} key={JSON.stringify(item)} onClick={async () => { await onToggle(item); }} className="testBox">
-                      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', }} >
+                    <Grid
+                      item
+                      xs={3}
+                      data-testid={JSON.stringify(item)}
+                      key={JSON.stringify(item)}
+                      onClick={async () => {
+                        await onToggle(item);
+                      }}
+                      className="testBox"
+                    >
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                        }}
+                      >
                         <Avatar
                           sx={{
                             bgcolor: Colors.BACKGROUND_COLOR_EERIE,
-                            width: '80%',
-                            height: '100px',
+                            width: "80%",
+                            height: "100px",
                             borderRadius: "10%",
-                            border: selected && selected.teamName === item.teamName ? "2px solid blue" : "none",
-                            padding: '8px'
+                            border:
+                              selected && selected.teamName === item.teamName
+                                ? "2px solid blue"
+                                : "none",
+                            padding: "8px",
                           }}
                         >
-                          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', }}>
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              alignItems: "center",
+                              width: "100%",
+                            }}
+                          >
                             <PeopleOutlineIcon sx={{ fontSize: 45 }} />
                             <Typography
                               sx={{
@@ -138,8 +190,9 @@ export default function TeamViewer({ onPress = () => { } }) {
                                 overflow: "hidden",
                                 wordWrap: "break-word",
                                 width: "100%",
-                                textAlign: "center"
-                              }}>
+                                textAlign: "center",
+                              }}
+                            >
                               {item.teamName}
                             </Typography>
                           </div>
@@ -171,7 +224,9 @@ export default function TeamViewer({ onPress = () => { } }) {
                       textAlign: "center",
                     }}
                   >
-                    <BrowserNotSupportedIcon sx={{ fontSize: 100, opacity:"60%" }} />
+                    <BrowserNotSupportedIcon
+                      sx={{ fontSize: 100, opacity: "60%" }}
+                    />
                     <Box sx={{ marginTop: "30px" }}>
                       <Typography variant="body1" align="center">
                         You don't have any teams yet.
@@ -186,7 +241,16 @@ export default function TeamViewer({ onPress = () => { } }) {
                           setShowUserTeams(false);
                         }}
                       >
-                        <AddIcon sx={{ backgroundColor: Colors.NAVBAR_SELECT_COLOR, color: Colors.TEXT_COLOR, fontSize: "50px", borderRadius: "10%", padding: '5px', marginTop: '20px' }} />
+                        <AddIcon
+                          sx={{
+                            backgroundColor: Colors.NAVBAR_SELECT_COLOR,
+                            color: Colors.TEXT_COLOR,
+                            fontSize: "50px",
+                            borderRadius: "10%",
+                            padding: "5px",
+                            marginTop: "20px",
+                          }}
+                        />
                       </IconButton>
                     </Box>
                   </Box>

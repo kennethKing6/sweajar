@@ -82,7 +82,6 @@ export default function HomepageLeaderBoard({
         bgcolor: Colors.BACKGROUND_COLOR,
         height: "auto",
       }}
-      spacing={1}
     >
       {sortedData.length > 0 ? (
         <Grid item alignSelf="flex-start">

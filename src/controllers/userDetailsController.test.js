@@ -9,22 +9,33 @@ import { SortReportsByTimestampController } from "./sortReportsByTimestampContro
 
 const chartsFakeData = {
   swearType0: {
-    reportedID: "reported user",
-    reporterID: "reporter",
-    teamID: "Team they both belong to",
-    dateEntry: "timestamp",
-    swearTypeID: "Profinity",
-    teamID: "teamID",
-    swearType: "swearType",
+    report1: {
+      reportedID: "reported user",
+      reporterID: "reporter",
+      teamID: "Team they both belong to",
+      dateEntry: "timestamp",
+      swearTypeID: "Profinity",
+      teamID: "teamID",
+      swearType: {
+        swearType: "swearType 1",
+        description: " swearType 1 description",
+      },
+      description: " swearType 0 description",
+    },
   },
   swearType1: {
-    reportedID: "reported user 1",
-    reporterID: "reporter",
-    teamID: "Team they both belong to 1",
-    dateEntry: "timestamp 1",
-    swearTypeID: "Profinity 1",
-    teamID: "teamID 1",
-    swearType: "swearType 1",
+    report1: {
+      reportedID: "reported user 1",
+      reporterID: "reporter",
+      teamID: "Team they both belong to 1",
+      dateEntry: "timestamp 1",
+      swearTypeID: "Profinity 1",
+      teamID: "teamID 1",
+      swearType: {
+        swearType: "swearType 1",
+        description: " swearType 1 description",
+      },
+    },
   },
 };
 const userID = "userID";

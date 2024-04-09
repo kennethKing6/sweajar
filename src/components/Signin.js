@@ -26,7 +26,14 @@ export default function Signin({ onBackButton = () => {} }) {
       onSubmit={async (e) => await handleSubmit(e)}
       style={{ height: "100%" }}
     >
-      <h1 style={{ fontWeight: "bolder", fontSize: FontSizes.titleFontSize, color: Colors.TEXT_COLOR, marginTop: 0 }}>
+      <h1
+        style={{
+          fontWeight: "bolder",
+          fontSize: FontSizes.titleFontSize,
+          color: Colors.TEXT_COLOR,
+          marginTop: 0,
+        }}
+      >
         Sign In
       </h1>
       <p
@@ -38,6 +45,7 @@ export default function Signin({ onBackButton = () => {} }) {
         Build your company culture
       </p>
       <Grid
+        item
         xs={10}
         sx={{ justifyContent: "center", alignItems: "center", width: "100%" }}
       >
