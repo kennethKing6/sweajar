@@ -146,3 +146,53 @@ This file defines all the library we have used, our test configurations and our 
 To configure chrome extensions, the manifest.json file is used to set things like permissions, the name, the version and much more. To find out how you can further configure the extension check out the official documentation.
 
 Join us in promoting professionalism and accountability in the workplace with the SuperFly SwearJar. Let's create a workspace where respect and productivity thrive, supported by innovative technology and collaborative teamwork.
+
+## .ENV (Required file to be added)
+
+create a .env file in the project root directory. This file stores the credentials to a firebase account credentials.
+
+Download the firebase configuration file from firebase
+
+### Step 1: Go to the Firebase Console
+
+1. Open your web browser and navigate to the Firebase Console.
+2. Sign in to your Google account if prompted.
+3. Select your Firebase project or create a new one if you haven't already.
+
+### Step 2: Download the Firebase Configuration File
+
+1. In the Firebase Console, click on the gear icon next to "Project Overview" and select "Project settings".
+2. Scroll down to the "Your apps" section and click on the Web icon (</> symbol).
+3. In the modal that appears, give your app a nickname (e.g., "React App") and click "Register app".
+4. After registering the app, you should see a code snippet with your Firebase configuration object.
+5. Copy the entire configuration object, as you'll need it in the next step.
+
+### Step 3: Create a .env File
+
+1. In your React project's root directory, create a new file called .env.
+2. Open the .env file in a text editor.
+
+### Step 4: Create a .env File
+
+1. In the .env file, paste the Firebase configuration object you copied earlier.
+2. Replace the values of each key with the corresponding REACT*APP* prefix, like this:
+   REACT_APP_FIREBASE_API_KEY="YOUR_API_KEY"
+   REACT_APP_FIREBASE_AUTH_DOMAIN="YOUR_AUTH_DOMAIN"
+   REACT_APP_FIREBASE_PROJECT_ID="YOUR_PROJECT_ID"
+   REACT_APP_FIREBASE_STORAGE_BUCKET="YOUR_STORAGE_BUCKET"
+   REACT_APP_FIREBASE_MESSAGING_SENDER_ID="YOUR_MESSAGING_SENDER_ID"
+   REACT_APP_FIREBASE_APP_ID="YOUR_APP_ID"
+   REACT_APP_FIREBASE_MEASUREMENT_ID="YOUR_MEASUREMENT_ID"
+   REACT_APP_FIREBASE_DATABASE_URL="YOUR_DATABASE_URL"
+
+3. Replace the placeholders (YOUR_API_KEY, YOUR_AUTH_DOMAIN, etc.) with the actual values from the Firebase configuration object you copied earlier.
+
+4. Make sure there are no spaces or quotes around the values.
+
+5. Save the .env file.
+
+6. Open the project in your terminal
+
+7. Make sure Nodejs is installed on your computer. Run "npm install"
+
+8. Run "npm start" to start the project and begin testing
