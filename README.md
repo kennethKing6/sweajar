@@ -1,9 +1,42 @@
-# Getting Started with Create React App
+# SuperFly SwearJar
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Project Overview
+SuperFly Aerial has identified a gap in the market for a comprehensive solution that monitors and reports common office violations, such as profanity usage, forgetting to turn off mute, and tardiness to meetings. Our project aims to fill this void by developing an integrated app that facilitates the tracking of these critical stats.
 
-## Available Scripts
+These fouls can affect the productivity, communication, and morale of the team, and therefore need to be addressed. Our proposed solution would increase the awareness and accountability of the team members, and encourage them to avoid or reduce the office fouls. The solution would also be adaptable to different types of teams and workflows, as it would allow users to choose what they want to track and how they want to report it.
 
+## Key Features
+- Configurability: Users can easily create, edit, and delete teams, users, and categories to tailor the app to their specific needs.
+- Multi-Tenant Functionality: The app supports multiple teams while ensuring data privacy and security between them.
+- User-Friendly Dashboard: A visually appealing dashboard displays team statistics over customizable timeframes, allowing for easy monitoring of office behaviors.
+- Violation Logging: Users can log violations with a simple interface, promoting transparency and accountability.
+- Chart and Leaderboard Display: Statistics are presented through interactive charts and leaderboards, providing insights into team performance.
+- Self-Serve/Open Access: The system is designed to be accessible to all users while safeguarding personal information and maintaining affordability.
+
+## Technologies Used
+- **Development**: The project was developed using modern web technologies and tested locally before being deployed to the GitHub repository.
+- **Frontend**: React.js and Next.js were utilized for building the user interface, providing a responsive and interactive experience while maintaining a single codebase with both backend and frontend components. Material-UI (MUI) was used for UI design and components.
+- **Backend**: Connecting to Firebase Database (NoSQL) for secure data storage and management. Firebase offers larger storage space compared to other free services.
+- **Deployment**: The project is deployed using Netlify for hosting the application, providing seamless deployment and scalability. Git + GitHub were used for collaborative development and version control.
+- **CI/CD**: GitHub Actions were implemented for continuous integration and continuous deployment (CI/CD), ensuring automated testing and deployment processes. Unit tests were utilized to maintain code quality and reliability.
+- **Other Tools**: ChatGPT was utilized for generating default violation types. The Agile methodology was adopted for the software development process, promoting iterative and incremental development.
+
+## Database
+SwearJar database consists of four tables: Users, Teams, Violation Type, and Report.
+The Users table stores information about employees, including their ID, first and last names, email, profile picture, and the teams they are associated with.
+The Teams table contains details about different teams, including their ID, name, and team members.
+The Violation Type table categorizes types of violations by ID, name, and a text description of the violation type.
+The Report table logs instances of violations. Each record includes the report ID; IDs of the reporter and violator (employees); team ID and the specific type of violation; as well as a timestamp indicating when the violation was reported.
+
+## Installation
+To install and set up the SuperFly SwearJar:
+1. Install Node.js 
+2. Clone the SwearJar Link: https://github.com/kennethKing6/sweajar/
+3. Open the project using the terminal with the following command: cd <cloned project directory>
+4. Install dependencies using npm. (npm install)
+5. Run the app locally or deploy it to your preferred hosting platform.
+
+## Usage
 In the project directory, you can run:
 
 ### `npm start`
@@ -17,54 +50,75 @@ You may also see any lint errors in the console.
 ### `npm test`
 
 Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+See the section about 
+[running tests] (https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
 
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
+The build is minified and the filenames include the hashes \. Once build is complete, a build folder is created which is your production environment code that needs not to be changed.
 Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+See the section about 
+[deployment] (https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## File Structure
+src/
+Assets: contains appDimensions.js, colors.js, fonts.js, paddingSizes.js, sizes.js, width.js and image files
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Components: contains components of the app
+- AddSwearType.js - component responsible for adding user-defined violations.
+- AddTeamMember.js - component responsible for adding new members to a team or removing team members.
+- Button.js
+- CreateNewTeam.js - component responsible for creating a new team.
+- HomepageLeaderBoard.js - Leaderboard page.
+- LeaderboardChart.js - component responsible for displaying Bar Charts in the Leaderboard but is CURRENTLY UNUSED.
+- LeaderboardListItem.js - component responsible for displaying team member’s data as an item on a Leaderboard. 
+- NavBar.js - Navigation Bar component.
+- ReportButton.js
+- Signin.js - Sign in page.
+- Signup.js - Sign up page.
+- SortButton.js - component responsible for sorting team members by selected violation.
+- TeamDetails.js - Team Details page.
+- TeamViewer.js - Team Viewer page.
+- UserDetails.js - Profile page.
+- UserDetailsChart.js - component for Bar Chart on user’s Profile page.
+- UsersList.js - component responsible for displaying team members when the user creates a new report.
+- ViolationSelectList.js - New Report page.
+- ViolationsLineChart.js - component for LineChart on user’s Profile page.
+- Welcome.js - Welcome page.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Controllers:
+- homePageLeaderBoardController.js
+- reportViolationsController.js
+- sortReportsByTimestampController.js
+- userDetailsController.js
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Model:
+- AppState.js
+- DefaultViolations.js: This file stores all the suggested violations
+- Report.js: this file stores the path to the database and the logic for reporting a user in a team
+- SignedInUser.js: Stores the state of the signed in user
+- SwearType.js:  Contains the logic and the path of how the sweartype is stored in the database and the type of data it is stored. Generally path indicates the path of where the data is stored in firebase
+- Teams.js: This file contains all the logic of team management and the path is the path format that is used for storing team information in the database.
+- User.js: This file contains user information and the path to store user information in the database as well
 
-## Learn More
+Shared: Configuration files
+- FirebaseConfig.js
+- firebaseAuth.js
+- firebaseDatabase.js
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+App.css
+App.js: Project entry point
+Manifest.json: Chrome extension config file
+page.js: The main page for SwearJar. Contains the entry point and the page logics.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
+## Development Chrome Extension
+To configure chrome extensions, the manifest.json file is used to set things like permissions, the name, the version and much more. To find out how you can further configure the extension check out the official documentation.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Join us in promoting professionalism and accountability in the workplace with the SuperFly SwearJar. Let's create a workspace where respect and productivity thrive, supported by innovative technology and collaborative teamwork.
