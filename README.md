@@ -196,3 +196,94 @@ Download the firebase configuration file from firebase
 7. Make sure Nodejs is installed on your computer. Run "npm install"
 
 8. Run "npm start" to start the project and begin testing
+
+## <a href="https://firebase.google.com/docs/database/security">Firebase Realtime Database Secruity Rules (Important)</a>
+
+### Step 1: Open the Firebase Console
+
+1. Open your web browser and navigate to the Firebase Console.
+2. Sign in to your Google account if prompted.
+3. Select your Firebase project.
+
+### Step 2: Navigate to the Realtime Database
+
+1. In the Firebase Console, click on the "Realtime Database" option in the left-hand menu.
+
+2. If you haven't set up the Realtime Database yet, click on "Create Database" and follow the prompts to create a new database instance.
+
+### Step 3: Access the Rules Tab
+
+1. Once you're in the Realtime Database section, click on the "Rules" tab at the top of the page.
+
+### Step 4: Update the Security Rules
+
+1. In the Rules editor, replace the existing rules with the provided configuration:
+   <code style="font-size: inherit; font-family: inherit; line-height: 1.66667; padding: 8px;">{
+   "rules": {
+   ".read": true, // 2024-2-16
+   ".write": true, // 2024-2-16
+   "users": {
+   ".indexOn": ["userID", "companyID", "email", "teamID"],
+   "$uid": {
+        ".read": true,
+        ".write": true
+      }
+    },
+    "swearType": {
+      ".indexOn": ["companyID"],
+      "$uid": {
+   ".read": true,
+   ".write": true
+   }
+   },
+   "teams": {
+   ".indexOn": ["admin", "teamName"],
+   "$uid": {
+        ".read": true,
+        ".write": true
+      }
+    },
+    "teamMembers": {
+      ".indexOn": ["userEmail"],
+      "$uid": {
+   ".read": true,
+   ".write": true
+   }
+   },
+   "reports": {
+   "$uid": {
+        ".indexOn": ["dateEntry"],
+        ".read": true,
+        ".write": true
+      },
+      "sortedByDateEntries": {
+        "$uid": {
+   ".indexOn": ["dateEntry"],
+   ".read": true,
+   ".write": true
+   }
+   }
+   },
+   "data": {
+   ".indexOn": ["dateEntry"],
+   ".read": true,
+   ".write": true
+   },
+   "participating": {
+   ".indexOn": ["teamID", "userID"],
+   "$uid": {
+        "$id": {
+   ".read": true,
+   ".write": true
+   }
+   }
+   },
+   "userToTeams": {
+   ".indexOn": ["uid"],
+   "$uid": {
+   ".read": true,
+   ".write": true
+   }
+   }
+   }
+   }</code><br/>
