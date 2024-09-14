@@ -1,6 +1,7 @@
 import { Report } from "../model/Report";
 import { SignedInUser } from "../model/SignedInUser";
-// import { User } from "../model/User";
+import { SwearType } from "../model/SwearType";
+import { User } from "../model/User";
 
 export class ReportViolationsController {
   /**
@@ -24,7 +25,6 @@ export class ReportViolationsController {
    * @param {"minor"|"major"|"medium"} query.levels
    */
   static selectSwearType(query) {
-    console.log(query);
     if (!this.tempSelectedReports[query.name]) {
       this.tempSelectedReports[query.name] = query;
     } else {
@@ -32,6 +32,19 @@ export class ReportViolationsController {
     }
   }
 
+  static getSelectedReports() {
+    return this.tempSelectedReports;
+  }
+
+  static getSelectedSwearTypeCount() {
+    if (!this.tempSelectedReports) return 0;
+    const count = Object.keys(this.tempSelectedReports).length;
+    return count;
+  }
+
+  static getSelectedSweartypes() {
+    return Object.values(this.tempSelectedReports);
+  }
   /**
    *
    * @param {User} user
@@ -86,5 +99,25 @@ export class ReportViolationsController {
 
     this.tempSelectedReports = {};
     this.tempSelectedUsers = {};
+  }
+
+  /**
+   *
+   * @returns {Promise<[{name:string,description:string,category:string,selected:boolean}]>}
+   */
+  static async getSwearjarViolations() {
+    try {
+      const teamSwearTypes = await SwearType.getSwearTypesByCompany(
+        SignedInUser.user.teamID,
+      );
+      return teamSwearTypes.map((swearType) => {
+        return {
+          ...swearType,
+          selected: false,
+        };
+      });
+    } catch (err) {
+      return [];
+    }
   }
 }

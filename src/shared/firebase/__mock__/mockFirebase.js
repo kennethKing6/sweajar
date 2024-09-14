@@ -6,6 +6,7 @@ jest.mock("firebase/auth", () => {
     signInWithEmailAndPassword: jest.fn().mockReturnValue({}),
     createUserWithEmailAndPassword: jest.fn().mockReturnValue({}),
     signOut: jest.fn().mockReturnValue(),
+    onAuthStateChanged: jest.fn().mockReturnValue({}),
   };
 });
 

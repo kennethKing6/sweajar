@@ -2,7 +2,7 @@ name: Run all test and evaluate code coverage
 run-name: branch testers
 on: [push]
 jobs:
-   Example:
+   Functionalities:
      runs-on: ubuntu-latest
      steps:
         - name: Checkout repository
@@ -18,4 +18,4 @@ jobs:
         - name: install jest on github actions
           run: npm install --save-dev jest
         - name: Run All Test
-          run:  npm run test
+          run:  npm run test --coverage --coverageThreshold="{\"global\":{\"statements\":50,"functions":50,"statements":-50}}"

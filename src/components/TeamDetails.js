@@ -3,40 +3,35 @@ import { useState, useEffect } from "react";
 import {
   Box,
   List,
-  ListItem,
   ListSubheader,
   ListItemText,
+  ListItemAvatar,
   Grid,
-  Tooltip,
   IconButton,
   Typography,
+  Avatar,
+  Chip,
+  Card,
+  CardContent,
 } from "@mui/material";
 import { Teams } from "../model/Teams";
 import { User } from "../model/User";
 import { SignedInUser } from "../model/SignedInUser";
 import AddTeamMember from "./AddTeamMember";
-import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import UserListIcon from "@mui/icons-material/RecentActors";
+import BackIcon from "@mui/icons-material/ArrowBack";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
-
-export default function TeamDetails({ onAdd = () => {} }) {
-  const [teamMemberEmail, setTeamMemberEmail] = useState("");
+import { Colors } from "../assets/colors";
+import { FontSizes } from "../assets/fonts";
+import { MARGIN_SIZES } from "../assets/sizes";
+import { FontFamilies } from "../assets/fontFamilies";
+import { TeamManagementManagerController } from "../controllers/teamManagementController";
+import { DeleteIcon } from "../assets/icons";
+export default function TeamDetails() {
   const [showTeamMembers, setShowTeamMembers] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
+  const [showUserTeams, setShowUserTeams] = useState(true);
   const [teamMembers, setTeamMembers] = useState([]);
-
-  const onAddTeamMember = async (teamMemberEmail, teamID) => {
-    // Validate the input fields
-    if (!teamMemberEmail) {
-      alert("Please enter an email for the new team member.");
-      return;
-    }
-    // Add a new team member
-    const newTeamMember = await Teams.addTeamMember(teamMemberEmail, teamID);
-    onAdd(newTeamMember);
-    // Clear the input fields
-    setTeamMemberEmail("");
-    alert("Successfully Added Team Member");
-  };
 
   useEffect(() => {
     // Fetch the list items from the database
@@ -48,106 +43,110 @@ export default function TeamDetails({ onAdd = () => {} }) {
   }, []);
 
   return (
-    <Grid container spacing={2}>
-      <Grid
-        item
-        xs={12}
-        md={6}
-        lg={8}
+    <Grid
+      item
+      xs={12}
+      md={6}
+      lg={8}
+      sx={{
+        position: "relative",
+        alignSelf: "flex-start",
+        justifyContent: "flex-end",
+        alignItems: "flex-start",
+      }}
+    >
+      <Box
         sx={{
-          position: "relative",
-          alignSelf: "flex-start",
-          justifyContent: "flex-end",
-          alignItems: "flex-start",
+          bgcolor: "black",
+          color: "white",
+          padding: 2,
+          height: "110vh",
         }}
       >
         <Box
           sx={{
-            width: "100%",
-            maxWidth: 360,
-            bgcolor: "black",
-            color: "white",
-            padding: 2,
-            border: "2px solid yellow",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
           }}
         >
-          <Box display={"flex"}>
-            <h1>{/* {items.teamName}*/}Team Details</h1>
-            <Tooltip title="Show Team Members" placement="top">
-              <IconButton
-                onClick={() => {
-                  setShowTeamMembers(true);
-                  setShowAdd(false);
-                }}
-              >
-                <FormatListBulletedIcon
-                  sx={{ backgroundColor: "yellow", color: "black" }}
-                />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Add Team Member" placement="top">
-              <IconButton
-                onClick={() => {
-                  setShowTeamMembers(false);
-                  setShowAdd(true);
-                }}
-              >
-                <GroupAddIcon
-                  sx={{ backgroundColor: "yellow", color: "black" }}
-                />
-              </IconButton>
-            </Tooltip>
-          </Box>
-
-          {showTeamMembers && (
-            <List
-              subheader={
-                <ListSubheader
-                  component="div"
-                  id="teamMembers-list-subheader"
-                  sx={{ color: "white", bgcolor: "black" }}
-                >
-                  Team Members:
-                </ListSubheader>
-              }
-            >
-              {teamMembers &&
-                teamMembers.map((member, index) => (
-                  <ListItem key={index}>
-                    <TeamMemberItem userID={member.userID} />
-                  </ListItem>
-                ))}
-              {/* {items && Object.entries(items.teamMembers).map(([userID, firstName, lastName]) => (
-                                <ListItem key={userID}>
-                                    <ListItemText primary={firstName} {lastName}/>
-                                </ListItem>
-                            ))} */}
-              {/* {items.map( (item) => (
-                                <ListItem  key={JSON.stringify(item)} onClick={async () => {
-                                    await onToggle(item)
-                                }}>
-                                    <ListItemIcon>
-                                        <Checkbox checked={selected?selected.teamName === item.teamName:null} sx={{color:'white'}}/>
-                                    </ListItemIcon>
-                                    <ListItemText primary={item} sx={{color:'white'}}/>
-                                </ListItem>
-                            ))} */}
-            </List>
-          )}
-          {showAdd && (
-            <AddTeamMember
-              teamMemberEmail={teamMemberEmail}
-              setTeamMemberEmail={setTeamMemberEmail}
-              onAddTeamMember={onAddTeamMember}
-              teamID={SignedInUser.user.teamID}
+          <h1 style={{ fontFamily: FontFamilies.title }}>Team Details</h1>
+          <Box>
+            {/* <IconButton
+            title="Go back to Teams"
+            onClick={() => {
+              // This button should take you back to the Team Viewer
+            }}
+          >
+            <BackIcon
+               sx={{ backgroundColor: Colors.NAVBAR_SELECT_COLOR, color: Colors.TEXT_COLOR, fontSize: "30px", borderRadius: "10%", padding: '5px' }}
             />
-          )}
+          </IconButton> */}
+            <IconButton
+              title="Show Team Members"
+              onClick={() => {
+                setShowTeamMembers(true);
+                setShowAdd(false);
+              }}
+            >
+              <UserListIcon
+                sx={{
+                  backgroundColor: Colors.NAVBAR_SELECT_COLOR,
+                  color: Colors.TEXT_COLOR,
+                  fontSize: "30px",
+                  borderRadius: "10%",
+                  padding: "5px",
+                }}
+              />
+            </IconButton>
+            <IconButton
+              title="Add/Delete Team Member"
+              onClick={() => {
+                setShowTeamMembers(false);
+                setShowAdd(true);
+              }}
+            >
+              <GroupAddIcon
+                sx={{
+                  backgroundColor: Colors.NAVBAR_SELECT_COLOR,
+                  color: Colors.TEXT_COLOR,
+                  fontSize: "30px",
+                  borderRadius: "10%",
+                  padding: "5px",
+                }}
+              />
+            </IconButton>
+          </Box>
         </Box>
-      </Grid>
+
+        {showTeamMembers && (
+          <List
+            subheader={
+              <ListSubheader
+                component="div"
+                id="teamMembers-list-subheader"
+                sx={{
+                  color: Colors.TEXT_COLOR,
+                  bgcolor: Colors.BACKGROUND_COLOR,
+                  fontSize: FontSizes.bodyFontSize,
+                }}
+              >
+                Team Members:
+              </ListSubheader>
+            }
+          >
+            {teamMembers &&
+              teamMembers.map((member, index) => (
+                <TeamMemberItem userID={member.userID} admin={member.admin} />
+              ))}
+          </List>
+        )}
+        {showAdd && <AddTeamMember />}
+      </Box>
     </Grid>
   );
 }
-function TeamMemberItem({ userID }) {
+export function TeamMemberItem({ userID, admin }) {
   const [user, setUser] = useState(null);
   useEffect(() => {
     User.getUserByID(userID)
@@ -157,10 +156,86 @@ function TeamMemberItem({ userID }) {
   return (
     <>
       {user ? (
-        <Grid>
-          <ListItemText primary={`${user.firstName} ${user.lastName}`} />
-          <Typography>{user.email}</Typography>
-        </Grid>
+        <>
+          <Grid container>
+            <Grid item xs={10} />
+            <Grid item xs={2}>
+              <Chip
+                label={
+                  admin === userID
+                    ? "Admin"
+                    : userID === SignedInUser.user.userID
+                      ? "You"
+                      : "Member"
+                }
+                sx={{
+                  backgroundColor:
+                    admin === userID ? Colors.ERROR_COLOR : Colors.ERROR_COLOR,
+                  color: Colors.TEXT_COLOR,
+                  fontSize: FontSizes.captionFontSize,
+                  width: 100,
+                }}
+              />
+            </Grid>
+          </Grid>
+          <Card
+            key={JSON.stringify(user)}
+            sx={{
+              mb: 2,
+              bgcolor: Colors.TEAM_COLOR_DARK_BLUE,
+              color: Colors.TEXT_COLOR,
+            }}
+          >
+            <CardContent>
+              <Grid container alignItems={"center"}>
+                <Grid item>
+                  <ListItemAvatar>
+                    {user ? (
+                      <Avatar
+                        alt={`${user.firstName}`}
+                        src={user.profilePicture}
+                      />
+                    ) : (
+                      <></>
+                    )}
+                  </ListItemAvatar>
+                </Grid>
+                <Grid item>
+                  <ListItemText
+                    primary={`${user.firstName} ${user.lastName}`}
+                    secondary={
+                      admin !== userID ? (
+                        <DeleteIcon
+                          style={{
+                            position: "absolute",
+                            left: "90%",
+                            color: Colors.TEXT_COLOR,
+                          }}
+                          onClick={async () => {
+                            const { email, teamID } = user;
+                            if (
+                              window.confirm(
+                                `Are you sure you want to delete ${user.firstName} ${user.lastName} from the team?`,
+                              )
+                            ) {
+                              TeamManagementManagerController.deleteTeamMember(
+                                email,
+                                teamID,
+                              );
+                            }
+                          }}
+                        />
+                      ) : (
+                        <></>
+                      )
+                    }
+                  />
+                  <Typography>{user.email}</Typography>
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+        </>
       ) : (
         <></>
       )}

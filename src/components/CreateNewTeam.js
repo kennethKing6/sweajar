@@ -7,6 +7,8 @@ import {
   Button,
 } from "@mui/material";
 import { Teams } from "../model/Teams";
+import { Colors } from "../assets/colors";
+import { FontSizes } from "../assets/fonts";
 
 export default function CreateNewTeam({ onAdd = () => {} }) {
   const [teamName, setTeamName] = useState("");
@@ -35,7 +37,7 @@ export default function CreateNewTeam({ onAdd = () => {} }) {
           id="newTeam-list-subheader"
           sx={{ color: "white", bgcolor: "black" }}
         >
-          Create a New Team
+          Create a New Team / Delete a Team
         </ListSubheader>
       }
     >
@@ -45,28 +47,51 @@ export default function CreateNewTeam({ onAdd = () => {} }) {
           value={teamName}
           onChange={(e) => setTeamName(e.target.value)}
           sx={{
-            input: { color: "white" },
-            label: { color: "white" },
-            "& .MuiOutlinedInput-notchedOutline": { borderColor: "white" },
+            width: "100%",
+            input: { color: Colors.TEXT_COLOR  },
+            label: { color: Colors.TEXT_COLOR  },
+            "& .MuiOutlinedInput-notchedOutline": { borderColor: Colors.BORDER_WHITE },
+            "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: Colors.BORDER_BLUE },
             "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-              { borderColor: "yellow" },
-            "& .MuiFormLabel-root.Mui-focused": { color: "yellow" },
+              { borderColor:  Colors.BORDER_BlUE },
+            "& .MuiFormLabel-root.Mui-focused": { color: Colors.TEXT_COLOR },
           }}
         />
       </ListItem>
-      <ListItem>
+      <ListItem sx={{display: "flex", justifyContent:"space-between"}}>
         <Button
           variant="contained"
           onClick={async () => await onSubmit()}
           sx={{
-            backgroundColor: "#FFEB3B",
-            color: "black",
+            backgroundColor: Colors.BUTTON_PRIMARY_COLOR,
+            color: Colors.TEXT_COLOR,
             "&:hover": {
-              backgroundColor: "#FFC107",
+              backgroundColor: Colors.BUTTON_SECONDARY_COLOR,
             },
+            marginRight: "20px",
           }}
         >
           Create
+        </Button>
+        <Button
+          variant="contained"
+          onClick={async () => {
+            try {
+              await Teams.deleteTeamByName(teamName);
+              alert("Team was successfully deleted");
+            } catch (err) {
+              alert("Could not delete team");
+            }
+          }}
+          sx={{
+            backgroundColor: Colors.BUTTON_PRIMARY_COLOR,
+            color: Colors.TEXT_COLOR,
+            "&:hover": {
+              backgroundColor: Colors.BUTTON_SECONDARY_COLOR,
+            },
+          }}
+        >
+          Delete
         </Button>
       </ListItem>
     </List>

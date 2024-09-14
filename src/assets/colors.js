@@ -1,24 +1,61 @@
 const PRIMARY_COLOR = "black";
-const SECONDARY_COLOR = "yellow";
+const SECONDARY_COLOR = "white";
+const TERTIARY_COLOR = "yellow";
+
+// Background colors black, dark blue
+const BACKGROUND_COLOR = "#000000";
+const BACKGROUND_COLOR_SECONDARY = "#000011"; // Rich black
+const BACKGROUND_COLOR_YELLOW = "yellow";
+const BACKGROUND_COLOR_GOLD = "#FFEB3B"; // Aureolin
+const BACKGROUND_COLOR_EERIE = "#18181A"; // Eerie black, already in Teams img
+
+// Button backgrounds darkblue, blue, lightblue
+const BUTTON_PRIMARY_COLOR = "#5158BB";
+const BUTTON_SECONDARY_COLOR = "#043565";
+const BUTTON_TEXTIARY_COLOR = "#e1762b";
+const BUTTON_GOLD = "#FFC107";
+
+// NavBar colors
+const NAVBAR_PRIMARY_BACKGROUND = "#070726";
+const NAVBAR_SELECT_COLOR = "#0A0B8D";
+// Text colors
 const TEXT_COLOR = "white";
 const TEXT_COLOR_SECONDARY = "black";
-const TEXT_COLOR_TERTIARY = "#999999";
-const BACKGROUND_COLOR = "#267365";
+const TEXT_COLOR_TERTIARY = "yellow";
 const TEXT_COLOR_PLACEHOLDER = "#C7C7CD";
+
+// Menu background colors
+// Team background colors
+const TEAM_COLOR_DARK_ORANGE = "#b36025";
+const TEAM_COLOR_ORANGE = "#ff792c";
+const TEAM_COLOR_BEIGE = "#ffcd71";
+const TEAM_COLOR_BLUE = "#2c45ff";
+const TEAM_COLOR_DARK_BLUE = "#251d61";
+
+// Border colors
+const BORDER_WHITE = "white";
+const BORDER_BLUE = "blue";
+const BORDER_YELLOW = "yellow";
+
+const GREY_ACCENT = "#898989";
+const DARK_GREY_ACCENT = "#333333";
+const BROWN_ACCENT = "#5d642b";
+
+const CHART_COLOR = "#FFFF00";
+const CHART_TEXT = "#FFFFFF";
+const CHART_LABEL = "#FFFFFF";
+const CHART_BACKGROUND = "black";
+
 const ACCENT_COLOR_1 = "#662400";
 const ACCENT_COLOR_2 = "#FFC107";
 const ACCENT_COLOR_3 = "#FF5733";
-const ACCENT_COLOR_4 = "#FFEB3B";
+const ACCENT_COLOR_4 = "#BFDBF7";
 const ACCENT_COLOR_5 = "#F2BB13";
 const ERROR_COLOR = "#FF3B30"; // Error color
 const SUCCESS_COLOR = "#4CD964"; // Success color
 const WARNING_COLOR = "#FFCC00"; // Warning color
 const LINK_COLOR = "#007AFF"; // Link color
 const BORDER_COLOR = "#C8C7CC"; // Border color
-const TERTIARY_COLOR = "#34C759";
-const BUTTON_PRIMARY_COLOR = "#34C759";
-const BUTTON_SECONDARY_COLOR = "#34C759";
-const BUTTON_TEXTIARY_COLOR = "#34C759";
 // const QUATERNARY_COLOR = "#5AC8FA";
 // const QUINARY_COLOR = "#FFCC00";
 // const BACKGROUND_COLOR_SECONDARY = "#F2F2F7";
@@ -77,11 +114,6 @@ const BUTTON_TEXTIARY_COLOR = "#34C759";
 // const SYSTEM_FILL_GRAY_33_COLOR = "#66666E";
 // const SYSTEM_FILL_GRAY_34_COLOR = "#4D4D56";
 // const SYSTEM_FILL_GRAY_35_COLOR = "#3C3C43";
-const NAVBAR_PRIMARY_BACKGROUND = "#021F59";
-const CHART_COLOR = "#FFFF00";
-const CHART_TEXT = "#FFFFFF";
-const CHART_LABEL = "#FFFFFF";
-const CHART_BACKGROUND = "black";
 
 export const Colors = {
   PRIMARY_COLOR,
@@ -97,7 +129,7 @@ export const Colors = {
   SUCCESS_COLOR,
   WARNING_COLOR,
   LINK_COLOR,
-  BORDER_COLOR,
+  BORDER_BLUE,
   TERTIARY_COLOR,
   TEXT_COLOR_SECONDARY,
   TEXT_COLOR_TERTIARY,
@@ -110,4 +142,23 @@ export const Colors = {
   CHART_LABEL,
   CHART_BACKGROUND,
   NAVBAR_PRIMARY_BACKGROUND,
+  BACKGROUND_COLOR_SECONDARY,
+  BUTTON_PRIMARY_COLOR,
+  BUTTON_SECONDARY_COLOR,
+  BUTTON_TEXTIARY_COLOR,
+  TEAM_COLOR_DARK_ORANGE,
+  TEAM_COLOR_ORANGE,
+  TEAM_COLOR_BEIGE,
+  TEAM_COLOR_BLUE,
+  TEAM_COLOR_DARK_BLUE,
+  GREY_ACCENT,
+  DARK_GREY_ACCENT,
+  BROWN_ACCENT,
+  BACKGROUND_COLOR_EERIE,
+  NAVBAR_SELECT_COLOR,
+  BORDER_WHITE,
+  BORDER_YELLOW,
+  BACKGROUND_COLOR_YELLOW,
+  BACKGROUND_COLOR_GOLD,
+  BUTTON_GOLD,
 };

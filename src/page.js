@@ -3,12 +3,21 @@ import UsersList from "./components/UsersList";
 import React, { useEffect, useState } from "react";
 import ViolationSelectList from "./components/ViolationSelectList";
 import Grid from "@mui/material/Grid";
+import { Colors } from "./assets/colors";
+import ReportButton from "./components/ReportButton";
+import ReportList from "./components/HomepageLeaderBoard";
 import HomepageLeaderBoard from "./components/HomepageLeaderBoard";
 import { User } from "./model/User";
 import Welcome from "./components/Welcome";
 import UserDetails from "./components/UserDetails";
 import NavBar from "./components/NavBar";
 import TeamViewer from "./components/TeamViewer";
+import Tutorial from "./components/Tutorial";
+import { reduxStore } from "./shared/redux/reduxStore";
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import { CacheProvider } from "@emotion/react";
+import createCache from "@emotion/cache";
 import { appDimensions } from "./assets/appDimensions";
 import TeamDetails from "./components/TeamDetails";
 
@@ -18,6 +27,7 @@ const HOMEPAGE_LEADERBOARD = "leaderboard";
 const USER_DETAILS_COMPONENT = "userDetails";
 const TEAM_VIEWER_COMPONENT = "teamViewer";
 const TEAM_DETAILS_COMPONENT = "teamDetails";
+const TUTORIAL_COMPONENT = "tutorial";
 
 export default function Page({ Component, pageProps }) {
   return <App {...pageProps} />;
@@ -82,15 +92,17 @@ function App() {
       style={{
         height: appDimensions.EXTENSION_HEIGHT,
         width: appDimensions.EXTENSION_WIDTH,
+        backgroundColor: Colors.BACKGROUND_COLOR,
+        overflowY: "auto",
       }}
     >
       <NavBar
         onLeaderboardClick={() => setSwitcher(HOMEPAGE_LEADERBOARD)}
         onNewReportClick={() => setSwitcher(VIOLATION_LIST_COMPONENT)}
         onProfileClick={() => setSwitcher(USER_DETAILS_COMPONENT)}
+        onTutorialClick={() => setSwitcher(TUTORIAL_COMPONENT)}
         onTeamsClick={() => setSwitcher(TEAM_VIEWER_COMPONENT)}
         onLogout={() => setSwitcher(HOMEPAGE_LEADERBOARD)}
-        style={{ zIndex: 1000 }}
       />
       {user ? (
         <>
@@ -127,6 +139,15 @@ function App() {
               user={HomepageLeaderBoardData[0]}
               onPress={() => {
                 setSwitcher(HOMEPAGE_LEADERBOARD);
+              }}
+            />
+          ) : (
+            <></>
+          )}
+          {switcher === TUTORIAL_COMPONENT ? (
+            <Tutorial
+              onPress={() => {
+                setSwitcher(TUTORIAL_COMPONENT);
               }}
             />
           ) : (

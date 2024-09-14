@@ -83,6 +83,20 @@ export class SwearType {
 
   /**
    *
+   * @param {object} query
+   * @param {string} query.name
+   * @param {string} query.teamID
+   */
+  static async deleteSwearType(query) {
+    if (!query.name) throw new Error("Please select a team");
+
+    await FirebaseDatabase.deleteDataFromDB({
+      queryPath: `${SWEAR_TYPE_PATH}/${query.teamID}/${query.name}`,
+    });
+  }
+
+  /**
+   *
    * @param {string} teamID
    * @returns {Promise<[SwearType]>}
    */

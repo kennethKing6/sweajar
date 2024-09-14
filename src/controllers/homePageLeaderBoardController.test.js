@@ -4,6 +4,7 @@ import { User } from "../model/User";
 
 import { FirebaseDatabase } from "../shared/firebase/firebaseDatabase";
 import { Teams } from "../model/Teams";
+import { SignedInUser } from "../model/SignedInUser";
 
 const user = {
   teamID: "teamID",
@@ -19,6 +20,10 @@ const teamMembers = {
   user3: user,
 };
 
+SignedInUser.user = {
+  userID: "fake user id",
+  teamID: "fake team id",
+};
 describe("Team Members", () => {
   it("Get team members that the currently signed in user is in", async () => {
     jest.spyOn(FirebaseDatabase, "readDataFromDB").mockReturnValue(teamMembers);
@@ -27,20 +32,10 @@ describe("Team Members", () => {
   });
 
   it("Get team members that the currently signed in user is in that has no teammates", async () => {
+    jest
+      .spyOn(FirebaseDatabase, "readDataFromDB")
+      .mockReturnValueOnce({ admin: "fake admin", teamName: "fake team name" });
     const result = await Teams.getTeamMembers();
-    expect(result.length).toBe(0);
-  });
-});
-
-describe("Team reports type array", () => {
-  //   it("Get team members that the currently signed in user is in", async () => {
-  //     jest.spyOn(Report, "getReportsLegends").mockReturnValue(["All", "Profi "]);
-  //     const result = await Teams.getTeamMembers();
-  //     expect(result.length).toBe(3);
-  //   });
-
-  it("Get team members that the currently signed in user is in that has no teammates", async () => {
-    const result = await Teams.getTeamMembers();
-    expect(result.length).toBe(0);
+    expect(result.length).toBe(2);
   });
 });

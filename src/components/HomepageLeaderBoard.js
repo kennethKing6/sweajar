@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import { Avatar, Stack, Typography } from "@mui/material";
+import { Avatar, Select, Stack, Typography, MenuItem } from "@mui/material";
 import { User } from "../model/User";
 import { SignedInUser } from "../model/SignedInUser";
 import { Report } from "../model/Report";
@@ -13,9 +13,12 @@ import {
   ListItemText,
   ListItemAvatar,
   ListItemButton,
+  Paper,
+  Grow,
 } from "@mui/material";
 import { Colors } from "../assets/colors";
 import { FontSizes } from "../assets/fonts";
+// import { Charts } from "react-charts";
 import LeaderboardChart from "./LeaderboardChart";
 import { MARGIN_SIZES } from "../assets/sizes";
 import { appDimensions } from "../assets/appDimensions";
@@ -24,7 +27,8 @@ import { width_sizes } from "../assets/width";
 import NativeSelect from "@mui/material/NativeSelect";
 import { HomePageLeaderBoardController } from "../controllers/homePageLeaderBoardController";
 import { AppState } from "../model/AppState";
-
+import { Padding_Sizes } from "../assets/paddingSizes";
+import { Teams } from "../model/Teams";
 export default function HomepageLeaderBoard({
   data,
   onExit = () => {},
@@ -34,6 +38,7 @@ export default function HomepageLeaderBoard({
   const [sortedData, setSortedData] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [profanitySorter, setProfanitySorter] = useState(null);
+  const [team, setTeam] = useState(null);
 
   console.log(selectedUser);
   useEffect(() => {
@@ -50,6 +55,14 @@ export default function HomepageLeaderBoard({
     }
   }, [profanitySorter]);
 
+  useEffect(() => {
+    try {
+      Teams.getTeam(SignedInUser.user.teamID)
+        .then((team) => setTeam(team))
+        .catch();
+    } catch (err) {}
+  });
+
   const handleUserClick = (user) => {
     AppState.selectUserID = user;
     setSelectedUser(user);
@@ -61,22 +74,42 @@ export default function HomepageLeaderBoard({
       sx={{
         width: appDimensions.EXTENSION_WIDTH,
         bgcolor: Colors.BACKGROUND_COLOR,
+        height: "auto",
       }}
-      spacing={2}
     >
       {sortedData.length > 0 ? (
         <Grid item alignSelf="flex-start">
           <Box
             sx={{
-              color: "white",
+              color: Colors.TEXT_COLOR,
               padding: 2,
             }}
           >
             <>
-              <h1 style={{ fontWeight: "900" }}>Leaderboard </h1>
-              <FilterDropDown
-                onSelectFilter={(filter) => setProfanitySorter(filter)}
-              />
+              <Grid container>
+                <Grid item xs={7.5}>
+                  <h1 style={{ fontWeight: "900" }}>Leaderboard </h1>
+                  {team && team.teamName ? (
+                    <Chip
+                      label={team.teamName}
+                      sx={{
+                        bgcolor: Colors.ACCENT_COLOR_1,
+                        color: Colors.TEXT_COLOR,
+                        fontSize: FontSizes.mediumFontSize,
+                        fontWeight: "900",
+                        padding: Padding_Sizes.PADDING_4,
+                      }}
+                    />
+                  ) : (
+                    <></>
+                  )}
+                </Grid>
+                <Grid item xs={4} mt={2}>
+                  <FilterDropDown
+                    onSelectFilter={(filter) => setProfanitySorter(filter)}
+                  />
+                </Grid>
+              </Grid>
               <nav aria-label="main reported folder">
                 <List>
                   {sortedData.map((person, index) => (
@@ -130,78 +163,92 @@ function UserItem({ person, index, pageDetails = () => {} }) {
       });
   }, [person]);
   useEffect(() => {
-    Report.getTheHighestViolationByUserID(
-      person.userID,
-      SignedInUser.user.teamID,
-    )
-      .then((data) => {
-        setHighestViolationCount(
-          data.highestViolationsMetrics.highestViolationCount,
-        );
-        setHighestViolation(data.highestViolationsMetrics.swearType.name);
-        setChartData(data.sortedViolations);
-      })
-      .catch((err) => console.error(err));
-  }, [user, person]);
+    if (person) {
+      Report.getTheHighestViolationByUserID(
+        person.userID,
+        SignedInUser.user.teamID,
+        person.swearTypeID,
+      )
+        .then((data) => {
+          setHighestViolationCount(
+            data.highestViolationsMetrics.highestViolationCount,
+          );
+          setHighestViolation(data.highestViolationsMetrics.swearType.name);
+          setChartData(data.sortedViolations);
+        })
+        .catch((err) => console.error(err));
+    }
+  }, [person]);
   return (
-    <ListItem
-      onClick={() => pageDetails(person.userID)}
-      key={index}
-      sx={{ backgroundColor: "white", marginTop: MARGIN_SIZES.MARGIN_4 }}
-    >
-      <Grid container>
-        {chartData.length > 0 ? (
-          <LeaderboardChart chartData={chartData} />
-        ) : (
-          <></>
-        )}
+    <>
+      {user ? (
+        <ListItem
+          onClick={() => pageDetails(person.userID)}
+          key={index}
+          sx={{
+            backgroundColor: Colors.BACKGROUND_COLOR_EERIE,
+            marginTop: MARGIN_SIZES.MARGIN_1,
+            border: `1px solid ${Colors.BORDER_BLUE}`,
+            "&:hover": {
+              boxShadow: "0px 0px 10px 5px rgba(0, 150, 255, 0.5)",
+            },
+          }}
+        >
+          <Grid container>
+            <ListItemButton>
+              <ListItemAvatar>
+                {user ? (
+                  <Avatar alt={`${user.firstName}`} src={user.profilePicture} />
+                ) : (
+                  <></>
+                )}
+              </ListItemAvatar>
+              <ListItemText
+                sx={{ color: Colors.TEXT_COLOR }}
+                primary={`${user ? user.firstName : ""} ${user ? user.lastName : ""}`}
+                secondary={
+                  highestViolation ? (
+                    <Chip
+                      label={`${highestViolation}`}
+                      sx={{
+                        backgroundColor: Colors.TEAM_COLOR_BLUE,
+                        color: Colors.TEXT_COLOR,
+                        fontSize: FontSizes.bodyFontSize,
+                      }}
+                    />
+                  ) : (
+                    <></>
+                  )
+                }
+                primaryTypographyProps={{ variant: "h5", paddingBottom: "5px" }}
+              />
 
-        <ListItemButton>
-          <ListItemAvatar>
-            {user ? (
-              <Avatar alt={`${user.firstName}`} src={user.profilePicture} />
-            ) : (
-              <></>
-            )}
-          </ListItemAvatar>
-          <ListItemText
-            primary={`${user ? user.firstName : ""} ${user ? user.lastName : ""}`}
-            sx={{ color: Colors.TEXT_COLOR_SECONDARY }}
-            secondary={
-              highestViolation ? (
+              <ListItemSecondaryAction>
                 <Chip
-                  label={`${highestViolation}`}
+                  label={highestViolationCount}
                   sx={{
-                    backgroundColor: violationColor,
-                    color: Colors.TEXT_COLOR_SECONDARY,
-                    fontSize: FontSizes.captionFontSize,
+                    backgroundColor: Colors.TEAM_COLOR_BLUE,
+                    color: Colors.TEXT_COLOR,
+                    fontWeight: "bold",
+                    fontSize: FontSizes.bodyFontSize,
+                    width: 35,
+                    height: 35,
                   }}
                 />
-              ) : (
-                <></>
-              )
-            }
-          />
-
-          <ListItemSecondaryAction>
-            <Chip
-              label={highestViolationCount}
-              sx={{
-                backgroundColor: violationColor,
-                color: Colors.TEXT_COLOR,
-                fontWeight: "bold",
-                fontSize: FontSizes.captionFontSize,
-              }}
-            />
-          </ListItemSecondaryAction>
-        </ListItemButton>
-      </Grid>
-    </ListItem>
+              </ListItemSecondaryAction>
+            </ListItemButton>
+          </Grid>
+        </ListItem>
+      ) : (
+        <></>
+      )}
+    </>
   );
 }
 
 function FilterDropDown({ onSelectFilter = () => {} }) {
   const [filters, setFilters] = useState([]);
+  const [selectedFilter, setSelectedFilter] = useState("All");
   useEffect(() => {
     HomePageLeaderBoardController.getReportTypesPerTeam()
       .then((data) => setFilters(data))
@@ -211,34 +258,43 @@ function FilterDropDown({ onSelectFilter = () => {} }) {
     <Box
       sx={{
         width: width_sizes.BUTTON_WIDTH_LG,
-        bgcolor: Colors.ACCENT_COLOR_3,
         padding: MARGIN_SIZES.MARGIN_4 / 4,
         borderRadius: MARGIN_SIZES.MARGIN_4,
       }}
     >
       <FormControl fullWidth>
-        <NativeSelect
-          defaultValue={30}
+        <Select
           labelId="demo-controlled-open-select-label"
           id="demo-controlled-open-select"
+          value={selectedFilter}
           onChange={(e) => {
             onSelectFilter(e.target.value);
+            setSelectedFilter(e.target.value);
           }}
           inputProps={{
             id: "uncontrolled-native",
             sx: {
-              color: Colors.TEXT_COLOR,
+              color: "white",
               borderWidth: 0,
-              borderColor: "brown",
+              borderColor: Colors.BUTTON_PRIMARY_COLOR,
+              backgroundColor: Colors.BUTTON_SECONDARY_COLOR,
+            },
+          }}
+          MenuProps={{
+            PaperProps: {
+              sx: {
+                backgroundColor: Colors.ACCENT_COLOR_4,
+              },
             },
           }}
         >
-          {filters.map((v) => (
-            <option key={v} value={v}>
-              {v}
-            </option>
-          ))}
-        </NativeSelect>
+          {Array.isArray(filters) &&
+            filters.map((v) => (
+              <MenuItem key={v} value={v} sx={{ color: "black" }}>
+                {v}
+              </MenuItem>
+            ))}
+        </Select>
       </FormControl>
     </Box>
   );

@@ -8,6 +8,7 @@ import { User } from "./User";
 //mzafri@gmail.com
 const TEAMS_PATH = "/teams";
 const PARTICIPATING_TEAM = "/participating";
+const USER_TO_TEAM = "/userToTeams";
 
 export class Teams {
   static async createTeam(teamName) {
@@ -50,10 +51,18 @@ export class Teams {
       userID: user.userID,
     };
 
+    await FirebaseDatabase.pushDataToDB({
+      newData: `${PARTICIPATING_TEAM}/${team.teamID}/${user.userID}`,
+      queryPath: `${USER_TO_TEAM}/${user.userID}`,
+    });
+
     await FirebaseDatabase.writeDataToDB({
       data: newTeamMember,
       queryPath: `/${PARTICIPATING_TEAM}/${team.teamID}/${user.userID}`,
     });
+
+    alert("User was successfully added to the team");
+
     return newTeamMember;
   }
 
@@ -66,10 +75,45 @@ export class Teams {
       throw new Error("Only team admin can a new teammate");
 
     const user = await User.getUserByEmail(email);
+    let userToTeams = await FirebaseDatabase.readDataFromDB({
+      queryPath: `${USER_TO_TEAM}/${user.userID}`,
+    });
+
+    let result = [];
+    for (let data in userToTeams) {
+      const currentTeamPath = userToTeams[data];
+
+      if (
+        currentTeamPath === `${PARTICIPATING_TEAM}/${teamID}/${user.userID}`
+      ) {
+        result.push(
+          FirebaseDatabase.deleteDataFromDB({
+            queryPath: `${USER_TO_TEAM}/${user.userID}/${data}`,
+          }),
+        );
+      }
+    }
+    await Promise.any(result);
     await FirebaseDatabase.deleteDataFromDB({
       queryPath: `/${PARTICIPATING_TEAM}/${teamID}/${user.userID}`,
     });
     return user;
+  }
+
+  static async deleteTeamByName(teamName) {
+    const team = await FirebaseDatabase.readDataFromDByEquality({
+      queryKey: "teamName",
+      equalValue: `${teamName}`,
+      queryPath: TEAMS_PATH,
+    });
+    if (team) {
+      const teamID = Object.keys(team)[0];
+      if (teamID) {
+        await FirebaseDatabase.deleteDataFromDB({
+          queryPath: `${TEAMS_PATH}/${teamID}`,
+        });
+      }
+    }
   }
 
   /**
@@ -78,9 +122,34 @@ export class Teams {
    * @returns {Promise <[{teamName:string,teamMembers:{},teamID:string,admin:string}]>}
    */
   static async getTeams() {
-    const result = [];
-    let participatingTeams = await FirebaseDatabase.readDataFromDB({
-      queryPath: `${PARTICIPATING_TEAM}/${SignedInUser.user.userID}`,
+    let result = [];
+
+    let visitedParticipatingPath = {};
+    let userToTeams = await FirebaseDatabase.readDataFromDB({
+      queryPath: `${USER_TO_TEAM}/${SignedInUser.user.userID}`,
+    });
+
+    for (let data in userToTeams) {
+      const currentTeamPath = userToTeams[data];
+      if (!visitedParticipatingPath[currentTeamPath]) {
+        result.push(
+          FirebaseDatabase.readDataFromDB({
+            queryPath: currentTeamPath,
+          }),
+        );
+      }
+      visitedParticipatingPath[currentTeamPath] = currentTeamPath;
+    }
+
+    if (result.length > 0) {
+      result = await Promise.all(result);
+      result = result.filter((element) => element !== null);
+    }
+
+    let participatingTeams = await FirebaseDatabase.readDataFromDByEquality({
+      queryPath: `${PARTICIPATING_TEAM}`,
+      equalValue: SignedInUser.user.userID,
+      queryKey: "userID",
     });
 
     if (participatingTeams) {
@@ -105,10 +174,37 @@ export class Teams {
    * @param {string} teamID
    */
   static async getTeamMembers(teamID) {
-    const result = await FirebaseDatabase.readDataFromDB({
+    let result = new Map();
+    //Get admin user
+    const adminTeam = await FirebaseDatabase.readDataFromDB({
+      queryPath: `${TEAMS_PATH}/${teamID}`,
+    });
+    const { admin = "", teamName = "" } = adminTeam;
+    const teamAdmin = {
+      ...adminTeam,
+      userID: admin,
+    };
+    if (adminTeam) result.set(admin, teamAdmin);
+
+    // Get other members
+    const data = await FirebaseDatabase.readDataFromDB({
       queryPath: `${PARTICIPATING_TEAM}/${teamID}`,
     });
 
-    return result ? Object.values(result) : [];
+    if (data)
+      Object.values(data).map((v) => {
+        const { userID } = v;
+        result.set(userID, v);
+      });
+
+    // Add logged in user to the team if not yet saved in the database
+    const loggedInUser = {
+      teamID,
+      teamName,
+      admin,
+      userID: SignedInUser.user.userID,
+    };
+    result.set(SignedInUser.user.userID, loggedInUser);
+    return result.size > 0 ? Array.from(result).map((v) => v[1]) : [];
   }
 }
